@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nuha Precious Bloom</title>
+<meta name="description" content="Katalog lampu bunga pipe cleaner buatan tangan oleh Nuha Precious Bloom.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Great+Vibes&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fdf6f1;
+    --card: #ffffff;
+    --rose: #b97a7f;
+    --rose-dark: #9a5e63;
+    --sage: #7d846b;
+    --text: #4a3f3f;
+    --muted: #8a7d7b;
+    --line: #ecdcd6;
+    --wa: #25d366;
+    --wa-dark: #1da851;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Nunito", system-ui, sans-serif;
+    line-height: 1.6;
+  }
+  img { max-width: 100%; display: block; }
+
+  header {
+    text-align: center;
+    padding: 32px 16px 8px;
+  }
+  header img.logo {
+    width: 240px;
+    margin: 0 auto;
+    border-radius: 24px;
+  }
+  .tagline {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.35rem;
+    color: var(--sage);
+    margin: 8px 0 0;
+  }
+  .intro {
+    max-width: 560px;
+    margin: 12px auto 0;
+    color: var(--muted);
+  }
+  .divider {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    color: var(--rose); margin: 32px auto 8px; max-width: 360px;
+  }
+  .divider::before, .divider::after {
+    content: ""; flex: 1; height: 1px; background: var(--line);
+  }
+  h2 {
+    font-family: "Great Vibes", cursive;
+    font-weight: 400;
+    font-size: 2.6rem;
+    color: var(--rose);
+    text-align: center;
+    margin: 0;
+  }
+
+  main { max-width: 960px; margin: 0 auto; padding: 0 16px 140px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(185, 122, 127, .08);
+    display: flex; flex-direction: column;
+  }
+  .card img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 75%; }
+  .card-body { padding: 20px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .card h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.6rem; margin: 0; color: var(--text);
+  }
+  .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+  .price { font-weight: 700; color: var(--rose-dark); font-size: 1.25rem; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; }
+
+  .qty {
+    display: inline-flex; align-items: center;
+    border: 1px solid var(--line); border-radius: 999px; overflow: hidden;
+  }
+  .qty button {
+    width: 40px; height: 40px; border: 0; background: #f8ece7;
+    color: var(--rose-dark); font-size: 1.3rem; cursor: pointer;
+  }
+  .qty button:hover { background: #f1ddd5; }
+  .qty input {
+    width: 44px; height: 40px; border: 0; text-align: center;
+    font: inherit; font-weight: 700; color: var(--text); background: #fff;
+    -moz-appearance: textfield;
+  }
+  .qty input::-webkit-outer-spin-button,
+  .qty input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .subtotal { font-size: .9rem; color: var(--muted); }
+
+  .order {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    background: rgba(255,255,255,.96);
+    backdrop-filter: blur(6px);
+    border-top: 1px solid var(--line);
+    padding: 12px 16px;
+  }
+  .order-inner {
+    max-width: 960px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .total-label { font-size: .85rem; color: var(--muted); }
+  .total { font-size: 1.35rem; font-weight: 700; color: var(--rose-dark); }
+  .wa-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--wa); color: #fff; border: 0; border-radius: 999px;
+    padding: 12px 22px; font: inherit; font-weight: 700; cursor: pointer;
+    text-decoration: none; white-space: nowrap;
+  }
+  .wa-btn:hover { background: var(--wa-dark); }
+  .wa-btn:disabled { background: #bdbdbd; cursor: not-allowed; }
+  .wa-btn svg { width: 20px; height: 20px; fill: currentColor; }
+
+  .info {
+    margin-top: 48px; text-align: center; color: var(--muted); font-size: .95rem;
+  }
+  .info a { color: var(--rose-dark); }
+  footer { text-align: center; color: var(--muted); font-size: .8rem; padding: 0 16px 24px; }
+
+  @media (max-width: 480px) {
+    h2 { font-size: 2.2rem; }
+    .wa-btn { padding: 12px 16px; }
+    .wa-btn span.long { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <img class="logo" src="images/logo.jpg" alt="Logo Nuha Precious Bloom">
+  <p class="tagline">Lampu bunga buatan tangan, penuh kasih</p>
+  <p class="intro">Setiap kuntum dibentuk satu-persatu daripada pipe cleaner lembut dan dihiasi lampu LED kecil yang hangat. Sesuai untuk hiasan bilik atau hadiah istimewa.</p>
+</header>
+
+<main>
+  <div class="divider">&#10047;</div>
+  <h2>Katalog Kami</h2>
+
+  <div class="grid" id="catalog"></div>
+
+  <div class="info">
+    <p>Pilih kuantiti, kemudian tekan butang <strong>Order via WhatsApp</strong>.<br>
+    Atau terus hubungi kami: <a href="https://wa.me/60134478918" target="_blank" rel="noopener">013-447 8918</a></p>
+  </div>
+</main>
+
+<div class="order">
+  <div class="order-inner">
+    <div>
+      <div class="total-label" id="itemCount">0 item</div>
+      <div class="total" id="total">RM0</div>
+    </div>
+    <button class="wa-btn" id="waBtn" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35M12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.32l-.34-.2-3.57.94.95-3.48-.22-.36a9.4 9.4 0 0 1-1.44-5.02c0-5.2 4.24-9.43 9.44-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.24 9.43-9.44 9.43m8.03-17.46A11.27 11.27 0 0 0 12.05.72C5.8.72.7 5.8.7 12.05c0 2 .52 3.95 1.52 5.67L.6 23.28l5.7-1.5a11.3 11.3 0 0 0 5.74 1.47h.01c6.25 0 11.34-5.08 11.35-11.33 0-3.03-1.18-5.88-3.32-8.02"/></svg>
+      <span>Order <span class="long">via WhatsApp</span></span>
+    </button>
+  </div>
+</div>
+
+<footer>&copy; Nuha Precious Bloom</footer>
+
+<script>
+  const WHATSAPP = "60134478918";
+  const products = [
+    {
+      id: "tangled",
+      name: "Tangled Flower Lamp",
+      desc: "Dua kuntum lili kuning keemasan berlampu, terinspirasi bunga ajaib Tangled.",
+      price: 35,
+      img: "images/tangled-flower-lamp.jpg"
+    },
+    {
+      id: "tiger",
+      name: "Tiger Lily",
+      desc: "Lili merah jambu lembut dengan tompok halus dan stamen merah, bercahaya hangat.",
+      price: 35,
+      img: "images/tiger-lily.jpg"
+    }
+  ];
+  const qty = Object.fromEntries(products.map(p => [p.id, 0]));
+  const rm = n => "RM" + n.toLocaleString("en-MY");
+
+  const catalog = document.getElementById("catalog");
+  catalog.innerHTML = products.map(p => `
+    <article class="card">
+      <img src="${p.img}" alt="${p.name}" loading="lazy">
+      <div class="card-body">
+        <h3>${p.name}</h3>
+        <p>${p.desc}</p>
+        <div class="price">${rm(p.price)} <span class="subtotal">/ unit</span></div>
+        <div class="row">
+          <div class="qty">
+            <button type="button" data-id="${p.id}" data-step="-1" aria-label="Kurang">&minus;</button>
+            <input type="number" min="0" max="99" value="0" id="q-${p.id}" data-id="${p.id}" aria-label="Kuantiti ${p.name}">
+            <button type="button" data-id="${p.id}" data-step="1" aria-label="Tambah">+</button>
+          </div>
+          <div class="subtotal" id="s-${p.id}">Subtotal: RM0</div>
+        </div>
+      </div>
+    </article>`).join("");
+
+  function setQty(id, value) {
+    const v = Math.max(0, Math.min(99, parseInt(value, 10) || 0));
+    qty[id] = v;
+    document.getElementById("q-" + id).value = v;
+    render();
+  }
+
+  function render() {
+    let total = 0, count = 0;
+    for (const p of products) {
+      const sub = qty[p.id] * p.price;
+      total += sub; count += qty[p.id];
+      document.getElementById("s-" + p.id).textContent = "Subtotal: " + rm(sub);
+    }
+    document.getElementById("total").textContent = rm(total);
+    document.getElementById("itemCount").textContent = count + " item";
+    document.getElementById("waBtn").disabled = count === 0;
+  }
+
+  catalog.addEventListener("click", e => {
+    const b = e.target.closest("button[data-step]");
+    if (b) setQty(b.dataset.id, qty[b.dataset.id] + Number(b.dataset.step));
+  });
+  catalog.addEventListener("change", e => {
+    if (e.target.matches("input[data-id]")) setQty(e.target.dataset.id, e.target.value);
+  });
+
+  document.getElementById("waBtn").addEventListener("click", () => {
+    const lines = ["Hai Nuha Precious Bloom! Saya nak order:", ""];
+    let total = 0;
+    for (const p of products) {
+      if (!qty[p.id]) continue;
+      const sub = qty[p.id] * p.price;
+      total += sub;
+      lines.push(`- ${p.name} x ${qty[p.id]} = ${rm(sub)}`);
+    }
+    lines.push("", `Jumlah: ${rm(total)}`, "", "Nama:", "Alamat:");
+    window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
+  });
+
+  render();
+</script>
+</body>
+</html>
