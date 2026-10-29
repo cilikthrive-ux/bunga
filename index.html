@@ -1,23 +1,26 @@
 <!doctype html>
-<html lang="ms">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nuha Precious Bloom</title>
-<meta name="description" content="Katalog lampu bunga pipe cleaner buatan tangan oleh Nuha Precious Bloom.">
+<title>Précious Nuha Bloom</title>
+<meta name="description" content="Where flowers bloom and magic glows. Handmade fuzzy wire flower lamps from Klang. Order via WhatsApp.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Great+Vibes&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #fdf6f1;
-    --card: #ffffff;
-    --rose: #b97a7f;
-    --rose-dark: #9a5e63;
+    --cream: #fff8ea;
+    --cream-deep: #fbefd6;
+    --pink: #fbe4e6;
+    --pink-deep: #f6d3d8;
+    --card: #fffdf8;
+    --rose: #c27c88;
+    --rose-dark: #a05c69;
     --sage: #7d846b;
-    --text: #4a3f3f;
-    --muted: #8a7d7b;
-    --line: #ecdcd6;
+    --text: #5a4446;
+    --muted: #8d7a7b;
+    --line: #f1dcd8;
     --wa: #25d366;
     --wa-dark: #1da851;
   }
@@ -25,101 +28,213 @@
   html { scroll-behavior: smooth; }
   body {
     margin: 0;
-    background: var(--bg);
+    background:
+      radial-gradient(circle at 10% 0%, var(--pink) 0, transparent 40%),
+      radial-gradient(circle at 95% 30%, var(--pink) 0, transparent 30%),
+      radial-gradient(circle at 0% 70%, var(--pink) 0, transparent 30%),
+      var(--cream);
     color: var(--text);
     font-family: "Nunito", system-ui, sans-serif;
     line-height: 1.6;
   }
   img { max-width: 100%; display: block; }
+  p { margin: 0 0 8px; }
 
+  /* little decorations */
+  .sparkle { text-align: center; color: var(--rose); letter-spacing: .12em; margin: 0; }
+  .divider { text-align: center; color: var(--rose); margin: 40px 0 0; font-size: .95rem; letter-spacing: .12em; }
+
+  /* hero */
   header {
     text-align: center;
-    padding: 32px 16px 8px;
+    padding: 24px 16px 8px;
+    max-width: 640px;
+    margin: 0 auto;
   }
   header img.logo {
-    width: 240px;
-    margin: 0 auto;
-    border-radius: 24px;
+    width: 180px;
+    margin: 10px auto 0;
+    border-radius: 50%;
+    box-shadow: 0 8px 24px rgba(194, 124, 136, .18);
+  }
+  h1 {
+    font-family: "Great Vibes", cursive;
+    font-weight: 400;
+    font-size: 3rem;
+    color: var(--rose-dark);
+    margin: 14px 0 0;
+    line-height: 1.1;
   }
   .tagline {
     font-family: "Cormorant Garamond", serif;
-    font-size: 1.35rem;
+    font-style: italic;
+    font-size: 1.3rem;
     color: var(--sage);
-    margin: 8px 0 0;
+    margin: 4px 0 0;
   }
-  .intro {
-    max-width: 560px;
-    margin: 12px auto 0;
-    color: var(--muted);
+  .kicker {
+    display: inline-block;
+    margin: 14px 0 0;
+    padding: 4px 14px;
+    border-radius: 999px;
+    background: var(--pink);
+    color: var(--rose-dark);
+    font-weight: 700;
+    font-size: .85rem;
   }
-  .divider {
-    display: flex; align-items: center; justify-content: center; gap: 12px;
-    color: var(--rose); margin: 32px auto 8px; max-width: 360px;
+  .story { color: var(--muted); margin-top: 14px; }
+  .story strong { color: var(--text); }
+  .lead { font-family: "Cormorant Garamond", serif; font-size: 1.35rem; color: var(--text); line-height: 1.35; }
+
+  .btn {
+    display: inline-block;
+    margin-top: 8px;
+    background: var(--rose);
+    color: #fff;
+    border-radius: 999px;
+    padding: 12px 26px;
+    font-weight: 700;
+    font-size: .9rem;
+    text-decoration: none;
+    box-shadow: 0 6px 16px rgba(194, 124, 136, .3);
   }
-  .divider::before, .divider::after {
-    content: ""; flex: 1; height: 1px; background: var(--line);
+  .btn:hover { background: var(--rose-dark); }
+  .meta { margin: 16px 0 0; color: var(--sage); font-size: .85rem; }
+
+  /* text blocks */
+  .block {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 0 16px;
+    text-align: center;
+    scroll-margin-top: 16px;
   }
-  h2 {
+  .block-title {
     font-family: "Great Vibes", cursive;
     font-weight: 400;
-    font-size: 2.6rem;
-    color: var(--rose);
-    text-align: center;
-    margin: 0;
+    font-size: 2.4rem;
+    color: var(--rose-dark);
+    margin: 16px 0 6px;
+    line-height: 1.2;
   }
+  .block-title::before, .block-title::after { content: "✧"; font-family: "Nunito", sans-serif; font-size: .9rem; color: var(--rose); margin: 0 10px; vertical-align: middle; }
 
-  main { max-width: 960px; margin: 0 auto; padding: 0 16px 140px; }
+  .bubble {
+    max-width: 620px;
+    margin: 40px auto 0;
+    padding: 28px 20px 24px;
+    background: linear-gradient(160deg, var(--pink) 0%, var(--cream-deep) 100%);
+    border-radius: 28px;
+    text-align: center;
+    position: relative;
+  }
+  .bubble .ribbon { font-size: 1.8rem; position: absolute; top: -20px; left: 50%; transform: translateX(-50%); }
+  .bubble-wrap { padding: 0 16px; }
+
+  .signoff { margin: 8px 0 0; color: var(--muted); }
+  .signoff span { font-family: "Great Vibes", cursive; font-size: 2rem; color: var(--rose); }
+
+  /* category chips */
+  nav.chips {
+    position: sticky; top: 0; z-index: 5;
+    background: rgba(255, 248, 234, .94);
+    backdrop-filter: blur(6px);
+    display: flex; gap: 8px; overflow-x: auto;
+    padding: 12px 16px;
+    margin-top: 20px;
+    border-bottom: 1px solid var(--line);
+    scrollbar-width: none;
+  }
+  nav.chips::-webkit-scrollbar { display: none; }
+  nav.chips a {
+    flex: none;
+    border: 1px solid var(--pink-deep);
+    background: var(--card);
+    color: var(--rose-dark);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: .85rem; font-weight: 600;
+    text-decoration: none; white-space: nowrap;
+  }
+  @media (min-width: 900px) { nav.chips { justify-content: center; } }
+
+  /* catalogue */
+  main { max-width: 1040px; margin: 0 auto; padding: 0 16px; scroll-margin-top: 56px; }
+  main section { scroll-margin-top: 64px; }
+  .section-head { text-align: center; margin: 32px 0 14px; }
+  .section-head h3 {
+    font-family: "Great Vibes", cursive;
+    font-weight: 400;
+    font-size: 2.2rem;
+    color: var(--rose);
+    margin: 0;
+    line-height: 1.2;
+  }
+  .section-head p { margin: 0; color: var(--muted); font-size: .9rem; }
+  .section-head .price-tag { color: var(--rose-dark); font-weight: 700; }
+
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    margin-top: 24px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
   }
   .card {
     background: var(--card);
     border: 1px solid var(--line);
-    border-radius: 20px;
+    border-radius: 18px;
     overflow: hidden;
-    box-shadow: 0 8px 24px rgba(185, 122, 127, .08);
+    box-shadow: 0 6px 18px rgba(194, 124, 136, .08);
     display: flex; flex-direction: column;
   }
-  .card img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 75%; }
-  .card-body { padding: 20px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
-  .card h3 {
-    font-family: "Cormorant Garamond", serif;
-    font-size: 1.6rem; margin: 0; color: var(--text);
+  .card .photo {
+    background: var(--pink);
+    cursor: zoom-in;
+    border: 0; padding: 0; width: 100%;
   }
-  .card p { margin: 0; color: var(--muted); font-size: .95rem; }
-  .price { font-weight: 700; color: var(--rose-dark); font-size: 1.25rem; }
-  .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; }
+  .card .photo img { width: 100%; height: auto; aspect-ratio: 9 / 16; object-fit: contain; }
+  .card-body { padding: 12px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .card h4 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.25rem; line-height: 1.2; margin: 0; color: var(--text);
+  }
+  .card p { margin: 0; color: var(--muted); font-size: .85rem; }
+  .badge {
+    align-self: flex-start;
+    font-size: .7rem; font-weight: 700;
+    color: var(--sage); background: #eef0e2;
+    border-radius: 999px; padding: 2px 8px;
+  }
+  .price { font-weight: 700; color: var(--rose-dark); font-size: 1.1rem; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 6px; flex-wrap: wrap; }
 
   .qty {
     display: inline-flex; align-items: center;
     border: 1px solid var(--line); border-radius: 999px; overflow: hidden;
   }
   .qty button {
-    width: 40px; height: 40px; border: 0; background: #f8ece7;
-    color: var(--rose-dark); font-size: 1.3rem; cursor: pointer;
+    width: 34px; height: 34px; border: 0; background: var(--pink);
+    color: var(--rose-dark); font-size: 1.15rem; cursor: pointer;
   }
-  .qty button:hover { background: #f1ddd5; }
+  .qty button:hover { background: var(--pink-deep); }
   .qty input {
-    width: 44px; height: 40px; border: 0; text-align: center;
+    width: 34px; height: 34px; border: 0; text-align: center;
     font: inherit; font-weight: 700; color: var(--text); background: #fff;
     -moz-appearance: textfield;
   }
   .qty input::-webkit-outer-spin-button,
   .qty input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-  .subtotal { font-size: .9rem; color: var(--muted); }
+  .subtotal { font-size: .8rem; color: var(--muted); }
 
+  /* order bar */
   .order {
-    position: fixed; left: 0; right: 0; bottom: 0;
-    background: rgba(255,255,255,.96);
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+    background: rgba(255, 253, 248, .96);
     backdrop-filter: blur(6px);
     border-top: 1px solid var(--line);
     padding: 12px 16px;
   }
   .order-inner {
-    max-width: 960px; margin: 0 auto;
+    max-width: 1040px; margin: 0 auto;
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
   }
   .total-label { font-size: .85rem; color: var(--muted); }
@@ -128,20 +243,34 @@
     display: inline-flex; align-items: center; gap: 8px;
     background: var(--wa); color: #fff; border: 0; border-radius: 999px;
     padding: 12px 22px; font: inherit; font-weight: 700; cursor: pointer;
-    text-decoration: none; white-space: nowrap;
+    white-space: nowrap;
   }
   .wa-btn:hover { background: var(--wa-dark); }
-  .wa-btn:disabled { background: #bdbdbd; cursor: not-allowed; }
+  .wa-btn:disabled { background: #c9bfbf; cursor: not-allowed; }
   .wa-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
-  .info {
-    margin-top: 48px; text-align: center; color: var(--muted); font-size: .95rem;
-  }
+  .info { margin-top: 40px; padding: 0 16px; text-align: center; color: var(--muted); font-size: .9rem; }
   .info a { color: var(--rose-dark); }
-  footer { text-align: center; color: var(--muted); font-size: .8rem; padding: 0 16px 24px; }
+  footer { text-align: center; color: var(--muted); font-size: .8rem; padding: 0 16px 110px; }
+
+  .lightbox {
+    position: fixed; inset: 0; z-index: 20;
+    background: rgba(60, 40, 42, .85);
+    display: none; align-items: center; justify-content: center;
+    padding: 16px; cursor: zoom-out;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-height: 90vh; max-width: 100%; border-radius: 14px; }
 
   @media (max-width: 480px) {
-    h2 { font-size: 2.2rem; }
+    h1 { font-size: 2.6rem; }
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .card-body { padding: 10px; }
+    .card h4 { font-size: 1.1rem; }
+    .card p { font-size: .8rem; }
+    .qty button, .qty input { width: 30px; height: 30px; }
+    .block-title { font-size: 2.1rem; }
+    .block-title::before, .block-title::after { margin: 0 6px; }
     .wa-btn { padding: 12px 16px; }
     .wa-btn span.long { display: none; }
   }
@@ -150,27 +279,83 @@
 <body>
 
 <header>
-  <img class="logo" src="images/logo.jpg" alt="Logo Nuha Precious Bloom">
-  <p class="tagline">Lampu bunga buatan tangan, penuh kasih</p>
-  <p class="intro">Setiap kuntum dibentuk satu-persatu daripada pipe cleaner lembut dan dihiasi lampu LED kecil yang hangat. Sesuai untuk hiasan bilik atau hadiah istimewa.</p>
+  <p class="sparkle">✦ ⋆ ˚｡ 🌷 ｡˚ ⋆ ✦</p>
+  <img class="logo" src="images/logo.jpg" alt="Précious Nuha Bloom logo">
+  <h1>Précious Nuha Bloom</h1>
+  <p class="tagline">Where flowers bloom and magic glows.</p>
+  <p class="kicker">A Little Bloom, A Lot of Love ♡</p>
+  <div class="story">
+    <p class="lead">Flowers are lovely, but flowers that glow? Even better! ✨</p>
+    <p>Welcome to our little flower world, where every bloom is handmade with love and a little sprinkle of magic.</p>
+    <p>From sweet daisies to romantic roses and whimsical lilies, our fuzzy wire flower lamps are made to bring a little happiness to your space and a whole lot of love to someone’s day.</p>
+    <p>Whether you’re looking for a gift for someone special or a little something to make your room feel extra magical, we have a bloom waiting for you. 🎀</p>
+  </div>
+  <a class="btn" href="#bloom">Explore Our Flowers ✿</a>
+  <p class="meta">Handmade in Klang 📍</p>
 </header>
 
-<main>
-  <div class="divider">&#10047;</div>
-  <h2>Katalog Kami</h2>
+<p class="divider">𐙚 ‧₊˚ ⋅ 🌷 ⋅ ˚₊‧ 𐙚</p>
 
-  <div class="grid" id="catalog"></div>
-
-  <div class="info">
-    <p>Pilih kuantiti, kemudian tekan butang <strong>Order via WhatsApp</strong>.<br>
-    Atau terus hubungi kami: <a href="https://wa.me/60134478918" target="_blank" rel="noopener">013-447 8918</a></p>
+<section class="block" id="bloom">
+  <h2 class="block-title">Find Your Little Bloom</h2>
+  <div class="story">
+    <p>A little romantic? We’ve got roses. 🌹</p>
+    <p>A little sunshine in your life? Say hello to our sunflowers. 🌻</p>
+    <p>Feeling whimsical? Our lilies might just steal your heart. 🌸</p>
+    <p><strong>Which one feels like you?</strong></p>
   </div>
-</main>
+</section>
+
+<nav class="chips" id="chips"></nav>
+
+<main id="catalog"></main>
+
+<p class="divider">✦ ⋆ ˚｡ ⋆ ✦</p>
+
+<section class="block">
+  <h2 class="block-title">A Little Flower, A Lot of Feelings</h2>
+  <div class="story">
+    <p>You know that feeling when someone gives you flowers just because?<br>Now imagine giving them flowers that glow, too. 🥹</p>
+    <p>Every Precious Nuha flower lamp is carefully handcrafted, petal by petal, making each piece a little special in its own way.</p>
+    <p>Made for birthdays, anniversaries, little surprises, or those random days when you just want to make someone smile.</p>
+    <p><strong>Because honestly, who wouldn’t love flowers that last?</strong></p>
+  </div>
+</section>
+
+<div class="bubble-wrap">
+  <section class="bubble">
+    <span class="ribbon" aria-hidden="true">🎀</span>
+    <h2 class="block-title">Made With Love, Just For You</h2>
+    <div class="story">
+      <p>Have a flower design in mind? Tell us what you’re dreaming of! Your favourite colours, a special flower, or a design you’ve been thinking about — we’d love to create something just for you.</p>
+      <p>Every little detail matters, and we can’t wait to bring your flower dreams to life.</p>
+    </div>
+    <a class="btn" href="https://wa.me/60134478918?text=Hi%20Precious%20Nuha!%20I%27d%20love%20a%20custom%20flower%20lamp%3A%20" target="_blank" rel="noopener">Let’s Create Your Bloom</a>
+  </section>
+</div>
+
+<p class="divider">˚₊‧ ✿ ‧₊˚</p>
+
+<section class="block">
+  <h2 class="block-title">A Little Reminder</h2>
+  <div class="story">
+    <p>You don’t always need a special occasion to give someone flowers.<br>Sometimes, a little surprise is more than enough.</p>
+    <p>And sometimes, the person who deserves flowers the most is you. 🌷</p>
+    <p>Thank you for being part of our little flower world.</p>
+  </div>
+  <p class="signoff">With love,<br><span>Precious Nuha 🤍</span></p>
+</section>
+
+<div class="info">
+  <p>Pick your blooms, choose the quantity, then tap <strong>Order via WhatsApp</strong> 🫶🏻<br>
+  Or just say hi: <a href="https://wa.me/60134478918" target="_blank" rel="noopener">013-447 8918</a></p>
+</div>
+<footer>&copy; Précious Nuha Bloom · @preciousnuha</footer>
 
 <div class="order">
   <div class="order-inner">
     <div>
-      <div class="total-label" id="itemCount">0 item</div>
+      <div class="total-label" id="itemCount">0 items</div>
       <div class="total" id="total">RM0</div>
     </div>
     <button class="wa-btn" id="waBtn" disabled>
@@ -180,47 +365,92 @@
   </div>
 </div>
 
-<footer>&copy; Nuha Precious Bloom</footer>
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Full photo"><img alt=""></div>
 
 <script>
   const WHATSAPP = "60134478918";
-  const products = [
+  const categories = [
     {
-      id: "tangled",
-      name: "Tangled Flower Lamp",
-      desc: "Dua kuntum lili kuning keemasan berlampu, terinspirasi bunga ajaib Tangled.",
+      id: "led35",
+      note: "LED",
       price: 35,
-      img: "images/tangled-flower-lamp.jpg"
+      items: [
+        { id: "tangled-yellow", name: "Tangled in Yellow", desc: "Rapunzel vibes, anyone? ✨ Golden lilies with the cutest swirls." },
+        { id: "tangled-lilac", name: "Tangled in Lilac", desc: "The same Tangled magic, in dreamy lilac & blue 💜" },
+        { id: "tiger-lily-pink", name: "Tiger Lily in Pink", desc: "Soft pink tiger lilies. Instant room upgrade 🌷" }
+      ]
     },
     {
-      id: "tiger",
-      name: "Tiger Lily",
-      desc: "Lili merah jambu lembut dengan tompok halus dan stamen merah, bercahaya hangat.",
-      price: 35,
-      img: "images/tiger-lily.jpg"
+      id: "usb45",
+      note: "USB + LED",
+      price: 45,
+      items: [
+        { id: "signature-plum-red-lily", name: "Signature Plum with Red Lily", desc: "A big glowing plum bloom with a red lily below. Main character energy 💋" },
+        { id: "signature-red-tiger-lily", name: "Signature Red with Tiger Lily", desc: "Deep red bloom + a sweet tiger lily. So classy on any desk ❤️" },
+        { id: "pink-daisy", name: "Pink Daisy", desc: "A shy little soft pink daisy 🥹 Cute & cozy for your study corner." },
+        { id: "white-daisy", name: "White Daisy", desc: "Clean, simple & softly glowing 🤍 For the minimalist hearts." },
+        { id: "white-tulip", name: "White Tulip", desc: "An elegant white tulip with tiny blooms below ✨" },
+        { id: "red-roses", name: "Red Roses", badge: "LED only", desc: "Classic red roses 🌹 The never-fail gift for your special someone." },
+        { id: "black-roses", name: "Black Roses", badge: "LED only", desc: "Dark, moody & a little mysterious 🖤" }
+      ]
+    },
+    {
+      id: "usb60",
+      note: "USB",
+      price: 60,
+      items: [
+        { id: "lily-valley-lotus", name: "Lily of the Valley with Lotus", desc: "Little bell lilies over a pink lotus 🪷 The calmest bedside glow." }
+      ]
+    },
+    {
+      id: "led75",
+      note: "LED · Big size",
+      price: 75,
+      items: [
+        { id: "giant-tiger-lily", name: "Giant Tiger Lily", desc: "Tiger lilies, but make it BIG 🌸 A total showstopper." },
+        { id: "wild-lily-garden", name: "Wild Lily Garden", desc: "A whole lily garden in one lamp 🥹 So many blooms, so much glow." }
+      ]
     }
   ];
+
+  for (const c of categories) for (const i of c.items) Object.assign(i, { price: c.price, note: c.note });
+  const products = categories.flatMap(c => c.items);
   const qty = Object.fromEntries(products.map(p => [p.id, 0]));
   const rm = n => "RM" + n.toLocaleString("en-MY");
 
-  const catalog = document.getElementById("catalog");
-  catalog.innerHTML = products.map(p => `
+  document.getElementById("chips").innerHTML = categories
+    .map(c => `<a href="#${c.id}">${c.note} · ${rm(c.price)}</a>`).join("");
+
+  const card = p => `
     <article class="card">
-      <img src="${p.img}" alt="${p.name}" loading="lazy">
+      <button class="photo" type="button" data-zoom="images/${p.id}.jpg" aria-label="View ${p.name}">
+        <img src="images/${p.id}.jpg" alt="${p.name}" loading="lazy" width="600" height="1066">
+      </button>
       <div class="card-body">
-        <h3>${p.name}</h3>
+        <h4>${p.name}</h4>
+        ${p.badge ? `<span class="badge">${p.badge}</span>` : ""}
         <p>${p.desc}</p>
-        <div class="price">${rm(p.price)} <span class="subtotal">/ unit</span></div>
+        <div class="price">${rm(p.price)}</div>
         <div class="row">
           <div class="qty">
-            <button type="button" data-id="${p.id}" data-step="-1" aria-label="Kurang">&minus;</button>
-            <input type="number" min="0" max="99" value="0" id="q-${p.id}" data-id="${p.id}" aria-label="Kuantiti ${p.name}">
-            <button type="button" data-id="${p.id}" data-step="1" aria-label="Tambah">+</button>
+            <button type="button" data-id="${p.id}" data-step="-1" aria-label="Less">&minus;</button>
+            <input type="number" inputmode="numeric" min="0" max="99" value="0" id="q-${p.id}" data-id="${p.id}" aria-label="Quantity for ${p.name}">
+            <button type="button" data-id="${p.id}" data-step="1" aria-label="More">+</button>
           </div>
-          <div class="subtotal" id="s-${p.id}">Subtotal: RM0</div>
+          <div class="subtotal" id="s-${p.id}"></div>
         </div>
       </div>
-    </article>`).join("");
+    </article>`;
+
+  const catalog = document.getElementById("catalog");
+  catalog.innerHTML = categories.map(c => `
+    <section id="${c.id}">
+      <div class="section-head">
+        <h3>Flower Lamp</h3>
+        <p>${c.note} · <span class="price-tag">${rm(c.price)}</span> each</p>
+      </div>
+      <div class="grid">${c.items.map(card).join("")}</div>
+    </section>`).join("");
 
   function setQty(id, value) {
     const v = Math.max(0, Math.min(99, parseInt(value, 10) || 0));
@@ -234,31 +464,39 @@
     for (const p of products) {
       const sub = qty[p.id] * p.price;
       total += sub; count += qty[p.id];
-      document.getElementById("s-" + p.id).textContent = "Subtotal: " + rm(sub);
+      document.getElementById("s-" + p.id).textContent = qty[p.id] ? "= " + rm(sub) : "";
     }
     document.getElementById("total").textContent = rm(total);
-    document.getElementById("itemCount").textContent = count + " item";
+    document.getElementById("itemCount").textContent = count + (count === 1 ? " item" : " items");
     document.getElementById("waBtn").disabled = count === 0;
   }
 
+  const lightbox = document.getElementById("lightbox");
   catalog.addEventListener("click", e => {
     const b = e.target.closest("button[data-step]");
-    if (b) setQty(b.dataset.id, qty[b.dataset.id] + Number(b.dataset.step));
+    if (b) return setQty(b.dataset.id, qty[b.dataset.id] + Number(b.dataset.step));
+    const z = e.target.closest("[data-zoom]");
+    if (z) {
+      lightbox.querySelector("img").src = z.dataset.zoom;
+      lightbox.classList.add("open");
+    }
   });
   catalog.addEventListener("change", e => {
     if (e.target.matches("input[data-id]")) setQty(e.target.dataset.id, e.target.value);
   });
+  lightbox.addEventListener("click", () => lightbox.classList.remove("open"));
+  document.addEventListener("keydown", e => { if (e.key === "Escape") lightbox.classList.remove("open"); });
 
   document.getElementById("waBtn").addEventListener("click", () => {
-    const lines = ["Hai Nuha Precious Bloom! Saya nak order:", ""];
+    const lines = ["Hi Precious Nuha! I'd love to order:", ""];
     let total = 0;
     for (const p of products) {
       if (!qty[p.id]) continue;
       const sub = qty[p.id] * p.price;
       total += sub;
-      lines.push(`- ${p.name} x ${qty[p.id]} = ${rm(sub)}`);
+      lines.push(`- ${p.name} (${p.badge || p.note}) x ${qty[p.id]} = ${rm(sub)}`);
     }
-    lines.push("", `Jumlah: ${rm(total)}`, "", "Nama:", "Alamat:");
+    lines.push("", `Total: ${rm(total)}`, "", "Name:", "Address:");
     window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
   });
 
