@@ -393,7 +393,7 @@
 
 <div class="info">
   <p>Pick your blooms, choose the quantity and your delivery area, then tap <strong>Order via WhatsApp</strong> 🫶🏻<br>
-  Postage: Semenanjung RM10 · Sabah / Sarawak RM45 📦<br>
+  Postage: Semenanjung RM<span data-fee="sm">10</span> · Sabah / Sarawak RM<span data-fee="ss">45</span> 📦<br>
   Or just say hi: <a href="https://wa.me/60134478918" target="_blank" rel="noopener">013-447 8918</a></p>
 </div>
 <footer>&copy; Précious Nuha Bloom · @preciousnuha</footer>
@@ -401,8 +401,8 @@
 <div class="order">
   <div class="ship" id="ship" role="radiogroup" aria-label="Delivery area" hidden>
     <span class="ship-label">Deliver to:</span>
-    <label><input type="radio" name="area" value="sm"><span class="pill">Semenanjung +RM10</span></label>
-    <label><input type="radio" name="area" value="ss"><span class="pill">Sabah/Sarawak +RM45</span></label>
+    <label><input type="radio" name="area" value="sm"><span class="pill">Semenanjung +RM<span data-fee="sm">10</span></span></label>
+    <label><input type="radio" name="area" value="ss"><span class="pill">Sabah/Sarawak +RM<span data-fee="ss">45</span></span></label>
   </div>
   <div class="order-inner">
     <div>
@@ -422,17 +422,60 @@
   const WHATSAPP = "60134478918";
   // Google Sheet shared as "Anyone with the link" (CSV export). Empty or unreachable = use products.csv.
   const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1-wnqefDebKtjV0jvCL7RW9KRSHVJ_56WMuBDDaMshDk/export?format=csv";
-  // Pre-order: every flower shows this receive-by date until the day passes. Empty = off.
-  const PREORDER_BY = "2026-12-20";
+  // Optional "settings" tab in the same Sheet: preorder_until, postage_semenanjung, postage_sabah_sarawak.
+  const SETTINGS_CSV_URL = "https://docs.google.com/spreadsheets/d/1-wnqefDebKtjV0jvCL7RW9KRSHVJ_56WMuBDDaMshDk/gviz/tq?tqx=out:csv&sheet=settings";
+  // Used only when the Sheet has no "settings" tab.
+  const DEFAULT_SETTINGS = { preorder_until: "2026-12-20" };
 
-  const preorderDate = PREORDER_BY && new Date(PREORDER_BY + "T23:59:59+08:00");
-  const preorder = preorderDate && Date.now() <= preorderDate
-    ? preorderDate.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kuala_Lumpur" })
-    : "";
-  if (preorder) {
+  const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+  const monthIndex = name => MONTHS.indexOf(name.slice(0, 3).toLowerCase()) + 1;
+
+  // Accepts 2026-12-20, 20/12/2026, 20 December 2026 or December 20, 2026. Returns [y, m, d] or null.
+  function parseDate(text) {
+    const s = (text || "").trim();
+    let m;
+    if ((m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/))) return [+m[1], +m[2], +m[3]];
+    if ((m = s.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/))) {
+      const [a, b] = [+m[1], +m[2]];
+      return b > 12 ? [+m[3], a, b] : [+m[3], b, a];
+    }
+    if ((m = s.match(/^(\d{1,2})\s+([a-z]+)\s*,?\s*(\d{4})$/i)) && monthIndex(m[2])) return [+m[3], monthIndex(m[2]), +m[1]];
+    if ((m = s.match(/^([a-z]+)\s+(\d{1,2})\s*,?\s*(\d{4})$/i)) && monthIndex(m[1])) return [+m[3], monthIndex(m[1]), +m[2]];
+    return null;
+  }
+
+  let preorder = "";
+
+  function applySettings(settings) {
+    const d = parseDate(settings.preorder_until);
+    // The pre-order stays up until the end of that day, Malaysia time.
+    const end = d && new Date(Date.UTC(d[0], d[1] - 1, d[2], 15, 59, 59));
+    preorder = end && !isNaN(end) && Date.now() <= end
+      ? end.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kuala_Lumpur" })
+      : "";
     const note = document.getElementById("preorder");
     note.innerHTML = `🌷 Pre-order now · Receive by ${preorder}<small>Every bloom is handmade just for you 🤍</small>`;
-    note.hidden = false;
+    note.hidden = !preorder;
+
+    for (const [key, column] of [["sm", "postage_semenanjung"], ["ss", "postage_sabah_sarawak"]]) {
+      const fee = parseFloat((settings[column] || "").replace(/[^\d.]/g, ""));
+      if (!isNaN(fee)) SHIPPING[key].fee = fee;
+      document.querySelectorAll(`[data-fee="${key}"]`).forEach(el => { el.textContent = SHIPPING[key].fee; });
+    }
+  }
+
+  async function loadSettings() {
+    try {
+      const res = await fetch(SETTINGS_CSV_URL, { cache: "no-store" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const text = await res.text();
+      // Without a "settings" tab, Google returns the first tab, which has no preorder_until column.
+      // A settings tab with blank values is kept as is, so clearing the date turns pre-order off.
+      if (/preorder_until/i.test(text.split("\n")[0])) return parseCSV(text)[0] || {};
+    } catch (e) {
+      console.warn("Could not load settings", e);
+    }
+    return DEFAULT_SETTINGS;
   }
 
   let products = [];
@@ -543,6 +586,7 @@
   }
 
   async function load() {
+    applySettings(await loadSettings());
     for (const url of [SHEET_CSV_URL, "products.csv"]) {
       if (!url) continue;
       try {
