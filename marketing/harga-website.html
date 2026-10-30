@@ -1,0 +1,87 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Great+Vibes&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    width: 1080px; height: 1350px; overflow: hidden;
+    font-family: "Nunito", sans-serif; color: #5a4446;
+    background:
+      radial-gradient(circle at 8% 4%, #fbe4e6 0, transparent 32%),
+      radial-gradient(circle at 96% 40%, #fbe4e6 0, transparent 26%),
+      radial-gradient(circle at 4% 86%, #fbe4e6 0, transparent 26%),
+      #fff8ea;
+    padding: 40px 56px; text-align: center;
+  }
+  .spark { color: #c27c88; letter-spacing: .2em; font-size: 24px; }
+  h1 { font-family: "Great Vibes", cursive; font-weight: 400; font-size: 86px; color: #a05c69; line-height: 1; margin-top: 16px; }
+  .sub { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 29px; color: #7d846b; margin-top: 0; }
+
+  table {
+    width: 100%; margin-top: 24px; border-collapse: separate; border-spacing: 0;
+    background: #fffdf8; border: 2px solid #f1dcd8; border-radius: 30px; overflow: hidden;
+    box-shadow: 0 10px 30px rgba(194,124,136,.12); font-size: 22px;
+  }
+  th, td { padding: 10px 18px; border-bottom: 1px solid #f4e6e2; }
+  tr:last-child td { border-bottom: 0; }
+  th { padding-top: 16px; padding-bottom: 12px; vertical-align: bottom; }
+  td:first-child, th:first-child { text-align: left; font-weight: 700; color: #5a4446; width: 40%; }
+  td:not(:first-child) { color: #6d5a5c; width: 30%; }
+  .pro { background: linear-gradient(180deg, #fbe4e6, #fdf1f0); }
+  th.pro { border-top-right-radius: 28px; position: relative; }
+  .pname { font-family: "Cormorant Garamond", serif; font-size: 38px; font-weight: 700; color: #5a4446; display: block; }
+  .pprice { font-size: 48px; font-weight: 800; color: #a05c69; line-height: 1.05; display: block; }
+  .pop { display: inline-block; background: #c27c88; color: #fff; font-size: 15px; font-weight: 800; padding: 4px 12px; border-radius: 999px; margin-bottom: 6px; letter-spacing: .04em; }
+  td.yes { color: #6f8762; font-weight: 800; font-size: 30px; }
+  td.no { color: #d2b9b6; font-weight: 800; font-size: 26px; }
+  td.strong { font-weight: 800; color: #a05c69; }
+  .dots { display: inline-flex; gap: 6px; vertical-align: middle; margin-left: 6px; }
+  .dots i { width: 18px; height: 18px; border-radius: 50%; display: inline-block; border: 2px solid #fff; box-shadow: 0 0 0 1px #e6d6d2; }
+
+  .care {
+    margin-top: 16px; display: flex; align-items: center; justify-content: center; gap: 14px;
+    background: #fffdf8; border: 2px dashed #e6c4c8; border-radius: 22px; padding: 14px 20px; font-size: 22px;
+  }
+  .care b { font-family: "Cormorant Garamond", serif; font-size: 30px; color: #5a4446; }
+  .care .p { font-weight: 800; color: #a05c69; font-size: 26px; }
+
+  .promo { margin: 18px auto 0; display: inline-block; background: #c27c88; color: #fff; border-radius: 999px; padding: 14px 34px; font-size: 28px; font-weight: 800; box-shadow: 0 10px 24px rgba(194,124,136,.35); }
+  .promo s { opacity: .8; font-weight: 700; }
+  .fine { margin-top: 14px; font-size: 19px; color: #8d7a7b; line-height: 1.5; }
+  .contact { margin-top: 10px; font-size: 28px; font-weight: 800; color: #5a4446; }
+  .contact span { color: #a05c69; }
+  .demo { font-size: 21px; color: #8d7a7b; margin-top: 4px; }
+</style></head>
+<body>
+  <p class="spark">✦ ⋆ ˚｡ 🌷 ｡˚ ⋆ ✦</p>
+  <h1>Website Kedai Sendiri</h1>
+  <p class="sub">Katalog cantik + order terus ke WhatsApp</p>
+
+  <table>
+    <tr>
+      <th></th>
+      <th><span class="pname">Basic 🌱</span><span class="pprice">RM149</span></th>
+      <th class="pro"><span class="pop">PALING POPULAR</span><span class="pname">Pro 🌷</span><span class="pprice">RM299</span></th>
+    </tr>
+    <tr><td>Katalog + order terus ke WhatsApp</td><td class="yes">✓</td><td class="pro yes">✓</td></tr>
+    <tr><td>Kos pos dikira automatik</td><td class="yes">✓</td><td class="pro yes">✓</td></tr>
+    <tr><td>Bilangan produk</td><td>Sampai 10</td><td class="pro strong">Sampai 50</td></tr>
+    <tr><td>Design</td>
+      <td>Pilih 1 dari 3 tema<span class="dots"><i style="background:#c27c88"></i><i style="background:#6f8762"></i><i style="background:#a07a4a"></i></span></td>
+      <td class="pro strong">Ikut warna, font &amp; logo jenama</td></tr>
+    <tr><td>Update harga &amp; stok</td><td>Melalui kami (RM20/update)</td><td class="pro strong">Sendiri guna Google Sheet</td></tr>
+    <tr><td>Pre-order, sold out, "siap dalam X hari"</td><td class="no">✕</td><td class="pro yes">✓</td></tr>
+    <tr><td>Ayat promosi &amp; cerita jenama</td><td class="no">✕</td><td class="pro yes">✓</td></tr>
+    <tr><td>Link website</td><td>Link percuma</td><td class="pro strong">Domain .com sendiri*</td></tr>
+    <tr><td>Pembetulan</td><td>1 kali</td><td class="pro strong">3 kali</td></tr>
+    <tr><td>Bantuan percuma</td><td>7 hari</td><td class="pro strong">30 hari</td></tr>
+  </table>
+
+  <div class="care"><b>Jagaan 🤍</b><span class="p">RM30/bulan</span><span>· update design, tambah ciri &amp; bantuan</span></div>
+
+  <p class="promo">🎀 Promo 5 orang pertama: Pro <s>RM299</s> RM249</p>
+  <p class="fine">*Pro termasuk domain .com tahun pertama. Renew tahun ke-2 ~RM45/tahun ditanggung pelanggan.</p>
+
+  <p class="contact">WhatsApp: <span>013-466 8038</span></p>
+  <p class="demo">Lihat contoh: preciousnuha.com · preciousnuha.com/template</p>
+</body></html>

@@ -9,9 +9,28 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <script src="config.js"></script>
 <script>
+  // Ready-made themes for the Basic package. "custom" (Pro) uses colors and fonts from config.js.
+  const THEMES = {
+    pink: {
+      colors: { background: "#fff8ea", soft: "#fbe4e6", accent: "#c27c88", accentDark: "#a05c69", text: "#5a4446", muted: "#8d7a7b" },
+      fonts: { script: "Great Vibes", serif: "Cormorant Garamond", body: "Nunito" }
+    },
+    sage: {
+      colors: { background: "#f6f8f1", soft: "#e2ead8", accent: "#6f8762", accentDark: "#4f6545", text: "#3d4738", muted: "#7a8573" },
+      fonts: { script: "Parisienne", serif: "Lora", body: "Nunito" }
+    },
+    cream: {
+      colors: { background: "#fbf7f0", soft: "#efe3d0", accent: "#a07a4a", accentDark: "#74552f", text: "#463b30", muted: "#8a7c6a" },
+      fonts: { script: "Allura", serif: "Playfair Display", body: "Nunito" }
+    }
+  };
+
   // Apply colours, fonts and page title before the page paints.
   (function () {
-    const S = window.SHOP, c = S.colors, f = S.fonts, root = document.documentElement.style;
+    const S = window.SHOP, root = document.documentElement.style;
+    // ?theme=sage in the address bar previews a theme without editing config.js.
+    const theme = THEMES[new URLSearchParams(location.search).get("theme") || S.theme] || { colors: S.colors, fonts: S.fonts };
+    const c = theme.colors, f = theme.fonts;
     root.setProperty("--bg", c.background);
     root.setProperty("--soft", c.soft);
     root.setProperty("--accent", c.accent);
@@ -191,7 +210,8 @@
     .block-title::before, .block-title::after { margin: 0 6px; }
     .wa-btn { padding: 12px 16px; }
     .wa-btn span.long, .ship-label { display: none; }
-    .ship span.pill { padding: 5px 10px; }
+    .ship { gap: 6px; }
+    .ship span.pill { padding: 5px 9px; font-size: .8rem; }
   }
 </style>
 </head>
@@ -234,7 +254,7 @@
       whatsappUs: "WhatsApp kami", greeting: "Hai! Saya nak order:", subtotal: "Subtotal", postage: "Pos", total: "Jumlah",
       pre: "Pre-order - terima sebelum", name: "Nama:", address: "Alamat:",
       howTo: "Pilih produk & kuantiti, pilih kawasan penghantaran, kemudian tekan <strong>Order via WhatsApp</strong> 🫶🏻",
-      postageList: "Pos:", sayHi: "Atau terus WhatsApp:", view: "Lihat", less: "Kurang", more: "Tambah", qty: "Kuantiti", area: "Kawasan penghantaran"
+      postageList: "Pos:", perItem: "setiap item", sayHi: "Atau terus WhatsApp:", view: "Lihat", less: "Kurang", more: "Tambah", qty: "Kuantiti", area: "Kawasan penghantaran"
     },
     en: {
       items: n => `${n} ${n === 1 ? "item" : "items"}`, plusPostage: "+ postage", deliverTo: "Deliver to:", order: "Order", via: "via WhatsApp",
@@ -244,7 +264,7 @@
       whatsappUs: "WhatsApp us", greeting: "Hi! I'd like to order:", subtotal: "Subtotal", postage: "Postage", total: "Total",
       pre: "Pre-order - receive by", name: "Name:", address: "Address:",
       howTo: "Pick your items, choose the quantity and your delivery area, then tap <strong>Order via WhatsApp</strong> 🫶🏻",
-      postageList: "Postage:", sayHi: "Or just say hi:", view: "View", less: "Less", more: "More", qty: "Quantity for", area: "Delivery area"
+      postageList: "Postage:", perItem: "per item", sayHi: "Or just say hi:", view: "View", less: "Less", more: "More", qty: "Quantity for", area: "Delivery area"
     }
   };
   const T = TEXT[SHOP.lang] || TEXT.ms;
@@ -301,13 +321,13 @@
   const ship = document.getElementById("ship");
   ship.setAttribute("aria-label", T.area);
   ship.innerHTML = `<span class="ship-label">${T.deliverTo}</span>` + SHIPPING.map(s =>
-    `<label><input type="radio" name="area" value="${esc(s.id)}"><span class="pill">${esc(s.name)} +RM<span data-fee="${esc(s.id)}">${s.fee}</span></span></label>`
+    `<label><input type="radio" name="area" value="${esc(s.id)}"><span class="pill">${esc(s.name)} +RM<span data-fee="${esc(s.id)}">${s.fee}</span>${SHOP.shippingPerItem ? "/pc" : ""}</span></label>`
   ).join("");
   const area = () => SHIPPING.find(s => s.id === (ship.querySelector("input:checked") || {}).value);
 
   function renderInfo() {
     document.getElementById("info").innerHTML = `<p>${T.howTo}<br>
-      ${T.postageList} ${SHIPPING.map(s => `${esc(s.name)} ${rm(s.fee)}`).join(" · ")} 📦<br>
+      ${T.postageList} ${SHIPPING.map(s => `${esc(s.name)} ${rm(s.fee)}`).join(" · ")}${SHOP.shippingPerItem ? " " + T.perItem : ""} 📦<br>
       ${T.sayHi} <a href="${waLink()}" target="_blank" rel="noopener">${phone}</a></p>`;
     for (const s of SHIPPING) document.querySelectorAll(`[data-fee="${s.id}"]`).forEach(el => { el.textContent = s.fee; });
   }
@@ -382,15 +402,25 @@
     renderInfo();
   }
 
+  // Give up on Google after a few seconds so a slow Sheet never leaves the page empty.
+  function fetchText(url, ms = 6000) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), ms);
+    return fetch(url, { cache: "no-store", signal: ctrl.signal })
+      .then(res => {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.text();
+      })
+      .finally(() => clearTimeout(timer));
+  }
+
   async function loadSettings() {
     const fallback = { preorder_until: SHOP.preorderUntil };
     if (!SETTINGS_URL) return fallback;
     try {
-      const res = await fetch(SETTINGS_URL, { cache: "no-store" });
-      if (!res.ok) throw new Error("HTTP " + res.status);
       // Google guesses which rows are headers and moves them into column labels, so rebuild
       // the whole grid (labels first, then rows) and look for each setting name anywhere in it.
-      const text = await res.text();
+      const text = await fetchText(SETTINGS_URL);
       const table = JSON.parse(text.slice(text.indexOf("(") + 1, text.lastIndexOf(")"))).table;
       const cell = c => (c == null ? "" : String(c.f ?? c.v ?? "")).trim();
       const rows = [table.cols.map(c => c.label || ""), ...table.rows.map(r => (r.c || []).map(cell))];
@@ -508,16 +538,16 @@
   }
 
   async function load() {
+    // Ask Google for the products and the settings at the same time.
+    const fromSheet = PRODUCTS_URL ? fetchText(PRODUCTS_URL) : Promise.reject(new Error("no Sheet link"));
+    fromSheet.catch(() => {});
     applySettings(await loadSettings());
-    for (const url of [PRODUCTS_URL, "products.csv"]) {
-      if (!url) continue;
+    for (const [source, get] of [["Google Sheet", () => fromSheet], ["products.csv", () => fetchText("products.csv")]]) {
       try {
-        const res = await fetch(url, { cache: "no-store" });
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        const list = toProducts(parseCSV(await res.text()));
+        const list = toProducts(parseCSV(await get()));
         if (list.length) return build(list);
       } catch (e) {
-        console.warn("Could not load products from", url, e);
+        console.warn("Could not load products from", source, e);
       }
     }
     catalog.innerHTML = `<p class="loading">${T.loadFail} <a href="${waLink()}" target="_blank" rel="noopener">${T.whatsappUs}</a>.</p>`;
@@ -532,6 +562,9 @@
     render();
   }
 
+  // Postage is once per order, or per item when shippingPerItem is on.
+  const postageFor = (a, count) => !a || !count ? 0 : SHOP.shippingPerItem ? a.fee * count : a.fee;
+
   function render() {
     let total = 0, count = 0;
     for (const p of products) {
@@ -540,10 +573,11 @@
       document.getElementById("s-" + p.id).textContent = qty[p.id] ? "= " + rm(sub) : "";
     }
     const a = area();
+    const postage = postageFor(a, count);
     ship.hidden = count === 0;
-    document.getElementById("total").textContent = rm(total + (count && a ? a.fee : 0));
+    document.getElementById("total").textContent = rm(total + postage);
     document.getElementById("itemCount").textContent =
-      count && a ? `${T.items(count)} ${T.plusPostage} ${rm(a.fee)}` : count ? `${T.items(count)} ${T.plusPostage}` : T.items(0);
+      count && a ? `${T.items(count)} ${T.plusPostage} ${rm(postage)}` : count ? `${T.items(count)} ${T.plusPostage}` : T.items(0);
     document.getElementById("waBtn").disabled = count === 0;
   }
   ship.addEventListener("change", render);
@@ -574,18 +608,18 @@
       return;
     }
     const lines = [T.greeting, ""];
-    let total = 0;
+    let total = 0, count = 0;
     for (const p of products) {
       if (!qty[p.id]) continue;
       const sub = qty[p.id] * p.price;
-      total += sub;
+      total += sub; count += qty[p.id];
       lines.push(`- ${p.name}${p.category ? ` (${p.category})` : ""} x ${qty[p.id]} = ${rm(sub)}`);
     }
     lines.push(
       "",
       `${T.subtotal}: ${rm(total)}`,
-      `${T.postage} (${a.name}): ${rm(a.fee)}`,
-      `${T.total}: ${rm(total + a.fee)}`,
+      `${T.postage} (${a.name}): ` + (SHOP.shippingPerItem ? `${rm(a.fee)} x ${count} = ${rm(postageFor(a, count))}` : rm(a.fee)),
+      `${T.total}: ${rm(total + postageFor(a, count))}`,
       ...(preorder ? ["", `${T.pre} ${preorder}`] : []),
       "", T.name, T.address
     );

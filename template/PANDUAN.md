@@ -6,7 +6,7 @@ Templat ini buat website katalog untuk peniaga kecil:
 - Pelanggan pilih kuantiti dan kawasan pos, kemudian **order terus ke WhatsApp**
 - Label pre-order, sold out, tempoh siap
 - Boleh tukar warna, font, logo, ayat dan bahasa (BM atau English)
-- Hosting percuma (GitHub Pages atau Netlify), cuma domain yang berbayar
+- Hosting percuma di **Netlify**, cuma domain yang berbayar
 
 ## Fail dalam folder ini
 
@@ -20,7 +20,7 @@ Templat ini buat website katalog untuk peniaga kecil:
 ## Langkah setup untuk pelanggan baru
 
 ### 1. Salin templat
-Salin seluruh folder `template` ke repo baru di GitHub (contoh `kedai-ani`).
+Salin seluruh folder `template` dan namakan ikut pelanggan (contoh `kedai-ani`). Kalau guna GitHub, letak dalam repo baru (boleh **private**).
 
 ### 2. Isi `config.js`
 Buka `config.js` dan tukar:
@@ -28,7 +28,7 @@ Buka `config.js` dan tukar:
 - `name`, `tagline`: nama kedai dan slogan
 - `logo`: letak logo dalam `images/` (contoh `images/logo.png`)
 - `whatsapp`: nombor dengan kod negara, tanpa `+` atau sengkang. `013-447 8918` jadi `60134478918`
-- `colors`: warna jenama pelanggan
+- `theme`: **Basic** pilih `"pink"`, `"sage"` atau `"cream"`. **Pro** guna `"custom"` dan isi `colors` & `fonts` ikut jenama pelanggan
 - `hero`, `before`, `after`: ayat-ayat di website
 - `shipping`: kawasan dan kos pos
 - `lang`: `"ms"` atau `"en"`
@@ -66,9 +66,30 @@ Untuk pelanggan ubah tarikh pre-order dan kos pos sendiri, tambah tab bernama `s
 - Nama `postage_...` mesti sama dengan `id` dalam `shipping` di `config.js`
 - Kosongkan tarikh untuk buang pre-order. Lepas tarikh tu, pre-order hilang sendiri
 
-### 5. Hidupkan website
-- **GitHub Pages:** repo, kemudian **Settings → Pages → Deploy from a branch → `main` / root**
-- **Domain sendiri:** dalam DNS, tambah 4 rekod A untuk `@` (`185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`) dan CNAME `www` ke `NAMA-AKAUN.github.io`. Kemudian isi **Custom domain** dalam Settings → Pages dan tandakan **Enforce HTTPS**
+### 5. Hidupkan website di Netlify (percuma)
+Netlify ialah **website** (app.netlify.com), bukan app telefon. Guna komputer, atau Safari dengan **Request Desktop Website**.
+
+**Cara A: Drag & drop** (paling senang, sesuai untuk Basic)
+1. Daftar atau log masuk di **app.netlify.com**
+2. **Add new project → Deploy manually**, kemudian seret folder kedai ke kotak upload
+3. **Project configuration → General → Change project name**, kemudian taip nama kedai. Link jadi `nama-kedai.netlify.app`
+4. Bila ada perubahan: buka project, pergi **Deploys**, dan seret folder yang dah dikemaskini
+
+**Cara B: Sambung GitHub** (website update sendiri setiap kali repo berubah)
+1. **Add new project → Import an existing project → GitHub**, kemudian pilih repo pelanggan
+2. **Build command:** kosong. **Publish directory:** kosong (atau nama folder kalau templat dalam subfolder). Tekan **Deploy**
+3. Tukar nama project macam Cara A langkah 3
+
+**Domain sendiri (pakej Pro)**
+1. Dalam Netlify: **Domain management → Add a domain**, kemudian masukkan domain pelanggan
+2. Dalam DNS di Spaceship (atau tempat domain dibeli), padam rekod parking lama dan tambah:
+
+   | Type | Host | Value |
+   |---|---|---|
+   | A | `@` | `75.2.60.5` |
+   | CNAME | `www` | `nama-kedai.netlify.app` |
+
+3. Tunggu sampai domain aktif. HTTPS (🔒) dipasang sendiri oleh Netlify, dan boleh ambil masa sampai 24–48 jam
 
 ### 6. Semak sebelum serah
 - [ ] Logo, nama dan warna betul
@@ -77,12 +98,29 @@ Untuk pelanggan ubah tarikh pre-order dan kos pos sendiri, tambah tab bernama `s
 - [ ] Kos pos betul
 - [ ] Buka di telefon, semua kemas
 
-## Cadangan harga jualan
+## Tunjuk tema kepada pelanggan
 
-| Pakej | Isi | Cadangan |
+Buka demo dengan `?theme=` di hujung link:
+
+- Pink Lembut: `preciousnuha.com/template/?theme=pink`
+- Hijau Sage: `preciousnuha.com/template/?theme=sage`
+- Krim Klasik: `preciousnuha.com/template/?theme=cream`
+
+## Pakej & harga
+
+| | Basic RM149 | Pro RM299 |
 |---|---|---|
-| Asas | Setup templat, sambung Sheet, link percuma | Caj sekali |
-| Lengkap | Asas + domain sendiri + gambar dan ayat | Caj sekali + kos domain |
-| Jagaan | Update design dan bantuan bulanan | Yuran bulanan |
+| Katalog + order WhatsApp, kos pos automatik | ✓ | ✓ |
+| Bilangan produk | Sampai 10 | Sampai 50 |
+| Design | 1 dari 3 tema (`theme`) | Warna, font & logo jenama (`theme: "custom"`) |
+| Update harga & stok | Melalui awak (RM20/update): edit `products.csv`, `sheetUrl` kosong | Sendiri guna Google Sheet (`sheetUrl`) |
+| Pre-order, sold out, siap dalam X hari | ✕ (biar lajur kosong, jangan buat tab `settings`) | ✓ |
+| Ayat promosi & cerita jenama (`hero`, `before`, `after`) | Ayat ringkas | ✓ ditulis khas |
+| Link | Percuma (`nama-kedai.netlify.app`) | Domain .com tahun pertama* |
+| Pembetulan | 1 kali | 3 kali |
+| Bantuan percuma | 7 hari | 30 hari |
 
-Kos domain (~RM40–90 setahun) biasanya dibayar oleh pelanggan sendiri.
+**Jagaan:** RM30/bulan (update design, tambah ciri, bantuan) atau RM20 setiap kali update.
+**Promo 5 pelanggan pertama:** Pro RM249, dengan syarat bagi testimoni.
+
+\*Renew domain tahun ke-2 ~RM45/tahun ditanggung pelanggan. Daftar domain dalam akaun pelanggan sendiri, beli .com sahaja, dan catat tarikh renew.
