@@ -204,6 +204,12 @@
     color: var(--sage); background: #eef0e2;
     border-radius: 999px; padding: 2px 8px;
   }
+  .ready { color: var(--sage) !important; font-weight: 600; font-size: .8rem !important; }
+  .badge.out { color: #fff; background: var(--muted); }
+  .card.sold-out .photo img { opacity: .55; filter: grayscale(.4); }
+  .qty button:disabled, .qty input:disabled { opacity: .45; cursor: not-allowed; }
+  .loading { text-align: center; color: var(--muted); padding: 40px 0; }
+  .loading a { color: var(--rose-dark); }
   .price { font-weight: 700; color: var(--rose-dark); font-size: 1.1rem; }
   .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 6px; flex-wrap: wrap; }
 
@@ -328,7 +334,7 @@
 
 <nav class="chips" id="chips"></nav>
 
-<main id="catalog"></main>
+<main id="catalog"><p class="loading">Loading our blooms… 🌷</p></main>
 
 <p class="divider">✦ ⋆ ˚｡ ⋆ ✦</p>
 
@@ -395,73 +401,80 @@
 
 <script>
   const WHATSAPP = "60134478918";
-  const categories = [
-    {
-      id: "led35",
-      note: "LED",
-      price: 35,
-      items: [
-        { id: "tangled-yellow", name: "Tangled in Yellow", desc: "Rapunzel vibes, anyone? ✨ Golden lilies with the cutest swirls." },
-        { id: "tangled-lilac", name: "Tangled in Lilac", desc: "The same Tangled magic, in dreamy lilac & blue 💜" },
-        { id: "tiger-lily-pink", name: "Tiger Lily in Pink", desc: "Soft pink tiger lilies. Instant room upgrade 🌷" }
-      ]
-    },
-    {
-      id: "usb45",
-      note: "USB + LED",
-      price: 45,
-      items: [
-        { id: "signature-plum-red-lily", name: "Signature Plum with Red Lily", desc: "A big glowing plum bloom with a red lily below. Main character energy 💋" },
-        { id: "signature-red-tiger-lily", name: "Signature Red with Tiger Lily", desc: "Deep red bloom + a sweet tiger lily. So classy on any desk ❤️" },
-        { id: "pink-daisy", name: "Pink Daisy", desc: "A shy little soft pink daisy 🥹 Cute & cozy for your study corner." },
-        { id: "white-daisy", name: "White Daisy", desc: "Clean, simple & softly glowing 🤍 For the minimalist hearts." },
-        { id: "white-tulip", name: "White Tulip", desc: "An elegant white tulip with tiny blooms below ✨" },
-        { id: "red-roses", name: "Red Roses", badge: "LED only", desc: "Classic red roses 🌹 The never-fail gift for your special someone." },
-        { id: "black-roses", name: "Black Roses", badge: "LED only", desc: "Dark, moody & a little mysterious 🖤" }
-      ]
-    },
-    {
-      id: "usb60",
-      note: "USB",
-      price: 60,
-      items: [
-        { id: "lily-valley-lotus", name: "Lily of the Valley with Lotus", desc: "Little bell lilies over a pink lotus 🪷 The calmest bedside glow." }
-      ]
-    },
-    {
-      id: "led75",
-      note: "LED · Big size",
-      price: 75,
-      items: [
-        { id: "giant-tiger-lily", name: "Giant Tiger Lily", desc: "Tiger lilies, but make it BIG 🌸 A total showstopper." },
-        { id: "wild-lily-garden", name: "Wild Lily Garden", desc: "A whole lily garden in one lamp 🥹 So many blooms, so much glow." }
-      ]
-    }
-  ];
+  // Google Sheet link from File → Share → Publish to web → CSV. Empty = use products.csv.
+  const SHEET_CSV_URL = "";
 
-  for (const c of categories) for (const i of c.items) Object.assign(i, { price: c.price, note: c.note });
-  const products = categories.flatMap(c => c.items);
-  const qty = Object.fromEntries(products.map(p => [p.id, 0]));
+  let products = [];
+  let qty = {};
   const rm = n => "RM" + n.toLocaleString("en-MY");
+  const esc = s => String(s || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-  document.getElementById("chips").innerHTML = categories
-    .map(c => `<a href="#${c.id}">${c.note} · ${rm(c.price)}</a>`).join("");
+  function parseCSV(text) {
+    const rows = [];
+    let row = [], cell = "", quoted = false;
+    for (let i = 0; i < text.length; i++) {
+      const ch = text[i];
+      if (quoted) {
+        if (ch !== '"') cell += ch;
+        else if (text[i + 1] === '"') { cell += '"'; i++; }
+        else quoted = false;
+      } else if (ch === '"') quoted = true;
+      else if (ch === ",") { row.push(cell); cell = ""; }
+      else if (ch === "\n") { row.push(cell); rows.push(row); row = []; cell = ""; }
+      else if (ch !== "\r") cell += ch;
+    }
+    if (cell || row.length) { row.push(cell); rows.push(row); }
+    const head = rows.shift().map(h => h.trim().toLowerCase());
+    return rows
+      .filter(r => r.some(c => c.trim()))
+      .map(r => Object.fromEntries(head.map((h, i) => [h, (r[i] || "").trim()])));
+  }
+
+  function imageUrl(id, link) {
+    if (!link) return `images/${id}.jpg`;
+    const drive = link.match(/drive\.google\.com\/.*(?:\/d\/|[?&]id=)([\w-]{20,})/);
+    return drive ? `https://drive.google.com/thumbnail?id=${drive[1]}&sz=w800` : link;
+  }
+
+  function toProducts(rows) {
+    const seen = new Set();
+    return rows
+      .filter(r => r.name && !/^(no|n|tak|tidak|false|0|hide)$/i.test(r.show || ""))
+      .map(r => {
+        let id = slug(r.id || r.name) || "item";
+        while (seen.has(id)) id += "-2";
+        seen.add(id);
+        return {
+          id,
+          name: r.name,
+          category: r.category || "Flower Lamp",
+          price: parseFloat((r.price || "").replace(/[^\d.]/g, "")) || 0,
+          readyIn: r.ready_in,
+          soldOut: /sold|habis|out/i.test(r.stock || ""),
+          badge: r.badge,
+          desc: r.description,
+          img: imageUrl(id, r.image)
+        };
+      });
+  }
 
   const card = p => `
-    <article class="card">
-      <button class="photo" type="button" data-zoom="images/${p.id}.jpg" aria-label="View ${p.name}">
-        <img src="images/${p.id}.jpg" alt="${p.name}" loading="lazy" width="600" height="1066">
+    <article class="card${p.soldOut ? " sold-out" : ""}">
+      <button class="photo" type="button" data-zoom="${esc(p.img)}" aria-label="View ${esc(p.name)}">
+        <img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy" width="600" height="1066" onerror="this.onerror=null;this.src='images/logo.jpg';this.parentNode.dataset.zoom='images/logo.jpg'">
       </button>
       <div class="card-body">
-        <h4>${p.name}</h4>
-        ${p.badge ? `<span class="badge">${p.badge}</span>` : ""}
-        <p>${p.desc}</p>
+        <h4>${esc(p.name)}</h4>
+        ${p.soldOut ? `<span class="badge out">Sold out</span>` : p.badge ? `<span class="badge">${esc(p.badge)}</span>` : ""}
+        <p>${esc(p.desc)}</p>
+        ${p.readyIn && !p.soldOut ? `<p class="ready">📦 Ready to ship in ${esc(p.readyIn)}</p>` : ""}
         <div class="price">${rm(p.price)}</div>
         <div class="row">
           <div class="qty">
-            <button type="button" data-id="${p.id}" data-step="-1" aria-label="Less">&minus;</button>
-            <input type="number" inputmode="numeric" min="0" max="99" value="0" id="q-${p.id}" data-id="${p.id}" aria-label="Quantity for ${p.name}">
-            <button type="button" data-id="${p.id}" data-step="1" aria-label="More">+</button>
+            <button type="button" data-id="${p.id}" data-step="-1" aria-label="Less"${p.soldOut ? " disabled" : ""}>&minus;</button>
+            <input type="number" inputmode="numeric" min="0" max="99" value="0" id="q-${p.id}" data-id="${p.id}" aria-label="Quantity for ${esc(p.name)}"${p.soldOut ? " disabled" : ""}>
+            <button type="button" data-id="${p.id}" data-step="1" aria-label="More"${p.soldOut ? " disabled" : ""}>+</button>
           </div>
           <div class="subtotal" id="s-${p.id}"></div>
         </div>
@@ -469,14 +482,47 @@
     </article>`;
 
   const catalog = document.getElementById("catalog");
-  catalog.innerHTML = categories.map(c => `
-    <section id="${c.id}">
-      <div class="section-head">
-        <h3>Flower Lamp</h3>
-        <p>${c.note} · <span class="price-tag">${rm(c.price)}</span> each</p>
-      </div>
-      <div class="grid">${c.items.map(card).join("")}</div>
-    </section>`).join("");
+
+  function build(list) {
+    products = list;
+    qty = Object.fromEntries(products.map(p => [p.id, 0]));
+    const cats = [];
+    for (const p of products) {
+      let c = cats.find(c => c.name === p.category);
+      if (!c) cats.push(c = { name: p.category, id: "cat-" + slug(p.category), items: [] });
+      c.items.push(p);
+    }
+    const priceText = c => {
+      const min = Math.min(...c.items.map(p => p.price));
+      return c.items.every(p => p.price === min) ? `${rm(min)} each` : `from ${rm(min)}`;
+    };
+    document.getElementById("chips").innerHTML = cats
+      .map(c => `<a href="#${c.id}">${esc(c.name)} · ${priceText(c).replace(" each", "")}</a>`).join("");
+    catalog.innerHTML = cats.map(c => `
+      <section id="${c.id}">
+        <div class="section-head">
+          <h3>Flower Lamp</h3>
+          <p>${esc(c.name)} · <span class="price-tag">${priceText(c)}</span></p>
+        </div>
+        <div class="grid">${c.items.map(card).join("")}</div>
+      </section>`).join("");
+    render();
+  }
+
+  async function load() {
+    for (const url of [SHEET_CSV_URL, "products.csv"]) {
+      if (!url) continue;
+      try {
+        const res = await fetch(url, { cache: "no-store" });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const list = toProducts(parseCSV(await res.text()));
+        if (list.length) return build(list);
+      } catch (e) {
+        console.warn("Could not load catalogue from", url, e);
+      }
+    }
+    catalog.innerHTML = `<p class="loading">Oops, our blooms didn't load 🥹 Please refresh, or <a href="https://wa.me/${WHATSAPP}" target="_blank" rel="noopener">WhatsApp us</a>.</p>`;
+  }
 
   function setQty(id, value) {
     const v = Math.max(0, Math.min(99, parseInt(value, 10) || 0));
@@ -539,7 +585,7 @@
       if (!qty[p.id]) continue;
       const sub = qty[p.id] * p.price;
       total += sub;
-      lines.push(`- ${p.name} (${p.badge || p.note}) x ${qty[p.id]} = ${rm(sub)}`);
+      lines.push(`- ${p.name} (${p.badge || p.category}) x ${qty[p.id]} = ${rm(sub)}`);
     }
     lines.push(
       "",
@@ -552,6 +598,7 @@
   });
 
   render();
+  load();
 </script>
 </body>
 </html>
