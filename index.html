@@ -358,7 +358,7 @@
   .addon span small { color: var(--muted); }
   .sheet .qty input { display: inline-block; width: 34px; margin: 0; padding: 0; border: 0; border-radius: 0; }
   .pickup-note { background: #eef3e6; color: #4f6545; border-radius: 12px; padding: 10px 12px; font-size: .85rem; font-weight: 600; margin-bottom: 12px; }
-  .pickup-note[hidden], #addressFields[hidden] { display: none; }
+  .pickup-note[hidden], #addressFields[hidden], .sheet label[hidden] { display: none; }
   .pickup-banner {
     display: block; max-width: 420px; margin: 10px auto 0; padding: 10px 16px;
     border-radius: 16px; background: #eef3e6; border: 1px solid #c9d6b8;
@@ -473,7 +473,7 @@
   <p>Pick your blooms, choose the quantity and your delivery area, then tap <strong>Order via WhatsApp</strong> 🫶🏻<br>
   Postage: Semenanjung RM<span data-fee="sm">10</span> · Sabah / Sarawak RM<span data-fee="ss">45</span> per lamp 📦<br>
   Self pickup at Taman Sentosa, Klang: box RM<span data-fee="pk">5</span> per lamp 🎁<br>
-  Add-ons: window paper bag RM<span data-addon="paper_bag">3</span> · wish card RM<span data-addon="wish_card">3</span> 💌<br>
+  Add-ons: window paper bag RM<span data-addon="paper_bag">3</span> · wish card RM<span data-addon="wish_card">2</span> 💌<br>
   Or just say hi: <a href="https://wa.me/60134478918" target="_blank" rel="noopener">013-447 8918</a></p>
 </div>
 <footer>&copy; Précious Nuha Bloom · @preciousnuha</footer>
@@ -506,6 +506,7 @@
     <p class="sub">Fill in your details and we'll confirm your order on WhatsApp 🌷</p>
     <div class="summary" id="summary"></div>
     <div class="addons" id="addons"></div>
+    <label id="wishField" hidden>Wish card message 💌<textarea name="wish" rows="2" required disabled></textarea></label>
     <p class="pickup-note" id="pickupNote" hidden>📍 Self pickup at Taman Sentosa, Klang. We'll WhatsApp you the exact spot &amp; time.</p>
     <label>Name<input name="name" autocomplete="name" required></label>
     <label>Phone number<input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="012-345 6789" required></label>
@@ -516,7 +517,6 @@
         <label>City / State<input name="city" autocomplete="address-level2" placeholder="Klang, Selangor" required></label>
       </div>
     </div>
-    <label>Wish card message / notes <small>(optional)</small><textarea name="notes" rows="2" placeholder="Happy birthday! Love, Aina…"></textarea></label>
     <button class="wa-btn" type="submit">
       <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg>
       <span>Send order via WhatsApp</span>
@@ -805,7 +805,7 @@
   // Extras picked in the order form; prices can be changed in the Sheet's settings tab.
   const ADDONS = [
     { id: "paper_bag", name: "Window paper bag", price: 3 },
-    { id: "wish_card", name: "Wish card", price: 3 }
+    { id: "wish_card", name: "Wish card", price: 2 }
   ];
   const addonQty = Object.fromEntries(ADDONS.map(a => [a.id, 0]));
 
@@ -839,6 +839,12 @@
             <button type="button" data-addon-step="1" data-addon-id="${x.id}" aria-label="More ${x.name}">+</button>
           </div>
         </div>`).join("");
+    // The card message box only appears once a wish card is added, so messages always come with a paid card.
+    const cards = addonQty.wish_card;
+    const wish = form.elements.wish;
+    document.getElementById("wishField").hidden = !cards;
+    wish.disabled = !cards;
+    wish.placeholder = cards > 1 ? "Card 1: Happy birthday Mama! / Card 2: …" : "Happy birthday! Love, Aina…";
   }
   document.getElementById("addons").addEventListener("click", e => {
     const b = e.target.closest("[data-addon-step]");
@@ -916,10 +922,10 @@
       `Name: ${f.name}`,
       `Phone: ${f.phone}`,
       c.a.pickup ? "Delivery: Self pickup (Taman Sentosa, Klang)" : `Address: ${f.address}, ${f.postcode} ${f.city}`,
-      ...(f.notes ? [`Wish card / notes: ${f.notes}`] : [])
+      ...(f.wish ? [`Wish card message: ${f.wish}`] : [])
     ];
     window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
-    form.elements.notes.value = "";
+    form.elements.wish.value = "";
     for (const id in addonQty) addonQty[id] = 0;
     closeCheckout();
   });
