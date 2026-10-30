@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catalogue · Précious Nuha Bloom</title>
+<meta name="description" content="Where flowers bloom and magic glows. Handmade fuzzy wire flower lamps from Klang. Order via WhatsApp.">
+<link rel="canonical" href="https://preciousnuha.com/catalogue">
+<!-- Link preview on WhatsApp, Instagram, Threads, Facebook and X -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Précious Nuha Bloom">
+<meta property="og:url" content="https://preciousnuha.com/catalogue">
+<meta property="og:title" content="Précious Nuha Bloom 🌷 Handmade flower lamps">
+<meta property="og:description" content="Where flowers bloom and magic glows ✨ Fuzzy wire flower lamps from RM35, handmade in Klang. Order via WhatsApp.">
+<meta property="og:image" content="https://preciousnuha.com/images/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Glowing tiger lily, tangled and daisy flower lamps by Précious Nuha Bloom">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="images/logo.jpg">
+<link rel="apple-touch-icon" href="images/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Pages">
+  <a href="index.html">Home</a>
+  <a href="catalogue.html" aria-current="page">Catalogue</a>
+  <a href="faq.html">FAQ</a>
+  <a href="testimoni/">Reviews</a>
+</nav>
+
+<header class="page-head">
+  <h1>Our Flowers</h1>
+  <p class="tagline">Handmade flower lamps that glow ✨</p>
+</header>
+
+<section class="block" id="bloom">
+  <div class="story">
+    <p>A little romantic? We’ve got roses. 🌹 A little sunshine? Say hello to our sunflowers. 🌻 Feeling whimsical? Our lilies might just steal your heart. 🌸</p>
+    <p><strong>Which one feels like you?</strong></p>
+  </div>
+</section>
+
+<div class="block">
+  <p class="preorder" id="preorder" hidden></p>
+  <p class="pickup-banner">📍 <strong>Self pickup at Taman Sentosa, Klang</strong><small>FREE pickup 🎉 Just choose a box (RM<span data-addon="box">5</span>) or window paper bag (RM<span data-addon="paper_bag">3</span>) for each lamp</small></p>
+</div>
+
+<nav class="chips" id="chips"></nav>
+
+<main id="catalog"><p class="loading">Loading our blooms… 🌷</p></main>
+
+
+<p class="more-links">Questions? Read our <a href="faq.html">FAQ</a> · See <a href="testimoni/">customer reviews</a> ⭐</p>
+
+<div class="info">
+  <p>Pick your blooms, choose the quantity and your delivery area, then tap <strong>Order via WhatsApp</strong> 🫶🏻<br>
+  Postage: Semenanjung RM<span data-fee="sm">10</span> · Sabah / Sarawak RM<span data-fee="ss">45</span> per lamp 📦<br>
+  Self pickup at Taman Sentosa, Klang: FREE · each lamp needs a box (RM<span data-addon="box">5</span>) or window paper bag (RM<span data-addon="paper_bag">3</span>) 🎁<br>
+  Add-ons: window paper bag RM<span data-addon="paper_bag">3</span> · wish card RM<span data-addon="wish_card">2</span> 💌<br>
+  Or just say hi: <a href="https://wa.me/60134478918" target="_blank" rel="noopener">013-447 8918</a></p>
+</div>
+<footer>&copy; Précious Nuha Bloom · @preciousnuha</footer>
+
+<div class="order">
+  <div class="ship" id="ship" role="radiogroup" aria-label="Delivery area" hidden>
+    <span class="ship-label">Delivery:</span>
+    <label><input type="radio" name="area" value="sm"><span class="pill">Semenanjung +RM<span data-fee="sm">10</span>/pc</span></label>
+    <label><input type="radio" name="area" value="ss"><span class="pill">Sabah/Sarawak +RM<span data-fee="ss">45</span>/pc</span></label>
+    <label><input type="radio" name="area" value="pk"><span class="pill pickup">📍 Pickup Klang · FREE</span></label>
+  </div>
+  <div class="order-inner">
+    <div>
+      <div class="total-label" id="itemCount">0 items</div>
+      <div class="total" id="total">RM0</div>
+    </div>
+    <button class="wa-btn" id="waBtn" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path id="wa-icon" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35M12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.32l-.34-.2-3.57.94.95-3.48-.22-.36a9.4 9.4 0 0 1-1.44-5.02c0-5.2 4.24-9.43 9.44-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.24 9.43-9.44 9.43m8.03-17.46A11.27 11.27 0 0 0 12.05.72C5.8.72.7 5.8.7 12.05c0 2 .52 3.95 1.52 5.67L.6 23.28l5.7-1.5a11.3 11.3 0 0 0 5.74 1.47h.01c6.25 0 11.34-5.08 11.35-11.33 0-3.03-1.18-5.88-3.32-8.02"/></svg>
+      <span>Order <span class="long">via WhatsApp</span></span>
+    </button>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Photo or video">
+  <button type="button" class="lightbox-close" aria-label="Close">×</button>
+  <img alt="">
+  <video playsinline muted loop controls preload="none" hidden></video>
+</div>
+
+<div class="sheet" id="checkout" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle" hidden>
+  <form id="checkoutForm" novalidate>
+    <button type="button" class="sheet-close" id="checkoutClose" aria-label="Close">×</button>
+    <h3 id="checkoutTitle">Almost there!</h3>
+    <p class="sub">Fill in your details and we'll confirm your order on WhatsApp 🌷</p>
+    <div class="summary" id="summary"></div>
+    <div class="addons" id="addons"></div>
+    <label id="wishField" hidden>Wish card message 💌<textarea name="wish" rows="2" required disabled></textarea></label>
+    <p class="pickup-note" id="pickupNote" hidden>📍 Self pickup at Taman Sentosa, Klang. We'll WhatsApp you the exact spot &amp; time.</p>
+    <label>Name<input name="name" autocomplete="name" required></label>
+    <label>Phone number<input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="012-345 6789" required></label>
+    <div id="addressFields">
+      <label>Delivery address<textarea name="address" rows="3" autocomplete="street-address" required></textarea></label>
+      <div class="row2">
+        <label>Postcode<input name="postcode" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="41200" required></label>
+        <label>City / State<input name="city" autocomplete="address-level2" placeholder="Klang, Selangor" required></label>
+      </div>
+    </div>
+    <div class="pay">
+      <p class="pay-title">💳 Pay with DuitNow QR</p>
+      <p class="pay-amount" id="payAmount">RM0</p>
+      <img id="payQr" src="images/duitnow-qr.jpg" alt="DuitNow QR for Nadia Atirah binti Isa">
+      <p class="to">Pay to: <strong id="payName">NADIA ATIRAH BINTI ISA</strong></p>
+      <a class="save" id="saveQr" href="images/duitnow-qr.jpg" download="PreciousNuha-DuitNow-QR.jpg">⬇️ Save QR</a>
+      <ol class="steps">
+        <li>Save the QR (or screenshot it), then open your bank or e-wallet app and scan it from your gallery</li>
+        <li>Key in the total amount above and pay</li>
+        <li>Tap the button below and send your receipt screenshot in WhatsApp</li>
+      </ol>
+    </div>
+    <button class="wa-btn" type="submit">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg>
+      <span>Send order via WhatsApp</span>
+    </button>
+  </form>
+</div>
+
+<script>
+  const WHATSAPP = "60134478918";
+  // Google Sheet shared as "Anyone with the link" (CSV export). Empty or unreachable = use products.csv.
+  const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1-wnqefDebKtjV0jvCL7RW9KRSHVJ_56WMuBDDaMshDk/export?format=csv";
+  // Optional "settings" tab in the same Sheet: preorder_until, postage_semenanjung, postage_sabah_sarawak.
+  const SHEET_TAB_URL = tab => `https://docs.google.com/spreadsheets/d/1-wnqefDebKtjV0jvCL7RW9KRSHVJ_56WMuBDDaMshDk/gviz/tq?tqx=out:json&sheet=${tab}`;
+  const SETTINGS_URL = SHEET_TAB_URL("settings");
+  // Used only when the Sheet has no "settings" tab.
+  const DEFAULT_SETTINGS = { preorder_until: "2026-12-20" };
+
+  const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+  const monthIndex = name => MONTHS.indexOf(name.slice(0, 3).toLowerCase()) + 1;
+
+  // Accepts 2026-12-20, 20/12/2026, 20 December 2026 or December 20, 2026. Returns [y, m, d] or null.
+  function parseDate(text) {
+    const s = (text || "").trim();
+    let m;
+    if ((m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/))) return [+m[1], +m[2], +m[3]];
+    if ((m = s.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/))) {
+      const [a, b] = [+m[1], +m[2]];
+      return b > 12 ? [+m[3], a, b] : [+m[3], b, a];
+    }
+    if ((m = s.match(/^(\d{1,2})\s+([a-z]+)\s*,?\s*(\d{4})$/i)) && monthIndex(m[2])) return [+m[3], monthIndex(m[2]), +m[1]];
+    if ((m = s.match(/^([a-z]+)\s+(\d{1,2})\s*,?\s*(\d{4})$/i)) && monthIndex(m[1])) return [+m[3], monthIndex(m[1]), +m[2]];
+    return null;
+  }
+
+  let preorder = "";
+
+  function applySettings(settings) {
+    const d = parseDate(settings.preorder_until);
+    // The pre-order stays up until the end of that day, Malaysia time.
+    const end = d && new Date(Date.UTC(d[0], d[1] - 1, d[2], 15, 59, 59));
+    preorder = end && !isNaN(end) && Date.now() <= end
+      ? end.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kuala_Lumpur" })
+      : "";
+    const note = document.getElementById("preorder");
+    note.innerHTML = `🌷 Pre-order now · Postage by ${preorder}<small>Every bloom is handmade just for you 🤍</small>`;
+    note.hidden = !preorder;
+
+    const money = v => parseFloat((v || "").replace(/[^\d.]/g, ""));
+    for (const [key, column] of [["sm", "postage_semenanjung"], ["ss", "postage_sabah_sarawak"]]) {
+      const fee = money(settings[column]);
+      if (!isNaN(fee)) SHIPPING[key].fee = fee;
+      document.querySelectorAll(`[data-fee="${key}"]`).forEach(el => { el.textContent = SHIPPING[key].fee; });
+    }
+    // A new DuitNow QR can be set from the Sheet (Google Drive link shared with anyone).
+    if (settings.payment_qr) {
+      const qr = imageUrl("payment-qr", settings.payment_qr);
+      document.getElementById("payQr").src = qr;
+      document.getElementById("saveQr").href = qr;
+    }
+    if (settings.payment_name) {
+      document.getElementById("payName").textContent = settings.payment_name;
+      document.getElementById("payQr").alt = "DuitNow QR for " + settings.payment_name;
+    }
+    for (const addon of ADDONS) {
+      const price = money(settings[addon.id === "box" ? "box_pickup" : "addon_" + addon.id]);
+      if (!isNaN(price)) addon.price = price;
+      document.querySelectorAll(`[data-addon="${addon.id}"]`).forEach(el => { el.textContent = addon.price; });
+    }
+  }
+
+  // Give up on Google after a few seconds so a slow Sheet never leaves the page empty.
+  function fetchText(url, ms = 6000) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), ms);
+    return fetch(url, { cache: "no-store", signal: ctrl.signal })
+      .then(res => {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.text();
+      })
+      .finally(() => clearTimeout(timer));
+  }
+
+  async function loadSettings() {
+    try {
+      // Google guesses which rows are headers and moves them into column labels, so rebuild
+      // the whole grid (labels first, then rows) and look for each setting name anywhere in it.
+      const text = await fetchText(SETTINGS_URL);
+      const table = JSON.parse(text.slice(text.indexOf("(") + 1, text.lastIndexOf(")"))).table;
+      const cell = c => (c == null ? "" : String(c.f ?? c.v ?? "")).trim();
+      const rows = [table.cols.map(c => c.label || ""), ...table.rows.map(r => (r.c || []).map(cell))];
+      // A setting's value is the cell right below its name. Merged header labels read like "A preorder_until".
+      const below = name => {
+        for (let r = 0; r < rows.length; r++) {
+          const c = rows[r].findIndex(v => v.toLowerCase().split(/\s+/).includes(name));
+          if (c >= 0) return ((rows[r + 1] || [])[c] || "").trim();
+        }
+        return null;
+      };
+      // Without a "settings" tab, Google returns the first tab, which has no preorder_until cell.
+      // A blank date is kept as is, so clearing it turns pre-order off.
+      const date = below("preorder_until");
+      if (date !== null) {
+        return {
+          preorder_until: date,
+          postage_semenanjung: below("postage_semenanjung") || "",
+          postage_sabah_sarawak: below("postage_sabah_sarawak") || "",
+          box_pickup: below("box_pickup") || "",
+          payment_qr: below("payment_qr") || "",
+          payment_name: below("payment_name") || "",
+          addon_paper_bag: below("addon_paper_bag") || "",
+          addon_wish_card: below("addon_wish_card") || ""
+        };
+      }
+    } catch (e) {
+      console.warn("Could not load settings", e);
+    }
+    return DEFAULT_SETTINGS;
+  }
+
+  let products = [];
+  let qty = {};
+  const rm = n => "RM" + n.toLocaleString("en-MY");
+  const esc = s => String(s || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+  function parseRows(text) {
+    const rows = [];
+    let row = [], cell = "", quoted = false;
+    for (let i = 0; i < text.length; i++) {
+      const ch = text[i];
+      if (quoted) {
+        if (ch !== '"') cell += ch;
+        else if (text[i + 1] === '"') { cell += '"'; i++; }
+        else quoted = false;
+      } else if (ch === '"') quoted = true;
+      else if (ch === ",") { row.push(cell); cell = ""; }
+      else if (ch === "\n") { row.push(cell); rows.push(row); row = []; cell = ""; }
+      else if (ch !== "\r") cell += ch;
+    }
+    if (cell || row.length) { row.push(cell); rows.push(row); }
+    return rows;
+  }
+
+  function parseCSV(text) {
+    const rows = parseRows(text);
+    const head = rows.shift().map(h => h.trim().toLowerCase());
+    return rows
+      .filter(r => r.some(c => c.trim()))
+      .map(r => Object.fromEntries(head.map((h, i) => [h, (r[i] || "").trim()])));
+  }
+
+  function imageUrl(id, link) {
+    if (!link) return `images/${id}.jpg`;
+    const drive = link.match(/drive\.google\.com\/.*(?:\/d\/|[?&]id=)([\w-]{20,})/);
+    return drive ? `https://drive.google.com/thumbnail?id=${drive[1]}&sz=w800` : link;
+  }
+
+  // Short clips of the lamps glowing, in videos/<id>.mp4. A "video" column in the Sheet can point a product at another .mp4.
+  const VIDEOS = new Set([
+    "tangled-yellow", "tangled-lilac", "tiger-lily-pink", "signature-plum-red-lily", "signature-red-tiger-lily",
+    "pink-daisy", "white-daisy", "white-tulip", "red-roses", "black-roses", "lily-valley-lotus",
+    "giant-tiger-lily", "wild-lily-garden"
+  ]);
+
+  function toProducts(rows) {
+    const seen = new Set();
+    return rows
+      .filter(r => r.name && !/^(no|n|tak|tidak|false|0|hide)$/i.test(r.show || ""))
+      .map(r => {
+        let id = slug(r.id || r.name) || "item";
+        while (seen.has(id)) id += "-2";
+        seen.add(id);
+        return {
+          id,
+          name: r.name,
+          category: r.category || "Flower Lamp",
+          price: parseFloat((r.price || "").replace(/[^\d.]/g, "")) || 0,
+          readyIn: /^[\d\s\-–~]+$/.test(r.ready_in || "") ? `${r.ready_in} days` : r.ready_in,
+          soldOut: /sold|habis|out/i.test(r.stock || ""),
+          badge: r.badge,
+          desc: r.description,
+          img: imageUrl(id, r.image),
+          video: r.video || (VIDEOS.has(id) ? `videos/${id}.mp4` : "")
+        };
+      });
+  }
+
+  const card = p => `
+    <article class="card${p.soldOut ? " sold-out" : ""}">
+      <button class="photo" type="button" data-zoom="${esc(p.img)}"${p.video ? ` data-video="${esc(p.video)}"` : ""} aria-label="${p.video ? "Play video of" : "View"} ${esc(p.name)}">
+        <img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy" width="600" height="1066" onerror="this.onerror=null;this.src='images/logo.jpg';this.parentNode.dataset.zoom='images/logo.jpg'">
+        ${p.video ? `<span class="play">▶ Video</span>` : ""}
+      </button>
+      <div class="card-body">
+        <h4>${esc(p.name)}</h4>
+        ${p.soldOut ? `<div class="badges"><span class="badge out">Sold out</span></div>`
+          : preorder || p.badge ? `<div class="badges">${preorder ? `<span class="badge pre">Pre-order</span>` : ""}${p.badge ? `<span class="badge">${esc(p.badge)}</span>` : ""}</div>` : ""}
+        <p>${esc(p.desc)}</p>
+        ${p.soldOut ? "" : p.readyIn ? `<p class="ready">📦 Ready to ship in ${esc(p.readyIn)}</p>`
+          : preorder ? `<p class="ready">📦 Postage by ${preorder}</p>` : ""}
+        <div class="price">${rm(p.price)}</div>
+        <div class="row">
+          <div class="qty">
+            <button type="button" data-id="${p.id}" data-step="-1" aria-label="Less"${p.soldOut ? " disabled" : ""}>&minus;</button>
+            <input type="number" inputmode="numeric" min="0" max="99" value="0" id="q-${p.id}" data-id="${p.id}" aria-label="Quantity for ${esc(p.name)}"${p.soldOut ? " disabled" : ""}>
+            <button type="button" data-id="${p.id}" data-step="1" aria-label="More"${p.soldOut ? " disabled" : ""}>+</button>
+          </div>
+          <div class="subtotal" id="s-${p.id}"></div>
+        </div>
+      </div>
+    </article>`;
+
+  const catalog = document.getElementById("catalog");
+
+  function build(list) {
+    products = list;
+    qty = Object.fromEntries(products.map(p => [p.id, 0]));
+    const cats = [];
+    for (const p of products) {
+      let c = cats.find(c => c.name === p.category);
+      if (!c) cats.push(c = { name: p.category, id: "cat-" + slug(p.category), items: [] });
+      c.items.push(p);
+    }
+    const priceText = c => {
+      const min = Math.min(...c.items.map(p => p.price));
+      return c.items.every(p => p.price === min) ? `${rm(min)} each` : `from ${rm(min)}`;
+    };
+    document.getElementById("chips").innerHTML = cats
+      .map(c => `<a href="#${c.id}">${esc(c.name)} · ${priceText(c).replace(" each", "")}</a>`).join("");
+    catalog.innerHTML = cats.map(c => `
+      <section id="${c.id}">
+        <div class="section-head">
+          <h3>Flower Lamp</h3>
+          <p>${esc(c.name)} · <span class="price-tag">${priceText(c)}</span></p>
+        </div>
+        <div class="grid">${c.items.map(card).join("")}</div>
+      </section>`).join("");
+    render();
+    // Links like catalogue.html#cat-led jump to that group once it exists.
+    if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
+  }
+
+  async function load() {
+    // Ask Google for the products and the settings at the same time.
+    const fromSheet = SHEET_CSV_URL ? fetchText(SHEET_CSV_URL) : Promise.reject(new Error("no Sheet link"));
+    fromSheet.catch(() => {});
+    applySettings(await loadSettings());
+    for (const [source, get] of [["Google Sheet", () => fromSheet], ["products.csv", () => fetchText("products.csv")]]) {
+      try {
+        const list = toProducts(parseCSV(await get()));
+        if (list.length) return build(list);
+      } catch (e) {
+        console.warn("Could not load catalogue from", source, e);
+      }
+    }
+    catalog.innerHTML = `<p class="loading">Oops, our blooms didn't load 🥹 Please refresh, or <a href="https://wa.me/${WHATSAPP}" target="_blank" rel="noopener">WhatsApp us</a>.</p>`;
+  }
+
+  function setQty(id, value) {
+    const v = Math.max(0, Math.min(99, parseInt(value, 10) || 0));
+    qty[id] = v;
+    document.getElementById("q-" + id).value = v;
+    render();
+  }
+
+  // Postage is charged for every lamp. Self pickup is free, but each lamp needs a box or paper bag (see ADDONS).
+  const SHIPPING = {
+    sm: { name: "Semenanjung", fee: 10 },
+    ss: { name: "Sabah / Sarawak", fee: 45 },
+    pk: { name: "Self pickup", fee: 0, pickup: true }
+  };
+  const ship = document.getElementById("ship");
+  const area = () => SHIPPING[(ship.querySelector("input:checked") || {}).value];
+
+  function render() {
+    let total = 0, count = 0;
+    for (const p of products) {
+      const sub = qty[p.id] * p.price;
+      total += sub; count += qty[p.id];
+      document.getElementById("s-" + p.id).textContent = qty[p.id] ? "= " + rm(sub) : "";
+    }
+    const a = area();
+    const items = count + (count === 1 ? " item" : " items");
+    const postage = a ? a.fee * count : 0;
+    ship.hidden = count === 0;
+    document.getElementById("total").textContent = rm(total + postage);
+    document.getElementById("itemCount").textContent =
+      count && a ? (a.pickup ? `${items} · free pickup` : `${items} + postage ${rm(postage)}`) : count ? `${items} + postage` : items;
+    document.getElementById("waBtn").disabled = count === 0;
+  }
+  ship.addEventListener("change", render);
+
+  const lightbox = document.getElementById("lightbox");
+  catalog.addEventListener("click", e => {
+    const b = e.target.closest("button[data-step]");
+    if (b) return setQty(b.dataset.id, qty[b.dataset.id] + Number(b.dataset.step));
+    const z = e.target.closest("[data-zoom]");
+    if (z) openLightbox(z.dataset.zoom, z.dataset.video);
+  });
+  catalog.addEventListener("change", e => {
+    if (e.target.matches("input[data-id]")) setQty(e.target.dataset.id, e.target.value);
+  });
+  const lbImg = lightbox.querySelector("img");
+  const lbVideo = lightbox.querySelector("video");
+
+  function openLightbox(img, video) {
+    lbImg.hidden = !!video;
+    lbVideo.hidden = !video;
+    if (video) {
+      lbVideo.poster = img;
+      lbVideo.src = video;
+      lbVideo.play().catch(() => {});
+    } else {
+      lbImg.src = img;
+    }
+    lightbox.classList.add("open");
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("open");
+    lbVideo.pause();
+    lbVideo.removeAttribute("src");
+    lbVideo.load();
+  }
+
+  // Taps on the video work its controls; anywhere else closes.
+  lightbox.addEventListener("click", e => { if (e.target !== lbVideo) closeLightbox(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && lightbox.classList.contains("open")) closeLightbox(); });
+
+  // Extras picked in the order form; prices can be changed in the Sheet's settings tab.
+  // "packaging" items count towards the box-or-bag each pickup lamp needs; the box is offered for pickup only.
+  const ADDONS = [
+    { id: "box", name: "Box", price: 5, packaging: true, pickupOnly: true },
+    { id: "paper_bag", name: "Window paper bag", price: 3, packaging: true },
+    { id: "wish_card", name: "Wish card", price: 2 }
+  ];
+  const addonQty = Object.fromEntries(ADDONS.map(a => [a.id, 0]));
+  const shownAddons = () => ADDONS.filter(x => !x.pickupOnly || area().pickup);
+  const packed = () => ADDONS.filter(x => x.packaging).reduce((t, x) => t + addonQty[x.id], 0);
+
+  // The cart as it stands: chosen lamps, postage or pickup boxes, add-ons and totals.
+  function cart() {
+    const a = area();
+    const items = products.filter(p => qty[p.id]).map(p => ({ p, n: qty[p.id], sub: qty[p.id] * p.price }));
+    const count = items.reduce((t, i) => t + i.n, 0);
+    const subtotal = items.reduce((t, i) => t + i.sub, 0);
+    const postage = a.fee * count;
+    const extras = shownAddons().filter(x => addonQty[x.id]).map(x => ({ x, n: addonQty[x.id], sub: addonQty[x.id] * x.price }));
+    const extrasTotal = extras.reduce((t, e) => t + e.sub, 0);
+    return { a, items, count, subtotal, postage, extras, total: subtotal + postage + extrasTotal };
+  }
+
+  function renderSummary() {
+    const c = cart();
+    document.getElementById("summary").innerHTML =
+      c.items.map(i => `<div><span>${esc(i.p.name)} × ${i.n}</span><span>${rm(i.sub)}</span></div>`).join("") +
+      (c.a.pickup
+        ? `<div><span>Self pickup</span><span>FREE</span></div>`
+        : `<div><span>Postage (${c.a.name}) × ${c.count}</span><span>${rm(c.postage)}</span></div>`) +
+      c.extras.map(e => `<div><span>${e.x.name} × ${e.n}</span><span>${rm(e.sub)}</span></div>`).join("") +
+      `<div class="grand"><span>Total</span><span>${rm(c.total)}</span></div>`;
+    document.getElementById("payAmount").textContent = rm(c.total);
+    const need = c.a.pickup
+      ? `<p class="addon-need${packed() >= c.count ? " ok" : ""}" id="addonNeed">Pickup: choose a box or window paper bag for each lamp (${Math.min(packed(), c.count)}/${c.count})</p>`
+      : "";
+    document.getElementById("addons").innerHTML =
+      `<p class="addons-title">${c.a.pickup ? "Packaging & add-ons 🎀" : `Add-ons 🎀 <small>(optional)</small>`}</p>` + need +
+      shownAddons().map(x => `
+        <div class="addon">
+          <span>${x.name} <small>${rm(x.price)}</small></span>
+          <div class="qty">
+            <button type="button" data-addon-step="-1" data-addon-id="${x.id}" aria-label="Less ${x.name}">&minus;</button>
+            <input type="number" value="${addonQty[x.id]}" readonly tabindex="-1" aria-label="${x.name} quantity">
+            <button type="button" data-addon-step="1" data-addon-id="${x.id}" aria-label="More ${x.name}">+</button>
+          </div>
+        </div>`).join("");
+    // The card message box only appears once a wish card is added, so messages always come with a paid card.
+    const cards = addonQty.wish_card;
+    const wish = form.elements.wish;
+    document.getElementById("wishField").hidden = !cards;
+    wish.disabled = !cards;
+    wish.placeholder = cards > 1 ? "Card 1: Happy birthday Mama! / Card 2: …" : "Happy birthday! Love, Aina…";
+  }
+  document.getElementById("addons").addEventListener("click", e => {
+    const b = e.target.closest("[data-addon-step]");
+    if (!b) return;
+    const id = b.dataset.addonId;
+    addonQty[id] = Math.max(0, Math.min(99, addonQty[id] + Number(b.dataset.addonStep)));
+    renderSummary();
+    document.querySelector(`[data-addon-id="${id}"][data-addon-step="${b.dataset.addonStep}"]`).focus();
+  });
+
+  const checkout = document.getElementById("checkout");
+  const form = document.getElementById("checkoutForm");
+  const SAVED = "pn-customer";
+
+  function openCheckout() {
+    renderSummary();
+    // Pickup needs no address, so those fields are hidden and skipped.
+    const pickup = !!area().pickup;
+    if (!pickup) addonQty.box = 0;
+    renderSummary();
+    document.getElementById("pickupNote").hidden = !pickup;
+    document.getElementById("addressFields").hidden = pickup;
+    for (const name of ["address", "postcode", "city"]) form.elements[name].disabled = pickup;
+    // Returning customers get their details filled in again.
+    try {
+      const saved = JSON.parse(localStorage.getItem(SAVED) || "{}");
+      for (const [k, v] of Object.entries(saved)) if (form.elements[k] && !form.elements[k].value) form.elements[k].value = v;
+    } catch (e) { /* storage unavailable */ }
+    checkout.hidden = false;
+    document.body.style.overflow = "hidden";
+    const first = [...form.querySelectorAll("[required]")].find(el => !el.value.trim()) || form.elements.name;
+    first.focus();
+  }
+
+  function closeCheckout() {
+    checkout.hidden = true;
+    document.body.style.overflow = "";
+  }
+
+  document.getElementById("waBtn").addEventListener("click", () => {
+    if (!area()) {
+      ship.classList.remove("nudge");
+      void ship.offsetWidth;
+      ship.classList.add("nudge");
+      return;
+    }
+    openCheckout();
+  });
+  document.getElementById("checkoutClose").addEventListener("click", closeCheckout);
+  checkout.addEventListener("click", e => { if (e.target === checkout) closeCheckout(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !checkout.hidden) closeCheckout(); });
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const f = Object.fromEntries([...new FormData(form)].map(([k, v]) => [k, String(v).trim()]));
+    // Light checks only: a real-looking phone number and a 5-digit postcode.
+    form.elements.phone.setCustomValidity(f.phone.replace(/\D/g, "").length >= 9 ? "" : "Please enter a valid phone number");
+    if (f.postcode !== undefined) form.elements.postcode.setCustomValidity(/^\d{5}$/.test(f.postcode) ? "" : "Postcode should be 5 digits");
+    // Every pickup lamp leaves in a box or a window paper bag.
+    const c0 = cart();
+    if (c0.a.pickup && packed() < c0.count) {
+      const needEl = document.getElementById("addonNeed");
+      needEl.classList.add("warn");
+      needEl.scrollIntoView({ block: "center", behavior: "smooth" });
+      return;
+    }
+    if (!form.reportValidity()) return;
+    try {
+      const keep = JSON.parse(localStorage.getItem(SAVED) || "{}");
+      for (const k of ["name", "phone", "address", "postcode", "city"]) if (f[k] !== undefined) keep[k] = f[k];
+      localStorage.setItem(SAVED, JSON.stringify(keep));
+    } catch (e) { /* storage unavailable */ }
+
+    const c = cart();
+    const lines = [
+      "Hi Precious Nuha! I'd love to order:", "",
+      ...c.items.map(i => `- ${i.p.name} (${i.p.badge || i.p.category}) x ${i.n} = ${rm(i.sub)}`),
+      "",
+      `Subtotal: ${rm(c.subtotal)}`,
+      c.a.pickup ? "Self pickup: FREE" : `Postage (${c.a.name}): ${rm(c.a.fee)} x ${c.count} = ${rm(c.postage)}`,
+      ...c.extras.map(e => `${e.x.name} x ${e.n} = ${rm(e.sub)}`),
+      `Total: ${rm(c.total)}`,
+      ...(preorder ? ["", `Pre-order - postage by ${preorder}`] : []),
+      "",
+      `Name: ${f.name}`,
+      `Phone: ${f.phone}`,
+      c.a.pickup ? "Delivery: Self pickup (Taman Sentosa, Klang)" : `Address: ${f.address}, ${f.postcode} ${f.city}`,
+      ...(f.wish ? [`Wish card message: ${f.wish}`] : []),
+      "",
+      `Payment: DuitNow QR ${rm(c.total)} (receipt to follow)`
+    ];
+    window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
+    form.elements.wish.value = "";
+    for (const id in addonQty) addonQty[id] = 0;
+    closeCheckout();
+  });
+  form.addEventListener("input", e => e.target.setCustomValidity(""));
+
+  render();
+  load();
+</script>
+</body>
+</html>
