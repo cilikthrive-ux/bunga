@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kedai</title>
+<meta name="description" content="">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="config.js"></script>
+<script>
+  // Apply colours, fonts and page title before the page paints.
+  (function () {
+    const S = window.SHOP, c = S.colors, f = S.fonts, root = document.documentElement.style;
+    root.setProperty("--bg", c.background);
+    root.setProperty("--soft", c.soft);
+    root.setProperty("--accent", c.accent);
+    root.setProperty("--accent-dark", c.accentDark);
+    root.setProperty("--text", c.text);
+    root.setProperty("--muted", c.muted);
+    root.setProperty("--script", `"${f.script}", cursive`);
+    root.setProperty("--serif", `"${f.serif}", Georgia, serif`);
+    root.setProperty("--body", `"${f.body}", system-ui, sans-serif`);
+    root.setProperty("--ratio", S.photoRatio);
+    const fam = [f.script, f.serif, f.body].map(n => "family=" + n.replace(/ /g, "+") + ":wght@400;600;700").join("&");
+    document.write(`<link rel="stylesheet" href="https://fonts.googleapis.com/css2?${fam}&display=swap">`);
+    document.title = S.name;
+    document.documentElement.lang = S.lang;
+  })();
+</script>
+<style>
+  :root {
+    --card: #fffdf8;
+    --line: color-mix(in srgb, var(--soft) 70%, var(--muted) 15%);
+    --wa: #25d366;
+    --wa-dark: #1da851;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(circle at 10% 0%, var(--soft) 0, transparent 40%),
+      radial-gradient(circle at 95% 30%, var(--soft) 0, transparent 30%),
+      radial-gradient(circle at 0% 70%, var(--soft) 0, transparent 30%),
+      var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    line-height: 1.6;
+  }
+  img { max-width: 100%; display: block; }
+  p { margin: 0 0 8px; }
+  .sparkle, .divider { text-align: center; color: var(--accent); letter-spacing: .12em; margin: 0; }
+  .divider { margin: 40px 0 0; font-size: .95rem; }
+
+  header { text-align: center; padding: 24px 16px 8px; max-width: 640px; margin: 0 auto; }
+  header img.logo {
+    width: 160px; aspect-ratio: 1; object-fit: cover;
+    margin: 10px auto 0; border-radius: 50%;
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 20%, transparent);
+  }
+  h1 { font-family: var(--script); font-weight: 400; font-size: 3rem; color: var(--accent-dark); margin: 14px 0 0; line-height: 1.1; }
+  .tagline { font-family: var(--serif); font-style: italic; font-size: 1.3rem; color: var(--muted); margin: 4px 0 0; }
+  .kicker {
+    display: inline-block; margin: 14px 0 0; padding: 4px 14px; border-radius: 999px;
+    background: var(--soft); color: var(--accent-dark); font-weight: 700; font-size: .85rem;
+  }
+  .story { color: var(--muted); margin-top: 14px; }
+  .story strong { color: var(--text); }
+  .lead { font-family: var(--serif); font-size: 1.35rem; color: var(--text); line-height: 1.35; }
+  .btn {
+    display: inline-block; margin-top: 8px; background: var(--accent); color: #fff;
+    border-radius: 999px; padding: 12px 26px; font-weight: 700; font-size: .9rem; text-decoration: none;
+    box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+  .btn:hover { background: var(--accent-dark); }
+
+  .block { max-width: 620px; margin: 0 auto; padding: 0 16px; text-align: center; scroll-margin-top: 16px; }
+  .block-title { font-family: var(--script); font-weight: 400; font-size: 2.4rem; color: var(--accent-dark); margin: 16px 0 6px; line-height: 1.2; }
+  .block-title::before, .block-title::after { content: "✧"; font-family: var(--body); font-size: .9rem; color: var(--accent); margin: 0 10px; vertical-align: middle; }
+  .bubble-wrap { padding: 0 16px; }
+  .bubble {
+    max-width: 620px; margin: 40px auto 0; padding: 24px 20px;
+    background: linear-gradient(160deg, var(--soft) 0%, color-mix(in srgb, var(--bg) 85%, var(--muted)) 100%);
+    border-radius: 28px; text-align: center;
+  }
+  .signoff { margin: 8px 0 0; color: var(--muted); }
+
+  .preorder {
+    display: block; max-width: 420px; margin: 14px auto 0; padding: 10px 16px; border-radius: 16px;
+    background: var(--card); border: 1px dashed var(--accent); color: var(--accent-dark);
+    font-weight: 700; font-size: .9rem; text-align: center;
+  }
+  .preorder[hidden] { display: none; }
+
+  nav.chips {
+    position: sticky; top: 0; z-index: 5;
+    background: color-mix(in srgb, var(--bg) 94%, transparent); backdrop-filter: blur(6px);
+    display: flex; gap: 8px; overflow-x: auto; padding: 12px 16px; margin-top: 20px;
+    border-bottom: 1px solid var(--line); scrollbar-width: none;
+  }
+  nav.chips::-webkit-scrollbar { display: none; }
+  nav.chips a {
+    flex: none; border: 1px solid var(--line); background: var(--card); color: var(--accent-dark);
+    border-radius: 999px; padding: 6px 14px; font-size: .85rem; font-weight: 600; text-decoration: none; white-space: nowrap;
+  }
+  @media (min-width: 900px) { nav.chips { justify-content: center; } }
+
+  main { max-width: 1040px; margin: 0 auto; padding: 0 16px; scroll-margin-top: 56px; }
+  main section { scroll-margin-top: 64px; }
+  .section-head { text-align: center; margin: 32px 0 14px; }
+  .section-head h3 { font-family: var(--script); font-weight: 400; font-size: 2.2rem; color: var(--accent); margin: 0; line-height: 1.2; }
+  .section-head p { margin: 0; color: var(--muted); font-size: .9rem; }
+  .section-head .price-tag { color: var(--accent-dark); font-weight: 700; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 8%, transparent);
+    display: flex; flex-direction: column;
+  }
+  .card .photo { background: var(--soft); cursor: zoom-in; border: 0; padding: 0; width: 100%; }
+  .card .photo img { width: 100%; height: auto; aspect-ratio: var(--ratio); object-fit: contain; }
+  .card-body { padding: 12px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .card h4 { font-family: var(--serif); font-size: 1.25rem; line-height: 1.2; margin: 0; color: var(--text); }
+  .card p { margin: 0; color: var(--muted); font-size: .85rem; }
+  .badges { display: flex; flex-wrap: wrap; gap: 4px; }
+  .badge { font-size: .7rem; font-weight: 700; color: var(--accent-dark); background: var(--soft); border-radius: 999px; padding: 2px 8px; }
+  .badge.out { color: #fff; background: var(--muted); }
+  .ready { color: var(--accent-dark) !important; font-weight: 600; font-size: .8rem !important; }
+  .card.sold-out .photo img { opacity: .55; filter: grayscale(.4); }
+  .price { font-weight: 700; color: var(--accent-dark); font-size: 1.1rem; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 6px; flex-wrap: wrap; }
+  .qty { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+  .qty button { width: 34px; height: 34px; border: 0; background: var(--soft); color: var(--accent-dark); font-size: 1.15rem; cursor: pointer; }
+  .qty input {
+    width: 34px; height: 34px; border: 0; text-align: center; font: inherit; font-weight: 700;
+    color: var(--text); background: #fff; -moz-appearance: textfield;
+  }
+  .qty input::-webkit-outer-spin-button, .qty input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .qty button:disabled, .qty input:disabled { opacity: .45; cursor: not-allowed; }
+  .subtotal { font-size: .8rem; color: var(--muted); }
+  .loading { text-align: center; color: var(--muted); padding: 40px 0; }
+  .loading a { color: var(--accent-dark); }
+
+  .order {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+    background: color-mix(in srgb, var(--card) 96%, transparent); backdrop-filter: blur(6px);
+    border-top: 1px solid var(--line); padding: 12px 16px;
+  }
+  .order-inner { max-width: 1040px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .ship { max-width: 1040px; margin: 0 auto 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: .85rem; color: var(--muted); }
+  .ship[hidden] { display: none; }
+  .ship label { cursor: pointer; }
+  .ship input { position: absolute; opacity: 0; pointer-events: none; }
+  .ship span.pill {
+    display: inline-block; border: 1px solid var(--line); background: var(--card);
+    color: var(--accent-dark); border-radius: 999px; padding: 5px 12px; font-weight: 600;
+  }
+  .ship input:checked + span.pill { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .ship input:focus-visible + span.pill { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
+  .ship.nudge span.pill { animation: nudge .5s; border-color: var(--accent); }
+  @keyframes nudge { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+  .total-label { font-size: .85rem; color: var(--muted); }
+  .total { font-size: 1.35rem; font-weight: 700; color: var(--accent-dark); }
+  .wa-btn {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--wa); color: #fff; border: 0;
+    border-radius: 999px; padding: 12px 22px; font: inherit; font-weight: 700; cursor: pointer; white-space: nowrap;
+  }
+  .wa-btn:hover { background: var(--wa-dark); }
+  .wa-btn:disabled { background: #c9bfbf; cursor: not-allowed; }
+  .wa-btn svg { width: 20px; height: 20px; fill: currentColor; }
+
+  .info { margin-top: 40px; padding: 0 16px; text-align: center; color: var(--muted); font-size: .9rem; }
+  .info a, footer a { color: var(--accent-dark); }
+  footer { text-align: center; color: var(--muted); font-size: .8rem; padding: 0 16px 110px; }
+  .lightbox {
+    position: fixed; inset: 0; z-index: 20; background: rgba(40, 30, 32, .85);
+    display: none; align-items: center; justify-content: center; padding: 16px; cursor: zoom-out;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-height: 90vh; max-width: 100%; border-radius: 14px; }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 2.6rem; }
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .card-body { padding: 10px; }
+    .card h4 { font-size: 1.1rem; }
+    .card p { font-size: .8rem; }
+    .qty button, .qty input { width: 30px; height: 30px; }
+    .block-title { font-size: 2.1rem; }
+    .block-title::before, .block-title::after { margin: 0 6px; }
+    .wa-btn { padding: 12px 16px; }
+    .wa-btn span.long, .ship-label { display: none; }
+    .ship span.pill { padding: 5px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header id="hero"></header>
+<div id="before"></div>
+<div class="block"><p class="preorder" id="preorder" hidden></p></div>
+<nav class="chips" id="chips"></nav>
+<main id="catalog"><p class="loading" id="loading"></p></main>
+<div id="after"></div>
+<div class="info" id="info"></div>
+<footer id="footer"></footer>
+
+<div class="order">
+  <div class="ship" id="ship" role="radiogroup" hidden></div>
+  <div class="order-inner">
+    <div>
+      <div class="total-label" id="itemCount"></div>
+      <div class="total" id="total">RM0</div>
+    </div>
+    <button class="wa-btn" id="waBtn" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35M12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.32l-.34-.2-3.57.94.95-3.48-.22-.36a9.4 9.4 0 0 1-1.44-5.02c0-5.2 4.24-9.43 9.44-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.24 9.43-9.44 9.43m8.03-17.46A11.27 11.27 0 0 0 12.05.72C5.8.72.7 5.8.7 12.05c0 2 .52 3.95 1.52 5.67L.6 23.28l5.7-1.5a11.3 11.3 0 0 0 5.74 1.47h.01c6.25 0 11.34-5.08 11.35-11.33 0-3.03-1.18-5.88-3.32-8.02"/></svg>
+      <span id="waLabel"></span>
+    </button>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" role="dialog"><img alt=""></div>
+
+<script>
+  const SHOP = window.SHOP;
+
+  const TEXT = {
+    ms: {
+      items: n => `${n} item`, plusPostage: "+ pos", deliverTo: "Hantar ke:", order: "Order", via: "via WhatsApp",
+      each: "seunit", from: "dari", soldOut: "Habis", preorder: "Pre-order", readyIn: "Siap dalam", days: "hari",
+      receiveBy: "Terima sebelum", preorderNote: d => `🌷 Pre-order sekarang · Terima sebelum ${d}`,
+      loading: "Sedang memuatkan produk… 🌷", loadFail: "Alamak, produk tak dapat dimuatkan 🥹 Cuba refresh, atau",
+      whatsappUs: "WhatsApp kami", greeting: "Hai! Saya nak order:", subtotal: "Subtotal", postage: "Pos", total: "Jumlah",
+      pre: "Pre-order - terima sebelum", name: "Nama:", address: "Alamat:",
+      howTo: "Pilih produk & kuantiti, pilih kawasan penghantaran, kemudian tekan <strong>Order via WhatsApp</strong> 🫶🏻",
+      postageList: "Pos:", sayHi: "Atau terus WhatsApp:", view: "Lihat", less: "Kurang", more: "Tambah", qty: "Kuantiti", area: "Kawasan penghantaran"
+    },
+    en: {
+      items: n => `${n} ${n === 1 ? "item" : "items"}`, plusPostage: "+ postage", deliverTo: "Deliver to:", order: "Order", via: "via WhatsApp",
+      each: "each", from: "from", soldOut: "Sold out", preorder: "Pre-order", readyIn: "Ready to ship in", days: "days",
+      receiveBy: "Receive by", preorderNote: d => `🌷 Pre-order now · Receive by ${d}`,
+      loading: "Loading our products… 🌷", loadFail: "Oops, our products didn't load 🥹 Please refresh, or",
+      whatsappUs: "WhatsApp us", greeting: "Hi! I'd like to order:", subtotal: "Subtotal", postage: "Postage", total: "Total",
+      pre: "Pre-order - receive by", name: "Name:", address: "Address:",
+      howTo: "Pick your items, choose the quantity and your delivery area, then tap <strong>Order via WhatsApp</strong> 🫶🏻",
+      postageList: "Postage:", sayHi: "Or just say hi:", view: "View", less: "Less", more: "More", qty: "Quantity for", area: "Delivery area"
+    }
+  };
+  const T = TEXT[SHOP.lang] || TEXT.ms;
+
+  const rm = n => "RM" + n.toLocaleString("en-MY");
+  const esc = s => String(s || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const waLink = msg => `https://wa.me/${SHOP.whatsapp}` + (msg ? `?text=${encodeURIComponent(msg)}` : "");
+  const phone = SHOP.whatsapp.replace(/^60/, "0").replace(/^(\d{3})(\d{3,4})(\d{4})$/, "$1-$2 $3");
+
+  // Google Sheet share link → CSV links for the products tab and the optional "settings" tab.
+  const sheetId = ((SHOP.sheetUrl || "").match(/\/spreadsheets\/d\/([\w-]{20,})/) || [])[1];
+  const PRODUCTS_URL = sheetId && `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
+  const SETTINGS_URL = sheetId && `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=settings`;
+
+  /* ---------- static content from config ---------- */
+
+  const block = (s, i) => {
+    const btn = s.button
+      ? `<a class="btn" href="${s.button.whatsapp !== undefined ? esc(waLink(s.button.whatsapp)) : esc(s.button.href || "#catalog")}"${s.button.whatsapp !== undefined ? ' target="_blank" rel="noopener"' : ""}>${s.button.label}</a>`
+      : "";
+    const inner = `<h2 class="block-title">${s.title}</h2><div class="story">${(s.text || []).map(t => `<p>${t}</p>`).join("")}</div>${btn}`;
+    return (i ? `<p class="divider">✦ ⋆ ˚｡ ⋆ ✦</p>` : "") +
+      (s.highlight ? `<div class="bubble-wrap"><section class="bubble">${inner}</section></div>` : `<section class="block">${inner}</section>`);
+  };
+
+  const h = SHOP.hero;
+  document.getElementById("hero").innerHTML = `
+    <p class="sparkle">✦ ⋆ ˚｡ 🌷 ｡˚ ⋆ ✦</p>
+    <img class="logo" src="${esc(SHOP.logo)}" alt="${esc(SHOP.name)}">
+    <h1>${SHOP.name}</h1>
+    ${SHOP.tagline ? `<p class="tagline">${SHOP.tagline}</p>` : ""}
+    ${h.kicker ? `<p class="kicker">${h.kicker}</p>` : ""}
+    <div class="story">${h.lead ? `<p class="lead">${h.lead}</p>` : ""}${(h.text || []).map(t => `<p>${t}</p>`).join("")}</div>
+    ${h.button ? `<a class="btn" href="#catalog">${h.button}</a>` : ""}`;
+  document.getElementById("before").innerHTML = (SHOP.before || []).length
+    ? `<p class="divider">𐙚 ‧₊˚ ⋅ 🌷 ⋅ ˚₊‧ 𐙚</p>` + SHOP.before.map(block).join("") : "";
+  document.getElementById("after").innerHTML = (SHOP.after || []).length
+    ? `<p class="divider">✦ ⋆ ˚｡ ⋆ ✦</p>` + SHOP.after.map((s, i) => block(s, i)).join("") : "";
+  document.getElementById("loading").textContent = T.loading;
+  document.getElementById("waLabel").innerHTML = `${T.order} <span class="long">${T.via}</span>`;
+
+  const socials = Object.entries(SHOP.social || {}).filter(([, v]) => v).map(([k, v]) => {
+    const handle = v.replace(/^@/, "");
+    const url = { instagram: `https://instagram.com/${handle}`, tiktok: `https://tiktok.com/@${handle}`, threads: `https://threads.com/@${handle}` }[k];
+    return `<a href="${esc(url)}" target="_blank" rel="noopener">${k[0].toUpperCase() + k.slice(1)}</a>`;
+  });
+  document.getElementById("footer").innerHTML =
+    `${SHOP.signoff ? `<p>${SHOP.signoff}</p>` : ""}&copy; ${SHOP.name}${socials.length ? " · " + socials.join(" · ") : ""}`;
+
+  /* ---------- shipping ---------- */
+
+  const SHIPPING = SHOP.shipping.map(s => ({ ...s }));
+  const ship = document.getElementById("ship");
+  ship.setAttribute("aria-label", T.area);
+  ship.innerHTML = `<span class="ship-label">${T.deliverTo}</span>` + SHIPPING.map(s =>
+    `<label><input type="radio" name="area" value="${esc(s.id)}"><span class="pill">${esc(s.name)} +RM<span data-fee="${esc(s.id)}">${s.fee}</span></span></label>`
+  ).join("");
+  const area = () => SHIPPING.find(s => s.id === (ship.querySelector("input:checked") || {}).value);
+
+  function renderInfo() {
+    document.getElementById("info").innerHTML = `<p>${T.howTo}<br>
+      ${T.postageList} ${SHIPPING.map(s => `${esc(s.name)} ${rm(s.fee)}`).join(" · ")} 📦<br>
+      ${T.sayHi} <a href="${waLink()}" target="_blank" rel="noopener">${phone}</a></p>`;
+    for (const s of SHIPPING) document.querySelectorAll(`[data-fee="${s.id}"]`).forEach(el => { el.textContent = s.fee; });
+  }
+
+  /* ---------- CSV ---------- */
+
+  function parseRows(text) {
+    const rows = [];
+    let row = [], cell = "", quoted = false;
+    for (let i = 0; i < text.length; i++) {
+      const ch = text[i];
+      if (quoted) {
+        if (ch !== '"') cell += ch;
+        else if (text[i + 1] === '"') { cell += '"'; i++; }
+        else quoted = false;
+      } else if (ch === '"') quoted = true;
+      else if (ch === ",") { row.push(cell); cell = ""; }
+      else if (ch === "\n") { row.push(cell); rows.push(row); row = []; cell = ""; }
+      else if (ch !== "\r") cell += ch;
+    }
+    if (cell || row.length) { row.push(cell); rows.push(row); }
+    return rows;
+  }
+
+  function parseCSV(text) {
+    const rows = parseRows(text);
+    const head = rows.shift().map(h => h.trim().toLowerCase());
+    return rows
+      .filter(r => r.some(c => c.trim()))
+      .map(r => Object.fromEntries(head.map((h, i) => [h, (r[i] || "").trim()])));
+  }
+
+  /* ---------- settings (pre-order date, postage) ---------- */
+
+  const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+  const MONTHS_MS = ["jan", "feb", "mac", "apr", "mei", "jun", "jul", "ogo", "sep", "okt", "nov", "dis"];
+  const monthIndex = name => {
+    const k = name.slice(0, 3).toLowerCase();
+    return (MONTHS.indexOf(k) + 1) || (MONTHS_MS.indexOf(k) + 1);
+  };
+
+  // Accepts 2026-12-20, 20/12/2026, 20 December 2026, 20 Disember 2026 or December 20, 2026.
+  function parseDate(text) {
+    const s = (text || "").trim();
+    let m;
+    if ((m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/))) return [+m[1], +m[2], +m[3]];
+    if ((m = s.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/))) {
+      const [a, b] = [+m[1], +m[2]];
+      return b > 12 ? [+m[3], a, b] : [+m[3], b, a];
+    }
+    if ((m = s.match(/^(\d{1,2})\s+([a-z]+)\s*,?\s*(\d{4})$/i)) && monthIndex(m[2])) return [+m[3], monthIndex(m[2]), +m[1]];
+    if ((m = s.match(/^([a-z]+)\s+(\d{1,2})\s*,?\s*(\d{4})$/i)) && monthIndex(m[1])) return [+m[3], monthIndex(m[1]), +m[2]];
+    return null;
+  }
+
+  let preorder = "";
+
+  function applySettings(settings) {
+    const d = parseDate(settings.preorder_until);
+    // Pre-order stays up until the end of that day, Malaysia time.
+    const end = d && new Date(Date.UTC(d[0], d[1] - 1, d[2], 15, 59, 59));
+    preorder = end && !isNaN(end) && Date.now() <= end
+      ? end.toLocaleDateString(SHOP.lang === "en" ? "en-GB" : "ms-MY", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kuala_Lumpur" })
+      : "";
+    const note = document.getElementById("preorder");
+    note.textContent = preorder ? T.preorderNote(preorder) : "";
+    note.hidden = !preorder;
+    for (const s of SHIPPING) {
+      const fee = parseFloat((settings["postage_" + s.id] || "").replace(/[^\d.]/g, ""));
+      if (!isNaN(fee)) s.fee = fee;
+    }
+    renderInfo();
+  }
+
+  async function loadSettings() {
+    const fallback = { preorder_until: SHOP.preorderUntil };
+    if (!SETTINGS_URL) return fallback;
+    try {
+      const res = await fetch(SETTINGS_URL, { cache: "no-store" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      // Google guesses which rows are headers and moves them into column labels, so rebuild
+      // the whole grid (labels first, then rows) and look for each setting name anywhere in it.
+      const text = await res.text();
+      const table = JSON.parse(text.slice(text.indexOf("(") + 1, text.lastIndexOf(")"))).table;
+      const cell = c => (c == null ? "" : String(c.f ?? c.v ?? "")).trim();
+      const rows = [table.cols.map(c => c.label || ""), ...table.rows.map(r => (r.c || []).map(cell))];
+      // A setting's value is the cell right below its name. Merged header labels read like "A preorder_until".
+      const below = name => {
+        for (let r = 0; r < rows.length; r++) {
+          const c = rows[r].findIndex(v => v.toLowerCase().split(/\s+/).includes(name));
+          if (c >= 0) return ((rows[r + 1] || [])[c] || "").trim();
+        }
+        return null;
+      };
+      // Without a "settings" tab, Google returns the first tab, which has no preorder_until cell.
+      // A blank date is kept as is, so clearing it turns pre-order off.
+      const date = below("preorder_until");
+      if (date !== null) {
+        const out = { preorder_until: date };
+        for (const s of SHIPPING) out["postage_" + s.id] = below("postage_" + s.id) || "";
+        return out;
+      }
+    } catch (e) {
+      console.warn("Could not load settings", e);
+    }
+    return fallback;
+  }
+
+  /* ---------- products ---------- */
+
+  let products = [];
+  let qty = {};
+
+  function imageUrl(id, link) {
+    if (!link) return `images/${id}.jpg`;
+    const drive = link.match(/drive\.google\.com\/.*(?:\/d\/|[?&]id=)([\w-]{20,})/);
+    return drive ? `https://drive.google.com/thumbnail?id=${drive[1]}&sz=w800` : link;
+  }
+
+  function toProducts(rows) {
+    const seen = new Set();
+    return rows
+      .filter(r => r.name && !/^(no|n|tak|tidak|false|0|hide)$/i.test(r.show || ""))
+      .map(r => {
+        let id = slug(r.id || r.name) || "item";
+        while (seen.has(id)) id += "-2";
+        seen.add(id);
+        const ready = r.ready_in || "";
+        return {
+          id,
+          name: r.name,
+          category: r.category || "",
+          price: parseFloat((r.price || "").replace(/[^\d.]/g, "")) || 0,
+          readyIn: /^[\d\s\-–~]+$/.test(ready) ? `${ready} ${T.days}` : ready,
+          soldOut: /sold|habis|out/i.test(r.stock || ""),
+          badge: r.badge,
+          desc: r.description,
+          img: imageUrl(id, r.image)
+        };
+      });
+  }
+
+  const card = p => {
+    const badges = p.soldOut ? [`<span class="badge out">${T.soldOut}</span>`]
+      : [preorder && `<span class="badge">${T.preorder}</span>`, p.badge && `<span class="badge">${esc(p.badge)}</span>`].filter(Boolean);
+    const ready = p.soldOut ? "" : p.readyIn ? `📦 ${T.readyIn} ${esc(p.readyIn)}` : preorder ? `📦 ${T.receiveBy} ${preorder}` : "";
+    const off = p.soldOut ? " disabled" : "";
+    return `
+    <article class="card${p.soldOut ? " sold-out" : ""}">
+      <button class="photo" type="button" data-zoom="${esc(p.img)}" aria-label="${T.view} ${esc(p.name)}">
+        <img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy" onerror="this.onerror=null;this.src='${esc(SHOP.logo)}';this.parentNode.dataset.zoom='${esc(SHOP.logo)}'">
+      </button>
+      <div class="card-body">
+        <h4>${esc(p.name)}</h4>
+        ${badges.length ? `<div class="badges">${badges.join("")}</div>` : ""}
+        ${p.desc ? `<p>${esc(p.desc)}</p>` : ""}
+        ${ready ? `<p class="ready">${ready}</p>` : ""}
+        <div class="price">${rm(p.price)}</div>
+        <div class="row">
+          <div class="qty">
+            <button type="button" data-id="${p.id}" data-step="-1" aria-label="${T.less}"${off}>&minus;</button>
+            <input type="number" inputmode="numeric" min="0" max="99" value="0" id="q-${p.id}" data-id="${p.id}" aria-label="${T.qty} ${esc(p.name)}"${off}>
+            <button type="button" data-id="${p.id}" data-step="1" aria-label="${T.more}"${off}>+</button>
+          </div>
+          <div class="subtotal" id="s-${p.id}"></div>
+        </div>
+      </div>
+    </article>`;
+  };
+
+  const catalog = document.getElementById("catalog");
+
+  function build(list) {
+    products = list;
+    qty = Object.fromEntries(products.map(p => [p.id, 0]));
+    const cats = [];
+    for (const p of products) {
+      let c = cats.find(c => c.name === p.category);
+      if (!c) cats.push(c = { name: p.category, id: "cat-" + (slug(p.category) || "all"), items: [] });
+      c.items.push(p);
+    }
+    const priceText = c => {
+      const min = Math.min(...c.items.map(p => p.price));
+      return c.items.every(p => p.price === min) ? `${rm(min)} ${T.each}` : `${T.from} ${rm(min)}`;
+    };
+    const chips = document.getElementById("chips");
+    chips.innerHTML = cats.length > 1 ? cats.map(c => `<a href="#${c.id}">${esc(c.name) || SHOP.name}</a>`).join("") : "";
+    chips.hidden = cats.length < 2;
+    catalog.innerHTML = cats.map(c => `
+      <section id="${c.id}">
+        <div class="section-head">
+          ${c.name ? `<h3>${esc(c.name)}</h3>` : ""}
+          <p><span class="price-tag">${priceText(c)}</span></p>
+        </div>
+        <div class="grid">${c.items.map(card).join("")}</div>
+      </section>`).join("");
+    render();
+  }
+
+  async function load() {
+    applySettings(await loadSettings());
+    for (const url of [PRODUCTS_URL, "products.csv"]) {
+      if (!url) continue;
+      try {
+        const res = await fetch(url, { cache: "no-store" });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const list = toProducts(parseCSV(await res.text()));
+        if (list.length) return build(list);
+      } catch (e) {
+        console.warn("Could not load products from", url, e);
+      }
+    }
+    catalog.innerHTML = `<p class="loading">${T.loadFail} <a href="${waLink()}" target="_blank" rel="noopener">${T.whatsappUs}</a>.</p>`;
+  }
+
+  /* ---------- cart ---------- */
+
+  function setQty(id, value) {
+    const v = Math.max(0, Math.min(99, parseInt(value, 10) || 0));
+    qty[id] = v;
+    document.getElementById("q-" + id).value = v;
+    render();
+  }
+
+  function render() {
+    let total = 0, count = 0;
+    for (const p of products) {
+      const sub = qty[p.id] * p.price;
+      total += sub; count += qty[p.id];
+      document.getElementById("s-" + p.id).textContent = qty[p.id] ? "= " + rm(sub) : "";
+    }
+    const a = area();
+    ship.hidden = count === 0;
+    document.getElementById("total").textContent = rm(total + (count && a ? a.fee : 0));
+    document.getElementById("itemCount").textContent =
+      count && a ? `${T.items(count)} ${T.plusPostage} ${rm(a.fee)}` : count ? `${T.items(count)} ${T.plusPostage}` : T.items(0);
+    document.getElementById("waBtn").disabled = count === 0;
+  }
+  ship.addEventListener("change", render);
+
+  const lightbox = document.getElementById("lightbox");
+  catalog.addEventListener("click", e => {
+    const b = e.target.closest("button[data-step]");
+    if (b) return setQty(b.dataset.id, qty[b.dataset.id] + Number(b.dataset.step));
+    const z = e.target.closest("[data-zoom]");
+    if (z) {
+      lightbox.querySelector("img").src = z.dataset.zoom;
+      lightbox.classList.add("open");
+    }
+  });
+  catalog.addEventListener("change", e => {
+    if (e.target.matches("input[data-id]")) setQty(e.target.dataset.id, e.target.value);
+  });
+  lightbox.addEventListener("click", () => lightbox.classList.remove("open"));
+  document.addEventListener("keydown", e => { if (e.key === "Escape") lightbox.classList.remove("open"); });
+
+  // Emoji are left out of the prefilled message: WhatsApp's link redirect garbles them.
+  document.getElementById("waBtn").addEventListener("click", () => {
+    const a = area();
+    if (!a) {
+      ship.classList.remove("nudge");
+      void ship.offsetWidth;
+      ship.classList.add("nudge");
+      return;
+    }
+    const lines = [T.greeting, ""];
+    let total = 0;
+    for (const p of products) {
+      if (!qty[p.id]) continue;
+      const sub = qty[p.id] * p.price;
+      total += sub;
+      lines.push(`- ${p.name}${p.category ? ` (${p.category})` : ""} x ${qty[p.id]} = ${rm(sub)}`);
+    }
+    lines.push(
+      "",
+      `${T.subtotal}: ${rm(total)}`,
+      `${T.postage} (${a.name}): ${rm(a.fee)}`,
+      `${T.total}: ${rm(total + a.fee)}`,
+      ...(preorder ? ["", `${T.pre} ${preorder}`] : []),
+      "", T.name, T.address
+    );
+    window.open(waLink(lines.join("\n")), "_blank");
+  });
+
+  renderInfo();
+  render();
+  load();
+</script>
+</body>
+</html>

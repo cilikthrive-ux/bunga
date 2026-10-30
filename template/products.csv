@@ -1,0 +1,5 @@
+id,name,category,price,ready_in,stock,show,badge,description,image
+sample-1,Hamper Mini,Hamper,45,,available,yes,Best seller,Hadiah comel untuk orang tersayang. Boleh tulis kad ucapan sekali 💌,images/sample-1.svg
+sample-2,Hamper Besar,Hamper,89,5-7,available,yes,,Penuh dengan snek pilihan. Sesuai untuk majlis & hari jadi 🎉,images/sample-2.svg
+sample-3,Cupcake Box (6 biji),Kek & Pastri,30,,available,yes,NEW,Cupcake lembut dengan frosting buttercream 🧁,images/sample-3.svg
+sample-4,Kek Ulang Tahun,Kek & Pastri,120,,sold out,yes,,"Kek 1kg, boleh custom tulisan & warna ✨",images/sample-4.svg

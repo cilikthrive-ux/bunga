@@ -423,7 +423,7 @@
   // Google Sheet shared as "Anyone with the link" (CSV export). Empty or unreachable = use products.csv.
   const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1-wnqefDebKtjV0jvCL7RW9KRSHVJ_56WMuBDDaMshDk/export?format=csv";
   // Optional "settings" tab in the same Sheet: preorder_until, postage_semenanjung, postage_sabah_sarawak.
-  const SETTINGS_CSV_URL = "https://docs.google.com/spreadsheets/d/1-wnqefDebKtjV0jvCL7RW9KRSHVJ_56WMuBDDaMshDk/gviz/tq?tqx=out:csv&headers=0&sheet=settings";
+  const SETTINGS_URL = "https://docs.google.com/spreadsheets/d/1-wnqefDebKtjV0jvCL7RW9KRSHVJ_56WMuBDDaMshDk/gviz/tq?tqx=out:json&sheet=settings";
   // Used only when the Sheet has no "settings" tab.
   const DEFAULT_SETTINGS = { preorder_until: "2026-12-20" };
 
@@ -466,13 +466,18 @@
 
   async function loadSettings() {
     try {
-      const res = await fetch(SETTINGS_CSV_URL, { cache: "no-store" });
+      const res = await fetch(SETTINGS_URL, { cache: "no-store" });
       if (!res.ok) throw new Error("HTTP " + res.status);
-      const rows = parseRows(await res.text());
-      // Each setting's value is the cell right below its name, wherever the name sits in the tab.
+      // Google guesses which rows are headers and moves them into column labels, so rebuild
+      // the whole grid (labels first, then rows) and look for each setting name anywhere in it.
+      const text = await res.text();
+      const table = JSON.parse(text.slice(text.indexOf("(") + 1, text.lastIndexOf(")"))).table;
+      const cell = c => (c == null ? "" : String(c.f ?? c.v ?? "")).trim();
+      const rows = [table.cols.map(c => c.label || ""), ...table.rows.map(r => (r.c || []).map(cell))];
+      // A setting's value is the cell right below its name. Merged header labels read like "A preorder_until".
       const below = name => {
         for (let r = 0; r < rows.length; r++) {
-          const c = rows[r].findIndex(v => v.trim().toLowerCase() === name);
+          const c = rows[r].findIndex(v => v.toLowerCase().split(/\s+/).includes(name));
           if (c >= 0) return ((rows[r + 1] || [])[c] || "").trim();
         }
         return null;

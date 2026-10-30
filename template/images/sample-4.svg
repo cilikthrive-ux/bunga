@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef1fb"/><stop offset="1" stop-color="#d7def3"/></linearGradient></defs>
+  <rect width="600" height="750" fill="url(#g)"/>
+  <text x="300" y="390" font-size="170" text-anchor="middle">✨</text>
+  <text x="300" y="520" font-family="Arial, sans-serif" font-size="34" fill="#8d7a7b" text-anchor="middle">Gambar produk</text>
+</svg>
