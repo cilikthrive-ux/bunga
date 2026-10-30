@@ -73,6 +73,9 @@ window.SHOP = {
     { id: "sabah_sarawak", name: "Sabah / Sarawak", fee: 20 }
   ],
 
+  // true = kos pos dikira untuk setiap item (contoh RM10 x 3 = RM30). false = sekali untuk satu order.
+  shippingPerItem: false,
+
   // Pre-order: tarikh terima, contoh "2026-12-20". Kosong = tiada pre-order.
   // Tab "settings" dalam Google Sheet boleh tukar ini tanpa ubah kod.
   preorderUntil: "",

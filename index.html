@@ -315,7 +315,8 @@
     .wa-btn { padding: 12px 16px; }
     .wa-btn span.long { display: none; }
     .ship-label { display: none; }
-    .ship span.pill { padding: 5px 10px; }
+    .ship { gap: 6px; }
+    .ship span.pill { padding: 5px 9px; font-size: .8rem; }
   }
 </style>
 </head>
@@ -393,7 +394,7 @@
 
 <div class="info">
   <p>Pick your blooms, choose the quantity and your delivery area, then tap <strong>Order via WhatsApp</strong> 🫶🏻<br>
-  Postage: Semenanjung RM<span data-fee="sm">10</span> · Sabah / Sarawak RM<span data-fee="ss">45</span> 📦<br>
+  Postage: Semenanjung RM<span data-fee="sm">10</span> · Sabah / Sarawak RM<span data-fee="ss">45</span> per lamp 📦<br>
   Or just say hi: <a href="https://wa.me/60134478918" target="_blank" rel="noopener">013-447 8918</a></p>
 </div>
 <footer>&copy; Précious Nuha Bloom · @preciousnuha</footer>
@@ -401,8 +402,8 @@
 <div class="order">
   <div class="ship" id="ship" role="radiogroup" aria-label="Delivery area" hidden>
     <span class="ship-label">Deliver to:</span>
-    <label><input type="radio" name="area" value="sm"><span class="pill">Semenanjung +RM<span data-fee="sm">10</span></span></label>
-    <label><input type="radio" name="area" value="ss"><span class="pill">Sabah/Sarawak +RM<span data-fee="ss">45</span></span></label>
+    <label><input type="radio" name="area" value="sm"><span class="pill">Semenanjung +RM<span data-fee="sm">10</span>/pc</span></label>
+    <label><input type="radio" name="area" value="ss"><span class="pill">Sabah/Sarawak +RM<span data-fee="ss">45</span>/pc</span></label>
   </div>
   <div class="order-inner">
     <div>
@@ -659,10 +660,12 @@
     }
     const a = area();
     const items = count + (count === 1 ? " item" : " items");
+    // Postage is charged for every lamp, not once per order.
+    const postage = a ? a.fee * count : 0;
     ship.hidden = count === 0;
-    document.getElementById("total").textContent = rm(total + (count && a ? a.fee : 0));
+    document.getElementById("total").textContent = rm(total + postage);
     document.getElementById("itemCount").textContent =
-      count && a ? `${items} + postage ${rm(a.fee)}` : count ? `${items} + postage` : items;
+      count && a ? `${items} + postage ${rm(postage)}` : count ? `${items} + postage` : items;
     document.getElementById("waBtn").disabled = count === 0;
   }
   ship.addEventListener("change", render);
@@ -692,18 +695,18 @@
       return;
     }
     const lines = ["Hi Precious Nuha! I'd love to order:", ""];
-    let total = 0;
+    let total = 0, count = 0;
     for (const p of products) {
       if (!qty[p.id]) continue;
       const sub = qty[p.id] * p.price;
-      total += sub;
+      total += sub; count += qty[p.id];
       lines.push(`- ${p.name} (${p.badge || p.category}) x ${qty[p.id]} = ${rm(sub)}`);
     }
     lines.push(
       "",
       `Subtotal: ${rm(total)}`,
-      `Postage (${a.name}): ${rm(a.fee)}`,
-      `Total: ${rm(total + a.fee)}`,
+      `Postage (${a.name}): ${rm(a.fee)} x ${count} = ${rm(a.fee * count)}`,
+      `Total: ${rm(total + a.fee * count)}`,
       ...(preorder ? ["", `Pre-order - receive by ${preorder}`] : []),
       "", "Name:", "Address:"
     );
