@@ -314,6 +314,13 @@
   .info a { color: var(--rose-dark); }
   footer { text-align: center; color: var(--muted); font-size: .8rem; padding: 0 16px 110px; }
 
+  .reviews-link {
+    display: table; margin: 12px auto 0; padding: 8px 18px; border-radius: 999px;
+    background: var(--card); border: 1px solid var(--pink-deep);
+    color: var(--rose-dark); font-weight: 700; font-size: .9rem; text-decoration: none;
+  }
+  .reviews-link[hidden] { display: none; }
+
   /* FAQ */
   .faq-list { text-align: left; margin-top: 10px; }
   .faq details {
@@ -453,6 +460,7 @@
     <p>Whether you’re looking for a gift for someone special or a little something to make your room feel extra magical, we have a bloom waiting for you. 🎀</p>
   </div>
   <a class="btn" href="#bloom">Explore Our Flowers ✿</a>
+  <a class="reviews-link" href="testimoni/" hidden>⭐ Read customer reviews</a>
   <p class="meta">Handmade in Klang 📍</p>
 </header>
 
@@ -480,6 +488,7 @@
 <section class="block faq" id="faq">
   <h2 class="block-title">Questions?</h2>
   <div class="faq-list" id="faqList"></div>
+  <a class="reviews-link" href="testimoni/" hidden>⭐ Read customer reviews</a>
   <p class="faq-more">Still curious? <a href="https://wa.me/60134478918" target="_blank" rel="noopener">Ask us on WhatsApp</a> 💬</p>
 </section>
 
@@ -845,6 +854,27 @@
       .map(f => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join("");
   }
 
+  // Show the reviews link once the Sheet's "testimoni" tab has at least one review.
+  async function loadReviewCount() {
+    try {
+      const text = await fetchText(SHEET_TAB_URL("testimoni"));
+      const table = JSON.parse(text.slice(text.indexOf("(") + 1, text.lastIndexOf(")"))).table;
+      const cell = c => (c == null ? "" : String(c.f ?? c.v ?? "")).trim();
+      const rows = [table.cols.map(c => c.label || ""), ...table.rows.map(r => (r.c || []).map(cell))];
+      const h = rows.findIndex(r => r.some(v => /review/i.test(v)));
+      if (h < 0) return;
+      const ri = rows[h].findIndex(v => /review/i.test(v));
+      const count = rows.slice(h + 1).filter(r => r[ri]).length;
+      if (!count) return;
+      document.querySelectorAll(".reviews-link").forEach(a => {
+        a.textContent = `⭐ Read ${count} customer review${count === 1 ? "" : "s"}`;
+        a.hidden = false;
+      });
+    } catch (e) {
+      console.warn("Could not load reviews", e);
+    }
+  }
+
   async function loadFaq() {
     try {
       const text = await fetchText(SHEET_TAB_URL("faq"));
@@ -866,6 +896,7 @@
 
   async function load() {
     const fromFaq = loadFaq();
+    loadReviewCount();
     // Ask Google for the products and the settings at the same time.
     const fromSheet = SHEET_CSV_URL ? fetchText(SHEET_CSV_URL) : Promise.reject(new Error("no Sheet link"));
     fromSheet.catch(() => {});

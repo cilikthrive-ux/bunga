@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Customer Reviews · Précious Nuha Bloom</title>
+<meta name="description" content="What our customers say about their Précious Nuha Bloom flower lamps.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://preciousnuha.com/testimoni/">
+<meta property="og:title" content="Customer reviews 🌷 Précious Nuha Bloom">
+<meta property="og:description" content="Happy customers and their glowing flower lamps ✨">
+<meta property="og:image" content="https://preciousnuha.com/images/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../images/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Great+Vibes&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fff8ea;
+    --pink: #fbe4e6;
+    --pink-deep: #f6d3d8;
+    --card: #fffdf8;
+    --rose: #c27c88;
+    --rose-dark: #a05c69;
+    --sage: #7d846b;
+    --text: #5a4446;
+    --muted: #8d7a7b;
+    --line: #f1dcd8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(circle at 10% 0%, var(--pink) 0, transparent 40%),
+      radial-gradient(circle at 95% 30%, var(--pink) 0, transparent 30%),
+      var(--cream);
+    color: var(--text);
+    font-family: "Nunito", system-ui, sans-serif;
+    line-height: 1.6;
+  }
+  img { max-width: 100%; display: block; }
+
+  header { text-align: center; padding: 20px 16px 4px; }
+  .back { display: inline-block; color: var(--rose-dark); font-weight: 700; text-decoration: none; font-size: .9rem; }
+  header img { width: 90px; height: 90px; border-radius: 50%; margin: 14px auto 0; box-shadow: 0 6px 18px rgba(194, 124, 136, .2); }
+  h1 { font-family: "Great Vibes", cursive; font-weight: 400; font-size: 2.8rem; color: var(--rose-dark); margin: 8px 0 0; line-height: 1.1; }
+  .sub { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 1.2rem; color: var(--sage); margin: 2px 0 0; }
+  .summary { margin: 10px 0 0; color: var(--muted); font-weight: 700; }
+  .summary .stars { color: #e0a43a; letter-spacing: 2px; }
+
+  main { max-width: 1040px; margin: 24px auto 0; padding: 0 16px; columns: 3 280px; column-gap: 16px; }
+  .review {
+    break-inside: avoid; margin: 0 0 16px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+    box-shadow: 0 6px 18px rgba(194, 124, 136, .08);
+  }
+  .review img { width: 100%; height: 260px; object-fit: cover; cursor: zoom-in; background: var(--pink); }
+  .review .body { padding: 14px 16px 16px; }
+  .review .stars { color: #e0a43a; letter-spacing: 2px; font-size: .95rem; }
+  .review p { margin: 6px 0 10px; white-space: pre-line; }
+  .review .who { font-weight: 700; font-size: .9rem; }
+  .review .what { color: var(--muted); font-size: .8rem; }
+  .empty, .loading { column-span: all; text-align: center; color: var(--muted); padding: 30px 0; }
+
+  .cta { text-align: center; padding: 20px 16px 48px; }
+  .btn {
+    display: inline-block; background: var(--rose); color: #fff; border-radius: 999px;
+    padding: 12px 26px; font-weight: 700; text-decoration: none;
+    box-shadow: 0 6px 16px rgba(194, 124, 136, .3);
+  }
+  .btn:hover { background: var(--rose-dark); }
+
+  .lightbox {
+    position: fixed; inset: 0; z-index: 20; background: rgba(60, 40, 42, .85);
+    display: none; align-items: center; justify-content: center; padding: 16px; cursor: zoom-out;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-height: 90vh; max-width: 100%; border-radius: 14px; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../">← Back to shop</a>
+  <img src="../images/logo.jpg" alt="Précious Nuha Bloom">
+  <h1>Happy Customers</h1>
+  <p class="sub">Little blooms, lots of love ♡</p>
+  <p class="summary" id="summary" hidden></p>
+</header>
+
+<main id="reviews"><p class="loading">Loading reviews… 🌷</p></main>
+
+<div class="cta">
+  <a class="btn" href="../#bloom">Find your bloom ✿</a>
+</div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Full photo"><img alt=""></div>
+
+<script>
+  // Reviews live in the "testimoni" tab of the shop's Google Sheet:
+  // name | review | photo (Google Drive link, optional) | product (optional) | stars (1-5, optional, default 5)
+  const SHEET = "https://docs.google.com/spreadsheets/d/1-wnqefDebKtjV0jvCL7RW9KRSHVJ_56WMuBDDaMshDk/gviz/tq?tqx=out:json&sheet=testimoni";
+
+  const esc = s => String(s || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const stars = n => "★".repeat(n) + "☆".repeat(5 - n);
+
+  function photoUrl(link) {
+    if (!link) return "";
+    const drive = link.match(/drive\.google\.com\/.*(?:\/d\/|[?&]id=)([\w-]{20,})/);
+    return drive ? `https://drive.google.com/thumbnail?id=${drive[1]}&sz=w800` : link;
+  }
+
+  async function load() {
+    const box = document.getElementById("reviews");
+    try {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 8000);
+      const res = await fetch(SHEET, { cache: "no-store", signal: ctrl.signal });
+      clearTimeout(timer);
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const text = await res.text();
+      const table = JSON.parse(text.slice(text.indexOf("(") + 1, text.lastIndexOf(")"))).table;
+      const cell = c => (c == null ? "" : String(c.f ?? c.v ?? "")).trim();
+      const rows = [table.cols.map(c => c.label || ""), ...table.rows.map(r => (r.c || []).map(cell))];
+      // Without a testimoni tab Google returns the first tab, which has no "review" column.
+      const h = rows.findIndex(r => r.some(v => /review/i.test(v)));
+      const col = name => h < 0 ? -1 : rows[h].findIndex(v => new RegExp(name, "i").test(v));
+      const [ni, ri, pi, wi, si] = ["name", "review", "photo", "product", "star"].map(col);
+      const list = h < 0 ? [] : rows.slice(h + 1)
+        .filter(r => r[ri])
+        .map(r => ({
+          name: r[ni] || "Happy customer",
+          review: r[ri],
+          photo: photoUrl(r[pi]),
+          product: r[wi] || "",
+          stars: Math.max(1, Math.min(5, parseInt(r[si], 10) || 5))
+        }));
+
+      if (!list.length) {
+        box.innerHTML = `<p class="empty">Reviews are coming soon 🌷<br>Be one of our first happy customers!</p>`;
+        return;
+      }
+      const avg = list.reduce((t, r) => t + r.stars, 0) / list.length;
+      const summary = document.getElementById("summary");
+      summary.innerHTML = `<span class="stars">${stars(Math.round(avg))}</span> ${avg.toFixed(1)} from ${list.length} review${list.length === 1 ? "" : "s"}`;
+      summary.hidden = false;
+      box.innerHTML = list.map(r => `
+        <article class="review">
+          ${r.photo ? `<img src="${esc(r.photo)}" alt="Photo from ${esc(r.name)}" loading="lazy" onerror="this.remove()">` : ""}
+          <div class="body">
+            <div class="stars" aria-label="${r.stars} out of 5 stars">${stars(r.stars)}</div>
+            <p>${esc(r.review)}</p>
+            <div class="who">${esc(r.name)}</div>
+            ${r.product ? `<div class="what">${esc(r.product)}</div>` : ""}
+          </div>
+        </article>`).join("");
+    } catch (e) {
+      console.warn("Could not load reviews", e);
+      box.innerHTML = `<p class="empty">Reviews didn't load 🥹 Please refresh in a moment.</p>`;
+    }
+  }
+
+  const lightbox = document.getElementById("lightbox");
+  document.getElementById("reviews").addEventListener("click", e => {
+    if (e.target.matches(".review img")) {
+      lightbox.querySelector("img").src = e.target.src;
+      lightbox.classList.add("open");
+    }
+  });
+  lightbox.addEventListener("click", () => lightbox.classList.remove("open"));
+  document.addEventListener("keydown", e => { if (e.key === "Escape") lightbox.classList.remove("open"); });
+
+  load();
+</script>
+</body>
+</html>
