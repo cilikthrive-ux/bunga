@@ -17,7 +17,12 @@ window.SHOP = {
   // Kosong = guna products.csv dalam folder ini.
   sheetUrl: "",
 
-  // Warna utama kedai
+  // Tema siap (pakej Basic): "pink" (Pink Lembut), "sage" (Hijau Sage), "cream" (Krim Klasik).
+  // "custom" (pakej Pro) = guna colors & fonts di bawah.
+  // Pratonton tema tanpa ubah fail: tambah ?theme=sage di hujung link website.
+  theme: "pink",
+
+  // Warna kedai (hanya digunakan bila theme: "custom")
   colors: {
     background: "#fff8ea",  // latar belakang
     soft: "#fbe4e6",        // latar kad & butang lembut
@@ -27,7 +32,7 @@ window.SHOP = {
     muted: "#8d7a7b"
   },
 
-  // Font dari Google Fonts: tajuk bergaya, tajuk biasa, teks badan
+  // Font dari Google Fonts: tajuk bergaya, tajuk biasa, teks badan (hanya bila theme: "custom")
   fonts: { script: "Great Vibes", serif: "Cormorant Garamond", body: "Nunito" },
 
   // Bentuk gambar produk: "9 / 16" (tinggi), "4 / 5", "1 / 1" (segi empat)

@@ -9,9 +9,28 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <script src="config.js"></script>
 <script>
+  // Ready-made themes for the Basic package. "custom" (Pro) uses colors and fonts from config.js.
+  const THEMES = {
+    pink: {
+      colors: { background: "#fff8ea", soft: "#fbe4e6", accent: "#c27c88", accentDark: "#a05c69", text: "#5a4446", muted: "#8d7a7b" },
+      fonts: { script: "Great Vibes", serif: "Cormorant Garamond", body: "Nunito" }
+    },
+    sage: {
+      colors: { background: "#f6f8f1", soft: "#e2ead8", accent: "#6f8762", accentDark: "#4f6545", text: "#3d4738", muted: "#7a8573" },
+      fonts: { script: "Parisienne", serif: "Lora", body: "Nunito" }
+    },
+    cream: {
+      colors: { background: "#fbf7f0", soft: "#efe3d0", accent: "#a07a4a", accentDark: "#74552f", text: "#463b30", muted: "#8a7c6a" },
+      fonts: { script: "Allura", serif: "Playfair Display", body: "Nunito" }
+    }
+  };
+
   // Apply colours, fonts and page title before the page paints.
   (function () {
-    const S = window.SHOP, c = S.colors, f = S.fonts, root = document.documentElement.style;
+    const S = window.SHOP, root = document.documentElement.style;
+    // ?theme=sage in the address bar previews a theme without editing config.js.
+    const theme = THEMES[new URLSearchParams(location.search).get("theme") || S.theme] || { colors: S.colors, fonts: S.fonts };
+    const c = theme.colors, f = theme.fonts;
     root.setProperty("--bg", c.background);
     root.setProperty("--soft", c.soft);
     root.setProperty("--accent", c.accent);

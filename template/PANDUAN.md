@@ -28,7 +28,7 @@ Buka `config.js` dan tukar:
 - `name`, `tagline`: nama kedai dan slogan
 - `logo`: letak logo dalam `images/` (contoh `images/logo.png`)
 - `whatsapp`: nombor dengan kod negara, tanpa `+` atau sengkang. `013-447 8918` jadi `60134478918`
-- `colors`: warna jenama pelanggan
+- `theme`: **Basic** pilih `"pink"`, `"sage"` atau `"cream"`. **Pro** guna `"custom"` dan isi `colors` & `fonts` ikut jenama pelanggan
 - `hero`, `before`, `after`: ayat-ayat di website
 - `shipping`: kawasan dan kos pos
 - `lang`: `"ms"` atau `"en"`
@@ -77,12 +77,29 @@ Untuk pelanggan ubah tarikh pre-order dan kos pos sendiri, tambah tab bernama `s
 - [ ] Kos pos betul
 - [ ] Buka di telefon, semua kemas
 
-## Cadangan harga jualan
+## Tunjuk tema kepada pelanggan
 
-| Pakej | Isi | Cadangan |
+Buka demo dengan `?theme=` di hujung link:
+
+- Pink Lembut: `preciousnuha.com/template/?theme=pink`
+- Hijau Sage: `preciousnuha.com/template/?theme=sage`
+- Krim Klasik: `preciousnuha.com/template/?theme=cream`
+
+## Pakej & harga
+
+| | Basic RM199 | Pro RM399 |
 |---|---|---|
-| Asas | Setup templat, sambung Sheet, link percuma | Caj sekali |
-| Lengkap | Asas + domain sendiri + gambar dan ayat | Caj sekali + kos domain |
-| Jagaan | Update design dan bantuan bulanan | Yuran bulanan |
+| Katalog + order WhatsApp, kos pos automatik | ✓ | ✓ |
+| Bilangan produk | Sampai 10 | Sampai 50 |
+| Design | 1 dari 3 tema (`theme`) | Warna, font & logo jenama (`theme: "custom"`) |
+| Update harga & stok | Melalui awak (RM20/update): edit `products.csv`, `sheetUrl` kosong | Sendiri guna Google Sheet (`sheetUrl`) |
+| Pre-order, sold out, siap dalam X hari | ✕ (biar lajur kosong, jangan buat tab `settings`) | ✓ |
+| Ayat promosi & cerita jenama (`hero`, `before`, `after`) | Ayat ringkas | ✓ ditulis khas |
+| Link | Percuma (Netlify / github.io) | Domain .com tahun pertama* |
+| Pembetulan | 1 kali | 3 kali |
+| Bantuan percuma | 7 hari | 30 hari |
 
-Kos domain (~RM40–90 setahun) biasanya dibayar oleh pelanggan sendiri.
+**Jagaan:** RM30/bulan (update design, tambah ciri, bantuan) atau RM20 setiap kali update.
+**Promo 5 pelanggan pertama:** Basic RM149, dengan syarat bagi testimoni.
+
+\*Renew domain tahun ke-2 ~RM45/tahun ditanggung pelanggan. Daftar domain dalam akaun pelanggan sendiri, beli .com sahaja, dan catat tarikh renew.

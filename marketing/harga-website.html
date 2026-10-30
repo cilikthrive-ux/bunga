@@ -1,6 +1,6 @@
 <!doctype html>
 <html><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Great+Vibes&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Great+Vibes&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; }
   body {
@@ -11,83 +11,76 @@
       radial-gradient(circle at 96% 40%, #fbe4e6 0, transparent 26%),
       radial-gradient(circle at 4% 86%, #fbe4e6 0, transparent 26%),
       #fff8ea;
-    padding: 64px 64px; text-align: center;
+    padding: 40px 56px; text-align: center;
   }
-  .spark { color: #c27c88; letter-spacing: .2em; font-size: 26px; }
-  h1 { font-family: "Great Vibes", cursive; font-weight: 400; font-size: 104px; color: #a05c69; line-height: 1; margin-top: 30px; }
-  .sub { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 34px; color: #7d846b; margin-top: 4px; }
-  .feats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; text-align: left; margin: 34px auto 0; width: 960px; font-size: 23px; font-weight: 700; }
-  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 44px; }
-  .card { background: #fffdf8; border: 2px solid #f1dcd8; border-radius: 30px; padding: 26px 20px 24px; box-shadow: 0 10px 30px rgba(194,124,136,.12); display: flex; flex-direction: column; }
-  .card.hot { border-color: #c27c88; background: linear-gradient(170deg, #fbe4e6, #fffdf8 55%); position: relative; }
-  .tag { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: #c27c88; color: #fff; font-size: 18px; font-weight: 800; padding: 5px 16px; border-radius: 999px; white-space: nowrap; }
-  .name { font-family: "Cormorant Garamond", serif; font-size: 40px; font-weight: 600; color: #5a4446; }
-  .price { font-size: 58px; font-weight: 800; color: #a05c69; line-height: 1.1; margin-top: 4px; }
-  .price small { font-size: 22px; font-weight: 700; color: #8d7a7b; }
-  .card ul { list-style: none; padding: 0; text-align: left; margin-top: 16px; font-size: 20px; line-height: 1.45; color: #6d5a5c; }
-  .card li { padding-left: 26px; position: relative; margin-bottom: 6px; }
-  .card li::before { content: "✿"; position: absolute; left: 0; color: #c27c88; }
-  .note { margin-top: auto; padding-top: 10px; font-size: 17px; color: #8d7a7b; font-style: italic; }
-  .promo { margin: 34px auto 0; display: inline-block; background: #c27c88; color: #fff; border-radius: 999px; padding: 16px 38px; font-size: 30px; font-weight: 800; box-shadow: 0 10px 24px rgba(194,124,136,.35); }
+  .spark { color: #c27c88; letter-spacing: .2em; font-size: 24px; }
+  h1 { font-family: "Great Vibes", cursive; font-weight: 400; font-size: 86px; color: #a05c69; line-height: 1; margin-top: 16px; }
+  .sub { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 29px; color: #7d846b; margin-top: 0; }
+
+  table {
+    width: 100%; margin-top: 24px; border-collapse: separate; border-spacing: 0;
+    background: #fffdf8; border: 2px solid #f1dcd8; border-radius: 30px; overflow: hidden;
+    box-shadow: 0 10px 30px rgba(194,124,136,.12); font-size: 22px;
+  }
+  th, td { padding: 10px 18px; border-bottom: 1px solid #f4e6e2; }
+  tr:last-child td { border-bottom: 0; }
+  th { padding-top: 16px; padding-bottom: 12px; vertical-align: bottom; }
+  td:first-child, th:first-child { text-align: left; font-weight: 700; color: #5a4446; width: 40%; }
+  td:not(:first-child) { color: #6d5a5c; width: 30%; }
+  .pro { background: linear-gradient(180deg, #fbe4e6, #fdf1f0); }
+  th.pro { border-top-right-radius: 28px; position: relative; }
+  .pname { font-family: "Cormorant Garamond", serif; font-size: 38px; font-weight: 700; color: #5a4446; display: block; }
+  .pprice { font-size: 48px; font-weight: 800; color: #a05c69; line-height: 1.05; display: block; }
+  .pop { display: inline-block; background: #c27c88; color: #fff; font-size: 15px; font-weight: 800; padding: 4px 12px; border-radius: 999px; margin-bottom: 6px; letter-spacing: .04em; }
+  td.yes { color: #6f8762; font-weight: 800; font-size: 30px; }
+  td.no { color: #d2b9b6; font-weight: 800; font-size: 26px; }
+  td.strong { font-weight: 800; color: #a05c69; }
+  .dots { display: inline-flex; gap: 6px; vertical-align: middle; margin-left: 6px; }
+  .dots i { width: 18px; height: 18px; border-radius: 50%; display: inline-block; border: 2px solid #fff; box-shadow: 0 0 0 1px #e6d6d2; }
+
+  .care {
+    margin-top: 16px; display: flex; align-items: center; justify-content: center; gap: 14px;
+    background: #fffdf8; border: 2px dashed #e6c4c8; border-radius: 22px; padding: 14px 20px; font-size: 22px;
+  }
+  .care b { font-family: "Cormorant Garamond", serif; font-size: 30px; color: #5a4446; }
+  .care .p { font-weight: 800; color: #a05c69; font-size: 26px; }
+
+  .promo { margin: 18px auto 0; display: inline-block; background: #c27c88; color: #fff; border-radius: 999px; padding: 14px 34px; font-size: 28px; font-weight: 800; box-shadow: 0 10px 24px rgba(194,124,136,.35); }
   .promo s { opacity: .8; font-weight: 700; }
-  .fine { margin-top: 18px; font-size: 22px; color: #8d7a7b; }
-  .contact { margin-top: 26px; font-size: 28px; font-weight: 800; color: #5a4446; }
+  .fine { margin-top: 14px; font-size: 19px; color: #8d7a7b; line-height: 1.5; }
+  .contact { margin-top: 10px; font-size: 28px; font-weight: 800; color: #5a4446; }
   .contact span { color: #a05c69; }
-  .demo { font-size: 22px; color: #8d7a7b; margin-top: 6px; }
+  .demo { font-size: 21px; color: #8d7a7b; margin-top: 4px; }
 </style></head>
 <body>
   <p class="spark">✦ ⋆ ˚｡ 🌷 ｡˚ ⋆ ✦</p>
   <h1>Website Kedai Sendiri</h1>
   <p class="sub">Katalog cantik + order terus ke WhatsApp</p>
 
-  <div class="feats">
-    <div>🛍️ Pelanggan pilih produk &amp; kuantiti</div>
-    <div>💬 Order terus masuk WhatsApp</div>
-    <div>📦 Kos pos dikira automatik</div>
-    <div>📝 Ubah harga &amp; stok guna Google Sheet</div>
-    <div>🎀 Ikut logo &amp; warna jenama</div>
-    <div>📱 Cantik di telefon</div>
-  </div>
+  <table>
+    <tr>
+      <th></th>
+      <th><span class="pname">Basic 🌱</span><span class="pprice">RM199</span></th>
+      <th class="pro"><span class="pop">PALING POPULAR</span><span class="pname">Pro 🌷</span><span class="pprice">RM399</span></th>
+    </tr>
+    <tr><td>Katalog + order terus ke WhatsApp</td><td class="yes">✓</td><td class="pro yes">✓</td></tr>
+    <tr><td>Kos pos dikira automatik</td><td class="yes">✓</td><td class="pro yes">✓</td></tr>
+    <tr><td>Bilangan produk</td><td>Sampai 10</td><td class="pro strong">Sampai 50</td></tr>
+    <tr><td>Design</td>
+      <td>Pilih 1 dari 3 tema<span class="dots"><i style="background:#c27c88"></i><i style="background:#6f8762"></i><i style="background:#a07a4a"></i></span></td>
+      <td class="pro strong">Ikut warna, font &amp; logo jenama</td></tr>
+    <tr><td>Update harga &amp; stok</td><td>Melalui kami (RM20/update)</td><td class="pro strong">Sendiri guna Google Sheet</td></tr>
+    <tr><td>Pre-order, sold out, "siap dalam X hari"</td><td class="no">✕</td><td class="pro yes">✓</td></tr>
+    <tr><td>Ayat promosi &amp; cerita jenama</td><td class="no">✕</td><td class="pro yes">✓</td></tr>
+    <tr><td>Link website</td><td>Link percuma</td><td class="pro strong">Domain .com sendiri*</td></tr>
+    <tr><td>Pembetulan</td><td>1 kali</td><td class="pro strong">3 kali</td></tr>
+    <tr><td>Bantuan percuma</td><td>7 hari</td><td class="pro strong">30 hari</td></tr>
+  </table>
 
-  <div class="cards">
-    <div class="card">
-      <p class="name">Basic 🌱</p>
-      <p class="price">RM199</p>
-      <ul>
-        <li>Website katalog + order WhatsApp</li>
-        <li>Logo &amp; warna jenama</li>
-        <li>Google Sheet untuk update sendiri</li>
-        <li>Link percuma</li>
-        <li>Sampai 20 produk</li>
-      </ul>
-    </div>
-    <div class="card hot">
-      <span class="tag">PALING POPULAR</span>
-      <p class="name">Pro 🌷</p>
-      <p class="price">RM399</p>
-      <ul>
-        <li>Semua dalam Basic</li>
-        <li><strong>Domain .com tahun pertama</strong> + setup</li>
-        <li>Ayat promosi untuk website</li>
-        <li>Susun gambar produk</li>
-        <li>2 kali pembetulan</li>
-      </ul>
-      <p class="note">*Renew domain tahun ke-2 ~RM45/tahun ditanggung pelanggan</p>
-    </div>
-    <div class="card">
-      <p class="name">Jagaan 🤍</p>
-      <p class="price">RM30<small>/bulan</small></p>
-      <ul>
-        <li>Update design</li>
-        <li>Tambah ciri baru</li>
-        <li>Bantuan bila ada masalah</li>
-        <li>Atau RM20 setiap kali update</li>
-      </ul>
-    </div>
-  </div>
+  <div class="care"><b>Jagaan 🤍</b><span class="p">RM30/bulan</span><span>· update design, tambah ciri &amp; bantuan</span></div>
 
   <p class="promo">🎀 Promo 5 orang pertama: Basic <s>RM199</s> RM149</p>
-  <p class="fine">Pakej Pro termasuk domain .com tahun pertama · Basic guna link percuma</p>
+  <p class="fine">*Pro termasuk domain .com tahun pertama. Renew tahun ke-2 ~RM45/tahun ditanggung pelanggan.</p>
 
   <p class="contact">WhatsApp: <span>013-447 8918</span></p>
   <p class="demo">Lihat contoh: preciousnuha.com · preciousnuha.com/template</p>
