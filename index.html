@@ -423,7 +423,7 @@
   // Google Sheet shared as "Anyone with the link" (CSV export). Empty or unreachable = use products.csv.
   const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1-wnqefDebKtjV0jvCL7RW9KRSHVJ_56WMuBDDaMshDk/export?format=csv";
   // Optional "settings" tab in the same Sheet: preorder_until, postage_semenanjung, postage_sabah_sarawak.
-  const SETTINGS_CSV_URL = "https://docs.google.com/spreadsheets/d/1-wnqefDebKtjV0jvCL7RW9KRSHVJ_56WMuBDDaMshDk/gviz/tq?tqx=out:csv&sheet=settings";
+  const SETTINGS_CSV_URL = "https://docs.google.com/spreadsheets/d/1-wnqefDebKtjV0jvCL7RW9KRSHVJ_56WMuBDDaMshDk/gviz/tq?tqx=out:csv&headers=0&sheet=settings";
   // Used only when the Sheet has no "settings" tab.
   const DEFAULT_SETTINGS = { preorder_until: "2026-12-20" };
 
@@ -468,10 +468,25 @@
     try {
       const res = await fetch(SETTINGS_CSV_URL, { cache: "no-store" });
       if (!res.ok) throw new Error("HTTP " + res.status);
-      const text = await res.text();
-      // Without a "settings" tab, Google returns the first tab, which has no preorder_until column.
-      // A settings tab with blank values is kept as is, so clearing the date turns pre-order off.
-      if (/preorder_until/i.test(text.split("\n")[0])) return parseCSV(text)[0] || {};
+      const rows = parseRows(await res.text());
+      // Each setting's value is the cell right below its name, wherever the name sits in the tab.
+      const below = name => {
+        for (let r = 0; r < rows.length; r++) {
+          const c = rows[r].findIndex(v => v.trim().toLowerCase() === name);
+          if (c >= 0) return ((rows[r + 1] || [])[c] || "").trim();
+        }
+        return null;
+      };
+      // Without a "settings" tab, Google returns the first tab, which has no preorder_until cell.
+      // A blank date is kept as is, so clearing it turns pre-order off.
+      const date = below("preorder_until");
+      if (date !== null) {
+        return {
+          preorder_until: date,
+          postage_semenanjung: below("postage_semenanjung") || "",
+          postage_sabah_sarawak: below("postage_sabah_sarawak") || ""
+        };
+      }
     } catch (e) {
       console.warn("Could not load settings", e);
     }
@@ -484,7 +499,7 @@
   const esc = s => String(s || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-  function parseCSV(text) {
+  function parseRows(text) {
     const rows = [];
     let row = [], cell = "", quoted = false;
     for (let i = 0; i < text.length; i++) {
@@ -499,6 +514,11 @@
       else if (ch !== "\r") cell += ch;
     }
     if (cell || row.length) { row.push(cell); rows.push(row); }
+    return rows;
+  }
+
+  function parseCSV(text) {
+    const rows = parseRows(text);
     const head = rows.shift().map(h => h.trim().toLowerCase());
     return rows
       .filter(r => r.some(c => c.trim()))
