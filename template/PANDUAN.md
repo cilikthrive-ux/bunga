@@ -6,7 +6,7 @@ Templat ini buat website katalog untuk peniaga kecil:
 - Pelanggan pilih kuantiti dan kawasan pos, kemudian **order terus ke WhatsApp**
 - Label pre-order, sold out, tempoh siap
 - Boleh tukar warna, font, logo, ayat dan bahasa (BM atau English)
-- Hosting percuma (GitHub Pages atau Netlify), cuma domain yang berbayar
+- Hosting percuma di **Netlify**, cuma domain yang berbayar
 
 ## Fail dalam folder ini
 
@@ -20,7 +20,7 @@ Templat ini buat website katalog untuk peniaga kecil:
 ## Langkah setup untuk pelanggan baru
 
 ### 1. Salin templat
-Salin seluruh folder `template` ke repo baru di GitHub (contoh `kedai-ani`).
+Salin seluruh folder `template` dan namakan ikut pelanggan (contoh `kedai-ani`). Kalau guna GitHub, letak dalam repo baru (boleh **private**).
 
 ### 2. Isi `config.js`
 Buka `config.js` dan tukar:
@@ -66,9 +66,30 @@ Untuk pelanggan ubah tarikh pre-order dan kos pos sendiri, tambah tab bernama `s
 - Nama `postage_...` mesti sama dengan `id` dalam `shipping` di `config.js`
 - Kosongkan tarikh untuk buang pre-order. Lepas tarikh tu, pre-order hilang sendiri
 
-### 5. Hidupkan website
-- **GitHub Pages:** repo, kemudian **Settings → Pages → Deploy from a branch → `main` / root**
-- **Domain sendiri:** dalam DNS, tambah 4 rekod A untuk `@` (`185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`) dan CNAME `www` ke `NAMA-AKAUN.github.io`. Kemudian isi **Custom domain** dalam Settings → Pages dan tandakan **Enforce HTTPS**
+### 5. Hidupkan website di Netlify (percuma)
+Netlify ialah **website** (app.netlify.com), bukan app telefon. Guna komputer, atau Safari dengan **Request Desktop Website**.
+
+**Cara A: Drag & drop** (paling senang, sesuai untuk Basic)
+1. Daftar atau log masuk di **app.netlify.com**
+2. **Add new project → Deploy manually**, kemudian seret folder kedai ke kotak upload
+3. **Project configuration → General → Change project name**, kemudian taip nama kedai. Link jadi `nama-kedai.netlify.app`
+4. Bila ada perubahan: buka project, pergi **Deploys**, dan seret folder yang dah dikemaskini
+
+**Cara B: Sambung GitHub** (website update sendiri setiap kali repo berubah)
+1. **Add new project → Import an existing project → GitHub**, kemudian pilih repo pelanggan
+2. **Build command:** kosong. **Publish directory:** kosong (atau nama folder kalau templat dalam subfolder). Tekan **Deploy**
+3. Tukar nama project macam Cara A langkah 3
+
+**Domain sendiri (pakej Pro)**
+1. Dalam Netlify: **Domain management → Add a domain**, kemudian masukkan domain pelanggan
+2. Dalam DNS di Spaceship (atau tempat domain dibeli), padam rekod parking lama dan tambah:
+
+   | Type | Host | Value |
+   |---|---|---|
+   | A | `@` | `75.2.60.5` |
+   | CNAME | `www` | `nama-kedai.netlify.app` |
+
+3. Tunggu sampai domain aktif. HTTPS (🔒) dipasang sendiri oleh Netlify, dan boleh ambil masa sampai 24–48 jam
 
 ### 6. Semak sebelum serah
 - [ ] Logo, nama dan warna betul
