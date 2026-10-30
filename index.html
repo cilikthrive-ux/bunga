@@ -351,6 +351,17 @@
   .sheet input:focus, .sheet textarea:focus { outline: 2px solid var(--rose); outline-offset: 1px; border-color: transparent; }
   .sheet .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .sheet .wa-btn { width: 100%; justify-content: center; margin-top: 6px; }
+  .pay {
+    text-align: center; border: 1px solid var(--line); border-radius: 16px;
+    background: #fff; padding: 14px 12px 12px; margin: 4px 0 12px;
+  }
+  .pay-title { font-weight: 700; margin: 0; }
+  .pay-amount { font-size: 1.6rem; font-weight: 800; color: var(--rose-dark); margin: 0; line-height: 1.2; }
+  .pay img { width: 240px; max-width: 80%; margin: 8px auto; border-radius: 12px; }
+  .pay .to { font-size: .8rem; color: var(--muted); margin: 0; }
+  .pay .save { display: inline-block; margin-top: 8px; font-size: .85rem; font-weight: 700; color: var(--rose-dark); text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; }
+  .pay .steps { text-align: left; font-size: .8rem; color: var(--text); margin: 10px 0 0; padding-left: 18px; }
+  .pay .steps li { margin-bottom: 2px; }
   .addons { border: 1px dashed var(--line); border-radius: 14px; padding: 10px 12px; margin-bottom: 12px; }
   .addons-title { font-size: .85rem; font-weight: 700; margin: 0 0 6px; }
   .addons-title small { font-weight: 400; color: var(--muted); }
@@ -517,6 +528,18 @@
         <label>City / State<input name="city" autocomplete="address-level2" placeholder="Klang, Selangor" required></label>
       </div>
     </div>
+    <div class="pay">
+      <p class="pay-title">💳 Pay with DuitNow QR</p>
+      <p class="pay-amount" id="payAmount">RM0</p>
+      <img id="payQr" src="images/duitnow-qr.jpg" alt="DuitNow QR for Nadia Atirah binti Isa">
+      <p class="to">Pay to: <strong id="payName">NADIA ATIRAH BINTI ISA</strong></p>
+      <a class="save" id="saveQr" href="images/duitnow-qr.jpg" download="PreciousNuha-DuitNow-QR.jpg">⬇️ Save QR</a>
+      <ol class="steps">
+        <li>Save the QR (or screenshot it), then open your bank or e-wallet app and scan it from your gallery</li>
+        <li>Key in the total amount above and pay</li>
+        <li>Tap the button below and send your receipt screenshot in WhatsApp</li>
+      </ol>
+    </div>
     <button class="wa-btn" type="submit">
       <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg>
       <span>Send order via WhatsApp</span>
@@ -569,6 +592,16 @@
       if (!isNaN(fee)) SHIPPING[key].fee = fee;
       document.querySelectorAll(`[data-fee="${key}"]`).forEach(el => { el.textContent = SHIPPING[key].fee; });
     }
+    // A new DuitNow QR can be set from the Sheet (Google Drive link shared with anyone).
+    if (settings.payment_qr) {
+      const qr = imageUrl("payment-qr", settings.payment_qr);
+      document.getElementById("payQr").src = qr;
+      document.getElementById("saveQr").href = qr;
+    }
+    if (settings.payment_name) {
+      document.getElementById("payName").textContent = settings.payment_name;
+      document.getElementById("payQr").alt = "DuitNow QR for " + settings.payment_name;
+    }
     for (const addon of ADDONS) {
       const price = money(settings["addon_" + addon.id]);
       if (!isNaN(price)) addon.price = price;
@@ -613,6 +646,8 @@
           postage_semenanjung: below("postage_semenanjung") || "",
           postage_sabah_sarawak: below("postage_sabah_sarawak") || "",
           box_pickup: below("box_pickup") || "",
+          payment_qr: below("payment_qr") || "",
+          payment_name: below("payment_name") || "",
           addon_paper_bag: below("addon_paper_bag") || "",
           addon_wish_card: below("addon_wish_card") || ""
         };
@@ -828,6 +863,7 @@
       `<div><span>${chargeLabel(c.a)} × ${c.count}</span><span>${rm(c.postage)}</span></div>` +
       c.extras.map(e => `<div><span>${e.x.name} × ${e.n}</span><span>${rm(e.sub)}</span></div>`).join("") +
       `<div class="grand"><span>Total</span><span>${rm(c.total)}</span></div>`;
+    document.getElementById("payAmount").textContent = rm(c.total);
     document.getElementById("addons").innerHTML =
       `<p class="addons-title">Add-ons 🎀 <small>(optional)</small></p>` +
       ADDONS.map(x => `
@@ -922,7 +958,9 @@
       `Name: ${f.name}`,
       `Phone: ${f.phone}`,
       c.a.pickup ? "Delivery: Self pickup (Taman Sentosa, Klang)" : `Address: ${f.address}, ${f.postcode} ${f.city}`,
-      ...(f.wish ? [`Wish card message: ${f.wish}`] : [])
+      ...(f.wish ? [`Wish card message: ${f.wish}`] : []),
+      "",
+      `Payment: DuitNow QR ${rm(c.total)} (receipt to follow)`
     ];
     window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
     form.elements.wish.value = "";
