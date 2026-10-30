@@ -198,12 +198,29 @@
     font-size: 1.25rem; line-height: 1.2; margin: 0; color: var(--text);
   }
   .card p { margin: 0; color: var(--muted); font-size: .85rem; }
+  .badges { display: flex; flex-wrap: wrap; gap: 4px; }
   .badge {
     align-self: flex-start;
     font-size: .7rem; font-weight: 700;
     color: var(--sage); background: #eef0e2;
     border-radius: 999px; padding: 2px 8px;
   }
+  .badge.pre { color: var(--rose-dark); background: var(--pink); }
+  .preorder {
+    display: block;
+    max-width: 420px;
+    margin: 14px auto 0;
+    padding: 10px 16px;
+    border-radius: 16px;
+    background: var(--card);
+    border: 1px dashed var(--rose);
+    color: var(--rose-dark);
+    font-weight: 700;
+    font-size: .9rem;
+    text-align: center;
+  }
+  .preorder[hidden] { display: none; }
+  .preorder small { display: block; font-weight: 600; color: var(--muted); font-size: .8rem; }
   .ready { color: var(--sage) !important; font-weight: 600; font-size: .8rem !important; }
   .badge.out { color: #fff; background: var(--muted); }
   .card.sold-out .photo img { opacity: .55; filter: grayscale(.4); }
@@ -332,6 +349,8 @@
   </div>
 </section>
 
+<div class="block"><p class="preorder" id="preorder" hidden></p></div>
+
 <nav class="chips" id="chips"></nav>
 
 <main id="catalog"><p class="loading">Loading our blooms… 🌷</p></main>
@@ -403,6 +422,18 @@
   const WHATSAPP = "60134478918";
   // Google Sheet shared as "Anyone with the link" (CSV export). Empty or unreachable = use products.csv.
   const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1-wnqefDebKtjV0jvCL7RW9KRSHVJ_56WMuBDDaMshDk/export?format=csv";
+  // Pre-order: every flower shows this receive-by date until the day passes. Empty = off.
+  const PREORDER_BY = "2026-12-20";
+
+  const preorderDate = PREORDER_BY && new Date(PREORDER_BY + "T23:59:59+08:00");
+  const preorder = preorderDate && Date.now() <= preorderDate
+    ? preorderDate.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kuala_Lumpur" })
+    : "";
+  if (preorder) {
+    const note = document.getElementById("preorder");
+    note.innerHTML = `🌷 Pre-order now · Receive by ${preorder}<small>Every bloom is handmade just for you 🤍</small>`;
+    note.hidden = false;
+  }
 
   let products = [];
   let qty = {};
@@ -466,9 +497,11 @@
       </button>
       <div class="card-body">
         <h4>${esc(p.name)}</h4>
-        ${p.soldOut ? `<span class="badge out">Sold out</span>` : p.badge ? `<span class="badge">${esc(p.badge)}</span>` : ""}
+        ${p.soldOut ? `<div class="badges"><span class="badge out">Sold out</span></div>`
+          : preorder || p.badge ? `<div class="badges">${preorder ? `<span class="badge pre">Pre-order</span>` : ""}${p.badge ? `<span class="badge">${esc(p.badge)}</span>` : ""}</div>` : ""}
         <p>${esc(p.desc)}</p>
-        ${p.readyIn && !p.soldOut ? `<p class="ready">📦 Ready to ship in ${esc(p.readyIn)}</p>` : ""}
+        ${p.soldOut ? "" : p.readyIn ? `<p class="ready">📦 Ready to ship in ${esc(p.readyIn)}</p>`
+          : preorder ? `<p class="ready">📦 Receive by ${preorder}</p>` : ""}
         <div class="price">${rm(p.price)}</div>
         <div class="row">
           <div class="qty">
@@ -592,6 +625,7 @@
       `Subtotal: ${rm(total)}`,
       `Postage (${a.name}): ${rm(a.fee)}`,
       `Total: ${rm(total + a.fee)}`,
+      ...(preorder ? ["", `Pre-order - receive by ${preorder}`] : []),
       "", "Name:", "Address:"
     );
     window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
