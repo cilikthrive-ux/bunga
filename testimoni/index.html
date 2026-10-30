@@ -42,7 +42,10 @@
   img { max-width: 100%; display: block; }
 
   header { text-align: center; padding: 20px 16px 4px; }
-  .back { display: inline-block; color: var(--rose-dark); font-weight: 700; text-decoration: none; font-size: .9rem; }
+  .site-nav { display: flex; justify-content: center; gap: 4px; flex-wrap: wrap; padding: 12px 12px 0; }
+  .site-nav a { color: var(--rose-dark); text-decoration: none; font-weight: 700; font-size: .9rem; padding: 6px 14px; border-radius: 999px; }
+  .site-nav a:hover { background: var(--pink); }
+  .site-nav a[aria-current="page"] { background: var(--rose); color: #fff; }
   header img { width: 90px; height: 90px; border-radius: 50%; margin: 14px auto 0; box-shadow: 0 6px 18px rgba(194, 124, 136, .2); }
   h1 { font-family: "Great Vibes", cursive; font-weight: 400; font-size: 2.8rem; color: var(--rose-dark); margin: 8px 0 0; line-height: 1.1; }
   .sub { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 1.2rem; color: var(--sage); margin: 2px 0 0; }
@@ -81,8 +84,14 @@
 </head>
 <body>
 
+<nav class="site-nav" aria-label="Pages">
+  <a href="../index.html">Home</a>
+  <a href="../catalogue.html">Catalogue</a>
+  <a href="../faq.html">FAQ</a>
+  <a href="./" aria-current="page">Reviews</a>
+</nav>
+
 <header>
-  <a class="back" href="../">← Back to shop</a>
   <img src="../images/logo.jpg" alt="Précious Nuha Bloom">
   <h1>Happy Customers</h1>
   <p class="sub">Little blooms, lots of love ♡</p>
@@ -92,7 +101,7 @@
 <main id="reviews"><p class="loading">Loading reviews… 🌷</p></main>
 
 <div class="cta">
-  <a class="btn" href="../#bloom">Find your bloom ✿</a>
+  <a class="btn" href="../catalogue.html">Find your bloom ✿</a>
 </div>
 
 <div class="lightbox" id="lightbox" role="dialog" aria-label="Full photo"><img alt=""></div>
