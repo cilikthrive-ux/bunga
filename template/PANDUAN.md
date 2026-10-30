@@ -87,7 +87,7 @@ Buka demo dengan `?theme=` di hujung link:
 
 ## Pakej & harga
 
-| | Basic RM199 | Pro RM399 |
+| | Basic RM149 | Pro RM299 |
 |---|---|---|
 | Katalog + order WhatsApp, kos pos automatik | ✓ | ✓ |
 | Bilangan produk | Sampai 10 | Sampai 50 |
@@ -100,6 +100,6 @@ Buka demo dengan `?theme=` di hujung link:
 | Bantuan percuma | 7 hari | 30 hari |
 
 **Jagaan:** RM30/bulan (update design, tambah ciri, bantuan) atau RM20 setiap kali update.
-**Promo 5 pelanggan pertama:** Basic RM149, dengan syarat bagi testimoni.
+**Promo 5 pelanggan pertama:** Pro RM249, dengan syarat bagi testimoni.
 
 \*Renew domain tahun ke-2 ~RM45/tahun ditanggung pelanggan. Daftar domain dalam akaun pelanggan sendiri, beli .com sahaja, dan catat tarikh renew.
