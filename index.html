@@ -5,6 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Précious Nuha Bloom</title>
 <meta name="description" content="Where flowers bloom and magic glows. Handmade fuzzy wire flower lamps from Klang. Order via WhatsApp.">
+<link rel="canonical" href="https://preciousnuha.com/">
+<!-- Link preview on WhatsApp, Instagram, Threads, Facebook and X -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Précious Nuha Bloom">
+<meta property="og:url" content="https://preciousnuha.com/">
+<meta property="og:title" content="Précious Nuha Bloom 🌷 Handmade flower lamps">
+<meta property="og:description" content="Where flowers bloom and magic glows ✨ Fuzzy wire flower lamps from RM35, handmade in Klang. Order via WhatsApp.">
+<meta property="og:image" content="https://preciousnuha.com/images/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Glowing tiger lily, tangled and daisy flower lamps by Précious Nuha Bloom">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="images/logo.jpg">
+<link rel="apple-touch-icon" href="images/logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -294,6 +308,50 @@
   .info a { color: var(--rose-dark); }
   footer { text-align: center; color: var(--muted); font-size: .8rem; padding: 0 16px 110px; }
 
+  /* checkout form */
+  .sheet {
+    position: fixed; inset: 0; z-index: 30;
+    background: rgba(60, 40, 42, .55);
+    display: flex; align-items: flex-end; justify-content: center;
+  }
+  .sheet[hidden] { display: none; }
+  .sheet form {
+    position: relative;
+    width: 100%; max-width: 520px; max-height: 92vh; overflow-y: auto;
+    background: var(--card);
+    border-radius: 24px 24px 0 0;
+    padding: 22px 18px 18px;
+    box-shadow: 0 -10px 30px rgba(60, 40, 42, .2);
+  }
+  @media (min-width: 600px) {
+    .sheet { align-items: center; }
+    .sheet form { border-radius: 24px; }
+  }
+  .sheet h3 { font-family: "Great Vibes", cursive; font-weight: 400; font-size: 2.1rem; color: var(--rose-dark); margin: 0; text-align: center; line-height: 1.2; }
+  .sheet .sub { text-align: center; color: var(--muted); font-size: .9rem; margin: 2px 0 12px; }
+  .sheet-close {
+    position: absolute; top: 10px; right: 12px;
+    width: 36px; height: 36px; border: 0; border-radius: 50%;
+    background: var(--pink); color: var(--rose-dark); font-size: 1.3rem; cursor: pointer;
+  }
+  .summary {
+    background: var(--cream); border: 1px solid var(--line); border-radius: 14px;
+    padding: 10px 12px; font-size: .85rem; color: var(--text); margin-bottom: 12px;
+  }
+  .summary div { display: flex; justify-content: space-between; gap: 10px; }
+  .summary .grand { font-weight: 700; color: var(--rose-dark); border-top: 1px dashed var(--line); margin-top: 6px; padding-top: 6px; }
+  .sheet label { display: block; font-size: .85rem; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+  .sheet label small { font-weight: 400; color: var(--muted); }
+  .sheet input, .sheet textarea {
+    display: block; width: 100%; margin-top: 4px;
+    font: inherit; font-size: 1rem; color: var(--text);
+    background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px;
+  }
+  .sheet ::placeholder { color: var(--muted); opacity: .5; }
+  .sheet input:focus, .sheet textarea:focus { outline: 2px solid var(--rose); outline-offset: 1px; border-color: transparent; }
+  .sheet .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .sheet .wa-btn { width: 100%; justify-content: center; margin-top: 6px; }
+
   .lightbox {
     position: fixed; inset: 0; z-index: 20;
     background: rgba(60, 40, 42, .85);
@@ -411,13 +469,34 @@
       <div class="total" id="total">RM0</div>
     </div>
     <button class="wa-btn" id="waBtn" disabled>
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35M12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.32l-.34-.2-3.57.94.95-3.48-.22-.36a9.4 9.4 0 0 1-1.44-5.02c0-5.2 4.24-9.43 9.44-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.24 9.43-9.44 9.43m8.03-17.46A11.27 11.27 0 0 0 12.05.72C5.8.72.7 5.8.7 12.05c0 2 .52 3.95 1.52 5.67L.6 23.28l5.7-1.5a11.3 11.3 0 0 0 5.74 1.47h.01c6.25 0 11.34-5.08 11.35-11.33 0-3.03-1.18-5.88-3.32-8.02"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path id="wa-icon" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35M12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.32l-.34-.2-3.57.94.95-3.48-.22-.36a9.4 9.4 0 0 1-1.44-5.02c0-5.2 4.24-9.43 9.44-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.24 9.43-9.44 9.43m8.03-17.46A11.27 11.27 0 0 0 12.05.72C5.8.72.7 5.8.7 12.05c0 2 .52 3.95 1.52 5.67L.6 23.28l5.7-1.5a11.3 11.3 0 0 0 5.74 1.47h.01c6.25 0 11.34-5.08 11.35-11.33 0-3.03-1.18-5.88-3.32-8.02"/></svg>
       <span>Order <span class="long">via WhatsApp</span></span>
     </button>
   </div>
 </div>
 
 <div class="lightbox" id="lightbox" role="dialog" aria-label="Full photo"><img alt=""></div>
+
+<div class="sheet" id="checkout" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle" hidden>
+  <form id="checkoutForm" novalidate>
+    <button type="button" class="sheet-close" id="checkoutClose" aria-label="Close">×</button>
+    <h3 id="checkoutTitle">Almost there!</h3>
+    <p class="sub">Fill in your details and we'll confirm your order on WhatsApp 🌷</p>
+    <div class="summary" id="summary"></div>
+    <label>Name<input name="name" autocomplete="name" required></label>
+    <label>Phone number<input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="012-345 6789" required></label>
+    <label>Delivery address<textarea name="address" rows="3" autocomplete="street-address" required></textarea></label>
+    <div class="row2">
+      <label>Postcode<input name="postcode" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="41200" required></label>
+      <label>City / State<input name="city" autocomplete="address-level2" placeholder="Klang, Selangor" required></label>
+    </div>
+    <label>Notes <small>(optional)</small><textarea name="notes" rows="2" placeholder="Gift message, preferred colour…"></textarea></label>
+    <button class="wa-btn" type="submit">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg>
+      <span>Send order via WhatsApp</span>
+    </button>
+  </form>
+</div>
 
 <script>
   const WHATSAPP = "60134478918";
@@ -686,32 +765,84 @@
   lightbox.addEventListener("click", () => lightbox.classList.remove("open"));
   document.addEventListener("keydown", e => { if (e.key === "Escape") lightbox.classList.remove("open"); });
 
-  document.getElementById("waBtn").addEventListener("click", () => {
+  // The cart as it stands: chosen lamps, postage and totals.
+  function cart() {
     const a = area();
-    if (!a) {
+    const items = products.filter(p => qty[p.id]).map(p => ({ p, n: qty[p.id], sub: qty[p.id] * p.price }));
+    const count = items.reduce((t, i) => t + i.n, 0);
+    const subtotal = items.reduce((t, i) => t + i.sub, 0);
+    const postage = a.fee * count;
+    return { a, items, count, subtotal, postage, total: subtotal + postage };
+  }
+
+  const checkout = document.getElementById("checkout");
+  const form = document.getElementById("checkoutForm");
+  const SAVED = "pn-customer";
+
+  function openCheckout() {
+    const c = cart();
+    document.getElementById("summary").innerHTML =
+      c.items.map(i => `<div><span>${esc(i.p.name)} × ${i.n}</span><span>${rm(i.sub)}</span></div>`).join("") +
+      `<div><span>Postage (${c.a.name}) × ${c.count}</span><span>${rm(c.postage)}</span></div>` +
+      `<div class="grand"><span>Total</span><span>${rm(c.total)}</span></div>`;
+    // Returning customers get their details filled in again.
+    try {
+      const saved = JSON.parse(localStorage.getItem(SAVED) || "{}");
+      for (const [k, v] of Object.entries(saved)) if (form.elements[k] && !form.elements[k].value) form.elements[k].value = v;
+    } catch (e) { /* storage unavailable */ }
+    checkout.hidden = false;
+    document.body.style.overflow = "hidden";
+    const first = [...form.querySelectorAll("[required]")].find(el => !el.value.trim()) || form.elements.name;
+    first.focus();
+  }
+
+  function closeCheckout() {
+    checkout.hidden = true;
+    document.body.style.overflow = "";
+  }
+
+  document.getElementById("waBtn").addEventListener("click", () => {
+    if (!area()) {
       ship.classList.remove("nudge");
       void ship.offsetWidth;
       ship.classList.add("nudge");
       return;
     }
-    const lines = ["Hi Precious Nuha! I'd love to order:", ""];
-    let total = 0, count = 0;
-    for (const p of products) {
-      if (!qty[p.id]) continue;
-      const sub = qty[p.id] * p.price;
-      total += sub; count += qty[p.id];
-      lines.push(`- ${p.name} (${p.badge || p.category}) x ${qty[p.id]} = ${rm(sub)}`);
-    }
-    lines.push(
-      "",
-      `Subtotal: ${rm(total)}`,
-      `Postage (${a.name}): ${rm(a.fee)} x ${count} = ${rm(a.fee * count)}`,
-      `Total: ${rm(total + a.fee * count)}`,
-      ...(preorder ? ["", `Pre-order - receive by ${preorder}`] : []),
-      "", "Name:", "Address:"
-    );
-    window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
+    openCheckout();
   });
+  document.getElementById("checkoutClose").addEventListener("click", closeCheckout);
+  checkout.addEventListener("click", e => { if (e.target === checkout) closeCheckout(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !checkout.hidden) closeCheckout(); });
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const f = Object.fromEntries([...new FormData(form)].map(([k, v]) => [k, String(v).trim()]));
+    // Light checks only: a real-looking phone number and a 5-digit postcode.
+    form.elements.phone.setCustomValidity(f.phone.replace(/\D/g, "").length >= 9 ? "" : "Please enter a valid phone number");
+    form.elements.postcode.setCustomValidity(/^\d{5}$/.test(f.postcode) ? "" : "Postcode should be 5 digits");
+    if (!form.reportValidity()) return;
+    try { localStorage.setItem(SAVED, JSON.stringify({ name: f.name, phone: f.phone, address: f.address, postcode: f.postcode, city: f.city })); } catch (e) { /* storage unavailable */ }
+
+    const c = cart();
+    const lines = [
+      "Hi Precious Nuha! I'd love to order:", "",
+      ...c.items.map(i => `- ${i.p.name} (${i.p.badge || i.p.category}) x ${i.n} = ${rm(i.sub)}`),
+      "",
+      `Subtotal: ${rm(c.subtotal)}`,
+      `Postage (${c.a.name}): ${rm(c.a.fee)} x ${c.count} = ${rm(c.postage)}`,
+      `Total: ${rm(c.total)}`,
+      ...(preorder ? ["", `Pre-order - receive by ${preorder}`] : []),
+      "",
+      `Name: ${f.name}`,
+      `Phone: ${f.phone}`,
+      `Address: ${f.address}, ${f.postcode} ${f.city}`,
+      ...(f.notes ? [`Notes: ${f.notes}`] : [])
+    ];
+    window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
+    form.elements.notes.value = "";
+    closeCheckout();
+  });
+  form.addEventListener("input", e => e.target.setCustomValidity(""));
 
   render();
   load();
