@@ -450,7 +450,7 @@
           name: r.name,
           category: r.category || "Flower Lamp",
           price: parseFloat((r.price || "").replace(/[^\d.]/g, "")) || 0,
-          readyIn: r.ready_in,
+          readyIn: /^[\d\s\-–~]+$/.test(r.ready_in || "") ? `${r.ready_in} days` : r.ready_in,
           soldOut: /sold|habis|out/i.test(r.stock || ""),
           badge: r.badge,
           desc: r.description,
