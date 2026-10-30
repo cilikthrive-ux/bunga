@@ -58,7 +58,7 @@
     background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
     box-shadow: 0 6px 18px rgba(194, 124, 136, .08);
   }
-  .review img { width: 100%; height: 260px; object-fit: cover; cursor: zoom-in; background: var(--pink); }
+  .review img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; cursor: zoom-in; background: var(--pink); }
   .review .body { padding: 14px 16px 16px; }
   .review .stars { color: #e0a43a; letter-spacing: 2px; font-size: .95rem; }
   .review p { margin: 6px 0 10px; white-space: pre-line; }
@@ -111,6 +111,18 @@
   // name | review | photo (Google Drive link, optional) | product (optional) | stars (1-5, optional, default 5)
   const SHEET = "https://docs.google.com/spreadsheets/d/1-wnqefDebKtjV0jvCL7RW9KRSHVJ_56WMuBDDaMshDk/gviz/tq?tqx=out:json&sheet=testimoni";
 
+  // Real messages from customers on WhatsApp, shown until the Sheet's testimoni tab has reviews of its own.
+  const DEFAULT_REVIEWS = [
+    { name: "Happy customer · WhatsApp", product: "White Tulip", stars: 5, photo: "photos/white-tulip-desk.jpg",
+      review: "Dah sampai awaaaa 🥹 Sukewww, mekaseyhhh! Nanti akan repeat lagiii, nak cari design bunga lain pulak ❤️" },
+    { name: "Happy customer · WhatsApp", product: "Tiger Lily in Pink", stars: 5, photo: "photos/tiger-lily-pink-hand.jpg",
+      review: "Terima kasih banyak awak, cantik sangattt. Ada rezeki saya order lagi dengan awak yaa ❤️" },
+    { name: "Happy customer · WhatsApp", product: "Signature Plum with Red Lily", stars: 5, photo: "photos/signature-plum-hand.jpg",
+      review: "Dah sampai and is freaking pretty 🥹🥹🥹 Thank you for the gift too, that one also prettyy!! She loves it so much." },
+    { name: "Happy customer · WhatsApp", product: "Lily of the Valley with Lotus", stars: 5, photo: "photos/lily-valley-lotus-night.jpg",
+      review: "So beautifulll 😍 Thank you dear!" }
+  ];
+
   const esc = s => String(s || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const stars = n => "★".repeat(n) + "☆".repeat(5 - n);
 
@@ -121,7 +133,6 @@
   }
 
   async function load() {
-    const box = document.getElementById("reviews");
     try {
       const ctrl = new AbortController();
       const timer = setTimeout(() => ctrl.abort(), 8000);
@@ -146,15 +157,19 @@
           stars: Math.max(1, Math.min(5, parseInt(r[si], 10) || 5))
         }));
 
-      if (!list.length) {
-        box.innerHTML = `<p class="empty">Reviews are coming soon 🌷<br>Be one of our first happy customers!</p>`;
-        return;
-      }
-      const avg = list.reduce((t, r) => t + r.stars, 0) / list.length;
-      const summary = document.getElementById("summary");
-      summary.innerHTML = `<span class="stars">${stars(Math.round(avg))}</span> ${avg.toFixed(1)} from ${list.length} review${list.length === 1 ? "" : "s"}`;
-      summary.hidden = false;
-      box.innerHTML = list.map(r => `
+      show(list.length ? list : DEFAULT_REVIEWS);
+    } catch (e) {
+      console.warn("Could not load reviews", e);
+      show(DEFAULT_REVIEWS);
+    }
+  }
+
+  function show(list) {
+    const avg = list.reduce((t, r) => t + r.stars, 0) / list.length;
+    const summary = document.getElementById("summary");
+    summary.innerHTML = `<span class="stars">${stars(Math.round(avg))}</span> ${avg.toFixed(1)} from ${list.length} review${list.length === 1 ? "" : "s"}`;
+    summary.hidden = false;
+    document.getElementById("reviews").innerHTML = list.map(r => `
         <article class="review">
           ${r.photo ? `<img src="${esc(r.photo)}" alt="Photo from ${esc(r.name)}" loading="lazy" onerror="this.remove()">` : ""}
           <div class="body">
@@ -164,10 +179,6 @@
             ${r.product ? `<div class="what">${esc(r.product)}</div>` : ""}
           </div>
         </article>`).join("");
-    } catch (e) {
-      console.warn("Could not load reviews", e);
-      box.innerHTML = `<p class="empty">Reviews didn't load 🥹 Please refresh in a moment.</p>`;
-    }
   }
 
   const lightbox = document.getElementById("lightbox");
