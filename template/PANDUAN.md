@@ -116,7 +116,7 @@ Buka demo dengan `?theme=` di hujung link:
 | Update harga & stok | Melalui awak (RM20/update): edit `products.csv`, `sheetUrl` kosong | Sendiri guna Google Sheet (`sheetUrl`) |
 | Pre-order, sold out, siap dalam X hari | ✕ (biar lajur kosong, jangan buat tab `settings`) | ✓ |
 | Ayat promosi & cerita jenama (`hero`, `before`, `after`) | Ayat ringkas | ✓ ditulis khas |
-| Link | Percuma (Netlify / github.io) | Domain .com tahun pertama* |
+| Link | Percuma (`nama-kedai.netlify.app`) | Domain .com tahun pertama* |
 | Pembetulan | 1 kali | 3 kali |
 | Bantuan percuma | 7 hari | 30 hari |
 
