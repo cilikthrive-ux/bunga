@@ -206,6 +206,12 @@
     border: 0; padding: 0; width: 100%;
   }
   .card .photo img { width: 100%; height: auto; aspect-ratio: 9 / 16; object-fit: contain; }
+  .card .photo { position: relative; }
+  .play {
+    position: absolute; left: 8px; bottom: 8px;
+    background: rgba(40, 28, 30, .6); color: #fff; backdrop-filter: blur(4px);
+    font-size: .75rem; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+  }
   .card-body { padding: 12px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
   .card h4 {
     font-family: "Cormorant Garamond", serif;
@@ -389,7 +395,14 @@
     padding: 16px; cursor: zoom-out;
   }
   .lightbox.open { display: flex; }
-  .lightbox img { max-height: 90vh; max-width: 100%; border-radius: 14px; }
+  .lightbox img, .lightbox video { max-height: 90vh; max-width: 100%; border-radius: 14px; }
+  .lightbox video { background: #000; cursor: default; }
+  .lightbox [hidden] { display: none; }
+  .lightbox-close {
+    position: absolute; top: 14px; right: 14px; width: 40px; height: 40px;
+    border: 0; border-radius: 50%; background: rgba(255,255,255,.9); color: var(--rose-dark);
+    font-size: 1.4rem; cursor: pointer;
+  }
 
   @media (max-width: 480px) {
     h1 { font-size: 2.6rem; }
@@ -511,7 +524,11 @@
   </div>
 </div>
 
-<div class="lightbox" id="lightbox" role="dialog" aria-label="Full photo"><img alt=""></div>
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Photo or video">
+  <button type="button" class="lightbox-close" aria-label="Close">×</button>
+  <img alt="">
+  <video playsinline muted loop controls preload="none" hidden></video>
+</div>
 
 <div class="sheet" id="checkout" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle" hidden>
   <form id="checkoutForm" novalidate>
@@ -699,6 +716,13 @@
     return drive ? `https://drive.google.com/thumbnail?id=${drive[1]}&sz=w800` : link;
   }
 
+  // Short clips of the lamps glowing, in videos/<id>.mp4. A "video" column in the Sheet can point a product at another .mp4.
+  const VIDEOS = new Set([
+    "tangled-yellow", "tangled-lilac", "tiger-lily-pink", "signature-plum-red-lily", "signature-red-tiger-lily",
+    "pink-daisy", "white-daisy", "white-tulip", "red-roses", "black-roses", "lily-valley-lotus",
+    "giant-tiger-lily", "wild-lily-garden"
+  ]);
+
   function toProducts(rows) {
     const seen = new Set();
     return rows
@@ -716,15 +740,17 @@
           soldOut: /sold|habis|out/i.test(r.stock || ""),
           badge: r.badge,
           desc: r.description,
-          img: imageUrl(id, r.image)
+          img: imageUrl(id, r.image),
+          video: r.video || (VIDEOS.has(id) ? `videos/${id}.mp4` : "")
         };
       });
   }
 
   const card = p => `
     <article class="card${p.soldOut ? " sold-out" : ""}">
-      <button class="photo" type="button" data-zoom="${esc(p.img)}" aria-label="View ${esc(p.name)}">
+      <button class="photo" type="button" data-zoom="${esc(p.img)}"${p.video ? ` data-video="${esc(p.video)}"` : ""} aria-label="${p.video ? "Play video of" : "View"} ${esc(p.name)}">
         <img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy" width="600" height="1066" onerror="this.onerror=null;this.src='images/logo.jpg';this.parentNode.dataset.zoom='images/logo.jpg'">
+        ${p.video ? `<span class="play">▶ Video</span>` : ""}
       </button>
       <div class="card-body">
         <h4>${esc(p.name)}</h4>
@@ -828,16 +854,37 @@
     const b = e.target.closest("button[data-step]");
     if (b) return setQty(b.dataset.id, qty[b.dataset.id] + Number(b.dataset.step));
     const z = e.target.closest("[data-zoom]");
-    if (z) {
-      lightbox.querySelector("img").src = z.dataset.zoom;
-      lightbox.classList.add("open");
-    }
+    if (z) openLightbox(z.dataset.zoom, z.dataset.video);
   });
   catalog.addEventListener("change", e => {
     if (e.target.matches("input[data-id]")) setQty(e.target.dataset.id, e.target.value);
   });
-  lightbox.addEventListener("click", () => lightbox.classList.remove("open"));
-  document.addEventListener("keydown", e => { if (e.key === "Escape") lightbox.classList.remove("open"); });
+  const lbImg = lightbox.querySelector("img");
+  const lbVideo = lightbox.querySelector("video");
+
+  function openLightbox(img, video) {
+    lbImg.hidden = !!video;
+    lbVideo.hidden = !video;
+    if (video) {
+      lbVideo.poster = img;
+      lbVideo.src = video;
+      lbVideo.play().catch(() => {});
+    } else {
+      lbImg.src = img;
+    }
+    lightbox.classList.add("open");
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("open");
+    lbVideo.pause();
+    lbVideo.removeAttribute("src");
+    lbVideo.load();
+  }
+
+  // Taps on the video work its controls; anywhere else closes.
+  lightbox.addEventListener("click", e => { if (e.target !== lbVideo) closeLightbox(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && lightbox.classList.contains("open")) closeLightbox(); });
 
   // Extras picked in the order form; prices can be changed in the Sheet's settings tab.
   // "packaging" items count towards the box-or-bag each pickup lamp needs; the box is offered for pickup only.
