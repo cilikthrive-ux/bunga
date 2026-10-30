@@ -314,6 +314,23 @@
   .info a { color: var(--rose-dark); }
   footer { text-align: center; color: var(--muted); font-size: .8rem; padding: 0 16px 110px; }
 
+  /* FAQ */
+  .faq-list { text-align: left; margin-top: 10px; }
+  .faq details {
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    margin-bottom: 10px; padding: 0 16px;
+  }
+  .faq summary {
+    cursor: pointer; list-style: none; padding: 14px 28px 14px 0; position: relative;
+    font-weight: 700; color: var(--text);
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; position: absolute; right: 0; top: 10px; font-size: 1.4rem; color: var(--rose); }
+  .faq details[open] summary::after { content: "−"; }
+  .faq details p { margin: 0 0 14px; color: var(--muted); white-space: pre-line; }
+  .faq-more { margin-top: 6px; color: var(--muted); font-size: .9rem; }
+  .faq-more a { color: var(--rose-dark); font-weight: 700; }
+
   /* checkout form */
   .sheet {
     position: fixed; inset: 0; z-index: 30;
@@ -460,6 +477,12 @@
 
 <main id="catalog"><p class="loading">Loading our blooms… 🌷</p></main>
 
+<section class="block faq" id="faq">
+  <h2 class="block-title">Questions?</h2>
+  <div class="faq-list" id="faqList"></div>
+  <p class="faq-more">Still curious? <a href="https://wa.me/60134478918" target="_blank" rel="noopener">Ask us on WhatsApp</a> 💬</p>
+</section>
+
 <p class="divider">✦ ⋆ ˚｡ ⋆ ✦</p>
 
 <section class="block">
@@ -572,7 +595,8 @@
   // Google Sheet shared as "Anyone with the link" (CSV export). Empty or unreachable = use products.csv.
   const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1-wnqefDebKtjV0jvCL7RW9KRSHVJ_56WMuBDDaMshDk/export?format=csv";
   // Optional "settings" tab in the same Sheet: preorder_until, postage_semenanjung, postage_sabah_sarawak.
-  const SETTINGS_URL = "https://docs.google.com/spreadsheets/d/1-wnqefDebKtjV0jvCL7RW9KRSHVJ_56WMuBDDaMshDk/gviz/tq?tqx=out:json&sheet=settings";
+  const SHEET_TAB_URL = tab => `https://docs.google.com/spreadsheets/d/1-wnqefDebKtjV0jvCL7RW9KRSHVJ_56WMuBDDaMshDk/gviz/tq?tqx=out:json&sheet=${tab}`;
+  const SETTINGS_URL = SHEET_TAB_URL("settings");
   // Used only when the Sheet has no "settings" tab.
   const DEFAULT_SETTINGS = { preorder_until: "2026-12-20" };
 
@@ -799,11 +823,55 @@
     render();
   }
 
+  // Default answers, kept in step with the live prices and pre-order date.
+  // A "faq" tab in the Sheet with "question" and "answer" columns replaces this list.
+  function defaultFaq() {
+    const fee = id => rm(SHIPPING[id].fee);
+    const addon = id => rm(ADDONS.find(a => a.id === id).price);
+    return [
+      { q: "What batteries do the lamps use? 🔋", a: "Small round button cell (coin) batteries." },
+      { q: "The batteries ran out. Can I replace them?", a: "Yes! You can buy new ones at DIY stores (e.g. Mr DIY) and swap them in." },
+      { q: "What does \"USB + LED\" mean?", a: "The big flower on top is a table lamp powered by USB, and the small flower below has its own LED lights." },
+      { q: "When will I get my lamp?", a: preorder ? `All our lamps are made to order 🌷 This batch will be posted by ${preorder}.` : "Every lamp is handmade to order. We'll let you know the ready date on WhatsApp." },
+      { q: "Can I pick it up myself?", a: `Yes! Self pickup at Taman Sentosa, Klang is FREE. Just choose a box (${addon("box")}) or window paper bag (${addon("paper_bag")}) for each lamp.` },
+      { q: "How much is postage?", a: `Semenanjung ${fee("sm")} and Sabah / Sarawak ${fee("ss")} for each lamp.` },
+      { q: "How do I pay?", a: "Scan our DuitNow QR in the order form, pay the total, then send your receipt in WhatsApp." },
+      { q: "Can I request my own flower or colour? 🎀", a: "Yes, we love custom orders! WhatsApp us your favourite flower, colours or a photo, and we'll see what we can make." }
+    ];
+  }
+
+  function renderFaq(list) {
+    document.getElementById("faqList").innerHTML = list
+      .map(f => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join("");
+  }
+
+  async function loadFaq() {
+    try {
+      const text = await fetchText(SHEET_TAB_URL("faq"));
+      const table = JSON.parse(text.slice(text.indexOf("(") + 1, text.lastIndexOf(")"))).table;
+      const cell = c => (c == null ? "" : String(c.f ?? c.v ?? "")).trim();
+      const rows = [table.cols.map(c => c.label || ""), ...table.rows.map(r => (r.c || []).map(cell))];
+      // Find the header row with "question" and "answer"; without a faq tab Google returns the first tab, which has neither.
+      const h = rows.findIndex(r => r.some(v => /question/i.test(v)) && r.some(v => /answer/i.test(v)));
+      if (h >= 0) {
+        const qi = rows[h].findIndex(v => /question/i.test(v)), ai = rows[h].findIndex(v => /answer/i.test(v));
+        const list = rows.slice(h + 1).map(r => ({ q: r[qi] || "", a: r[ai] || "" })).filter(f => f.q && f.a);
+        if (list.length) return list;
+      }
+    } catch (e) {
+      console.warn("Could not load FAQ", e);
+    }
+    return null;
+  }
+
   async function load() {
+    const fromFaq = loadFaq();
     // Ask Google for the products and the settings at the same time.
     const fromSheet = SHEET_CSV_URL ? fetchText(SHEET_CSV_URL) : Promise.reject(new Error("no Sheet link"));
     fromSheet.catch(() => {});
     applySettings(await loadSettings());
+    renderFaq(defaultFaq());
+    fromFaq.then(list => list && renderFaq(list));
     for (const [source, get] of [["Google Sheet", () => fromSheet], ["products.csv", () => fetchText("products.csv")]]) {
       try {
         const list = toProducts(parseCSV(await get()));
