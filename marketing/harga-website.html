@@ -1,0 +1,94 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Great+Vibes&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    width: 1080px; height: 1350px; overflow: hidden;
+    font-family: "Nunito", sans-serif; color: #5a4446;
+    background:
+      radial-gradient(circle at 8% 4%, #fbe4e6 0, transparent 32%),
+      radial-gradient(circle at 96% 40%, #fbe4e6 0, transparent 26%),
+      radial-gradient(circle at 4% 86%, #fbe4e6 0, transparent 26%),
+      #fff8ea;
+    padding: 64px 64px; text-align: center;
+  }
+  .spark { color: #c27c88; letter-spacing: .2em; font-size: 26px; }
+  h1 { font-family: "Great Vibes", cursive; font-weight: 400; font-size: 104px; color: #a05c69; line-height: 1; margin-top: 30px; }
+  .sub { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 34px; color: #7d846b; margin-top: 4px; }
+  .feats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; text-align: left; margin: 34px auto 0; width: 960px; font-size: 23px; font-weight: 700; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 44px; }
+  .card { background: #fffdf8; border: 2px solid #f1dcd8; border-radius: 30px; padding: 26px 20px 24px; box-shadow: 0 10px 30px rgba(194,124,136,.12); display: flex; flex-direction: column; }
+  .card.hot { border-color: #c27c88; background: linear-gradient(170deg, #fbe4e6, #fffdf8 55%); position: relative; }
+  .tag { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: #c27c88; color: #fff; font-size: 18px; font-weight: 800; padding: 5px 16px; border-radius: 999px; white-space: nowrap; }
+  .name { font-family: "Cormorant Garamond", serif; font-size: 40px; font-weight: 600; color: #5a4446; }
+  .price { font-size: 58px; font-weight: 800; color: #a05c69; line-height: 1.1; margin-top: 4px; }
+  .price small { font-size: 22px; font-weight: 700; color: #8d7a7b; }
+  .card ul { list-style: none; padding: 0; text-align: left; margin-top: 16px; font-size: 20px; line-height: 1.45; color: #6d5a5c; }
+  .card li { padding-left: 26px; position: relative; margin-bottom: 6px; }
+  .card li::before { content: "✿"; position: absolute; left: 0; color: #c27c88; }
+  .note { margin-top: auto; padding-top: 10px; font-size: 17px; color: #8d7a7b; font-style: italic; }
+  .promo { margin: 34px auto 0; display: inline-block; background: #c27c88; color: #fff; border-radius: 999px; padding: 16px 38px; font-size: 30px; font-weight: 800; box-shadow: 0 10px 24px rgba(194,124,136,.35); }
+  .promo s { opacity: .8; font-weight: 700; }
+  .fine { margin-top: 18px; font-size: 22px; color: #8d7a7b; }
+  .contact { margin-top: 26px; font-size: 28px; font-weight: 800; color: #5a4446; }
+  .contact span { color: #a05c69; }
+  .demo { font-size: 22px; color: #8d7a7b; margin-top: 6px; }
+</style></head>
+<body>
+  <p class="spark">✦ ⋆ ˚｡ 🌷 ｡˚ ⋆ ✦</p>
+  <h1>Website Kedai Sendiri</h1>
+  <p class="sub">Katalog cantik + order terus ke WhatsApp</p>
+
+  <div class="feats">
+    <div>🛍️ Pelanggan pilih produk &amp; kuantiti</div>
+    <div>💬 Order terus masuk WhatsApp</div>
+    <div>📦 Kos pos dikira automatik</div>
+    <div>📝 Ubah harga &amp; stok guna Google Sheet</div>
+    <div>🎀 Ikut logo &amp; warna jenama</div>
+    <div>📱 Cantik di telefon</div>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <p class="name">Basic 🌱</p>
+      <p class="price">RM199</p>
+      <ul>
+        <li>Website katalog + order WhatsApp</li>
+        <li>Logo &amp; warna jenama</li>
+        <li>Google Sheet untuk update sendiri</li>
+        <li>Link percuma</li>
+        <li>Sampai 20 produk</li>
+      </ul>
+    </div>
+    <div class="card hot">
+      <span class="tag">PALING POPULAR</span>
+      <p class="name">Pro 🌷</p>
+      <p class="price">RM399</p>
+      <ul>
+        <li>Semua dalam Basic</li>
+        <li>Setup domain sendiri (.com / .my)</li>
+        <li>Ayat promosi untuk website</li>
+        <li>Susun gambar produk</li>
+        <li>2 kali pembetulan</li>
+      </ul>
+      <p class="note">*Tak termasuk domain</p>
+    </div>
+    <div class="card">
+      <p class="name">Jagaan 🤍</p>
+      <p class="price">RM30<small>/bulan</small></p>
+      <ul>
+        <li>Update design</li>
+        <li>Tambah ciri baru</li>
+        <li>Bantuan bila ada masalah</li>
+        <li>Atau RM20 setiap kali update</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="promo">🎀 Promo 5 orang pertama: Basic <s>RM199</s> RM149</p>
+  <p class="fine">Harga tak termasuk domain (~RM40–90 setahun, dibayar oleh pelanggan)</p>
+
+  <p class="contact">WhatsApp: <span>013-447 8918</span></p>
+  <p class="demo">Lihat contoh: preciousnuha.com · preciousnuha.com/template</p>
+</body></html>
