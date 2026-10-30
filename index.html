@@ -351,6 +351,22 @@
   .sheet input:focus, .sheet textarea:focus { outline: 2px solid var(--rose); outline-offset: 1px; border-color: transparent; }
   .sheet .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .sheet .wa-btn { width: 100%; justify-content: center; margin-top: 6px; }
+  .addons { border: 1px dashed var(--line); border-radius: 14px; padding: 10px 12px; margin-bottom: 12px; }
+  .addons-title { font-size: .85rem; font-weight: 700; margin: 0 0 6px; }
+  .addons-title small { font-weight: 400; color: var(--muted); }
+  .addon { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: .9rem; padding: 4px 0; }
+  .addon span small { color: var(--muted); }
+  .sheet .qty input { display: inline-block; width: 34px; margin: 0; padding: 0; border: 0; border-radius: 0; }
+  .pickup-note { background: #eef3e6; color: #4f6545; border-radius: 12px; padding: 10px 12px; font-size: .85rem; font-weight: 600; margin-bottom: 12px; }
+  .pickup-note[hidden], #addressFields[hidden] { display: none; }
+  .pickup-banner {
+    display: block; max-width: 420px; margin: 10px auto 0; padding: 10px 16px;
+    border-radius: 16px; background: #eef3e6; border: 1px solid #c9d6b8;
+    color: #4f6545; font-size: .95rem; text-align: center;
+  }
+  .pickup-banner small { display: block; color: #6b7a63; font-size: .8rem; }
+  .ship span.pill.pickup { background: #eef3e6; border-color: #c9d6b8; color: #4f6545; }
+  .ship input:checked + span.pill.pickup { background: #6f8762; border-color: #6f8762; color: #fff; }
 
   .lightbox {
     position: fixed; inset: 0; z-index: 20;
@@ -408,7 +424,10 @@
   </div>
 </section>
 
-<div class="block"><p class="preorder" id="preorder" hidden></p></div>
+<div class="block">
+  <p class="preorder" id="preorder" hidden></p>
+  <p class="pickup-banner">📍 <strong>Self pickup at Taman Sentosa, Klang</strong><small>No postage, just a RM<span data-fee="pk">5</span> box per lamp 🎁</small></p>
+</div>
 
 <nav class="chips" id="chips"></nav>
 
@@ -453,15 +472,18 @@
 <div class="info">
   <p>Pick your blooms, choose the quantity and your delivery area, then tap <strong>Order via WhatsApp</strong> 🫶🏻<br>
   Postage: Semenanjung RM<span data-fee="sm">10</span> · Sabah / Sarawak RM<span data-fee="ss">45</span> per lamp 📦<br>
+  Self pickup at Taman Sentosa, Klang: box RM<span data-fee="pk">5</span> per lamp 🎁<br>
+  Add-ons: window paper bag RM<span data-addon="paper_bag">3</span> · wish card RM<span data-addon="wish_card">3</span> 💌<br>
   Or just say hi: <a href="https://wa.me/60134478918" target="_blank" rel="noopener">013-447 8918</a></p>
 </div>
 <footer>&copy; Précious Nuha Bloom · @preciousnuha</footer>
 
 <div class="order">
   <div class="ship" id="ship" role="radiogroup" aria-label="Delivery area" hidden>
-    <span class="ship-label">Deliver to:</span>
+    <span class="ship-label">Delivery:</span>
     <label><input type="radio" name="area" value="sm"><span class="pill">Semenanjung +RM<span data-fee="sm">10</span>/pc</span></label>
     <label><input type="radio" name="area" value="ss"><span class="pill">Sabah/Sarawak +RM<span data-fee="ss">45</span>/pc</span></label>
+    <label><input type="radio" name="area" value="pk"><span class="pill pickup">📍 Pickup Klang +RM<span data-fee="pk">5</span>/pc</span></label>
   </div>
   <div class="order-inner">
     <div>
@@ -483,14 +505,18 @@
     <h3 id="checkoutTitle">Almost there!</h3>
     <p class="sub">Fill in your details and we'll confirm your order on WhatsApp 🌷</p>
     <div class="summary" id="summary"></div>
+    <div class="addons" id="addons"></div>
+    <p class="pickup-note" id="pickupNote" hidden>📍 Self pickup at Taman Sentosa, Klang. We'll WhatsApp you the exact spot &amp; time.</p>
     <label>Name<input name="name" autocomplete="name" required></label>
     <label>Phone number<input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="012-345 6789" required></label>
-    <label>Delivery address<textarea name="address" rows="3" autocomplete="street-address" required></textarea></label>
-    <div class="row2">
-      <label>Postcode<input name="postcode" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="41200" required></label>
-      <label>City / State<input name="city" autocomplete="address-level2" placeholder="Klang, Selangor" required></label>
+    <div id="addressFields">
+      <label>Delivery address<textarea name="address" rows="3" autocomplete="street-address" required></textarea></label>
+      <div class="row2">
+        <label>Postcode<input name="postcode" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="41200" required></label>
+        <label>City / State<input name="city" autocomplete="address-level2" placeholder="Klang, Selangor" required></label>
+      </div>
     </div>
-    <label>Notes <small>(optional)</small><textarea name="notes" rows="2" placeholder="Gift message, preferred colour…"></textarea></label>
+    <label>Wish card message / notes <small>(optional)</small><textarea name="notes" rows="2" placeholder="Happy birthday! Love, Aina…"></textarea></label>
     <button class="wa-btn" type="submit">
       <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg>
       <span>Send order via WhatsApp</span>
@@ -534,13 +560,19 @@
       ? end.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kuala_Lumpur" })
       : "";
     const note = document.getElementById("preorder");
-    note.innerHTML = `🌷 Pre-order now · Receive by ${preorder}<small>Every bloom is handmade just for you 🤍</small>`;
+    note.innerHTML = `🌷 Pre-order now · Postage by ${preorder}<small>Every bloom is handmade just for you 🤍</small>`;
     note.hidden = !preorder;
 
-    for (const [key, column] of [["sm", "postage_semenanjung"], ["ss", "postage_sabah_sarawak"]]) {
-      const fee = parseFloat((settings[column] || "").replace(/[^\d.]/g, ""));
+    const money = v => parseFloat((v || "").replace(/[^\d.]/g, ""));
+    for (const [key, column] of [["sm", "postage_semenanjung"], ["ss", "postage_sabah_sarawak"], ["pk", "box_pickup"]]) {
+      const fee = money(settings[column]);
       if (!isNaN(fee)) SHIPPING[key].fee = fee;
       document.querySelectorAll(`[data-fee="${key}"]`).forEach(el => { el.textContent = SHIPPING[key].fee; });
+    }
+    for (const addon of ADDONS) {
+      const price = money(settings["addon_" + addon.id]);
+      if (!isNaN(price)) addon.price = price;
+      document.querySelectorAll(`[data-addon="${addon.id}"]`).forEach(el => { el.textContent = addon.price; });
     }
   }
 
@@ -579,7 +611,10 @@
         return {
           preorder_until: date,
           postage_semenanjung: below("postage_semenanjung") || "",
-          postage_sabah_sarawak: below("postage_sabah_sarawak") || ""
+          postage_sabah_sarawak: below("postage_sabah_sarawak") || "",
+          box_pickup: below("box_pickup") || "",
+          addon_paper_bag: below("addon_paper_bag") || "",
+          addon_wish_card: below("addon_wish_card") || ""
         };
       }
     } catch (e) {
@@ -659,7 +694,7 @@
           : preorder || p.badge ? `<div class="badges">${preorder ? `<span class="badge pre">Pre-order</span>` : ""}${p.badge ? `<span class="badge">${esc(p.badge)}</span>` : ""}</div>` : ""}
         <p>${esc(p.desc)}</p>
         ${p.soldOut ? "" : p.readyIn ? `<p class="ready">📦 Ready to ship in ${esc(p.readyIn)}</p>`
-          : preorder ? `<p class="ready">📦 Receive by ${preorder}</p>` : ""}
+          : preorder ? `<p class="ready">📦 Postage by ${preorder}</p>` : ""}
         <div class="price">${rm(p.price)}</div>
         <div class="row">
           <div class="qty">
@@ -723,10 +758,13 @@
     render();
   }
 
+  // Fees are charged for every lamp. Self pickup has no postage but each lamp needs a box.
   const SHIPPING = {
     sm: { name: "Semenanjung", fee: 10 },
-    ss: { name: "Sabah / Sarawak", fee: 45 }
+    ss: { name: "Sabah / Sarawak", fee: 45 },
+    pk: { name: "Self pickup", fee: 5, pickup: true }
   };
+  const chargeLabel = a => a.pickup ? "Box for pickup" : `Postage (${a.name})`;
   const ship = document.getElementById("ship");
   const area = () => SHIPPING[(ship.querySelector("input:checked") || {}).value];
 
@@ -739,12 +777,11 @@
     }
     const a = area();
     const items = count + (count === 1 ? " item" : " items");
-    // Postage is charged for every lamp, not once per order.
     const postage = a ? a.fee * count : 0;
     ship.hidden = count === 0;
     document.getElementById("total").textContent = rm(total + postage);
     document.getElementById("itemCount").textContent =
-      count && a ? `${items} + postage ${rm(postage)}` : count ? `${items} + postage` : items;
+      count && a ? `${items} + ${a.pickup ? "box" : "postage"} ${rm(postage)}` : count ? `${items} + postage` : items;
     document.getElementById("waBtn").disabled = count === 0;
   }
   ship.addEventListener("change", render);
@@ -765,26 +802,64 @@
   lightbox.addEventListener("click", () => lightbox.classList.remove("open"));
   document.addEventListener("keydown", e => { if (e.key === "Escape") lightbox.classList.remove("open"); });
 
-  // The cart as it stands: chosen lamps, postage and totals.
+  // Extras picked in the order form; prices can be changed in the Sheet's settings tab.
+  const ADDONS = [
+    { id: "paper_bag", name: "Window paper bag", price: 3 },
+    { id: "wish_card", name: "Wish card", price: 3 }
+  ];
+  const addonQty = Object.fromEntries(ADDONS.map(a => [a.id, 0]));
+
+  // The cart as it stands: chosen lamps, postage or pickup boxes, add-ons and totals.
   function cart() {
     const a = area();
     const items = products.filter(p => qty[p.id]).map(p => ({ p, n: qty[p.id], sub: qty[p.id] * p.price }));
     const count = items.reduce((t, i) => t + i.n, 0);
     const subtotal = items.reduce((t, i) => t + i.sub, 0);
     const postage = a.fee * count;
-    return { a, items, count, subtotal, postage, total: subtotal + postage };
+    const extras = ADDONS.filter(x => addonQty[x.id]).map(x => ({ x, n: addonQty[x.id], sub: addonQty[x.id] * x.price }));
+    const extrasTotal = extras.reduce((t, e) => t + e.sub, 0);
+    return { a, items, count, subtotal, postage, extras, total: subtotal + postage + extrasTotal };
   }
+
+  function renderSummary() {
+    const c = cart();
+    document.getElementById("summary").innerHTML =
+      c.items.map(i => `<div><span>${esc(i.p.name)} × ${i.n}</span><span>${rm(i.sub)}</span></div>`).join("") +
+      `<div><span>${chargeLabel(c.a)} × ${c.count}</span><span>${rm(c.postage)}</span></div>` +
+      c.extras.map(e => `<div><span>${e.x.name} × ${e.n}</span><span>${rm(e.sub)}</span></div>`).join("") +
+      `<div class="grand"><span>Total</span><span>${rm(c.total)}</span></div>`;
+    document.getElementById("addons").innerHTML =
+      `<p class="addons-title">Add-ons 🎀 <small>(optional)</small></p>` +
+      ADDONS.map(x => `
+        <div class="addon">
+          <span>${x.name} <small>${rm(x.price)}</small></span>
+          <div class="qty">
+            <button type="button" data-addon-step="-1" data-addon-id="${x.id}" aria-label="Less ${x.name}">&minus;</button>
+            <input type="number" value="${addonQty[x.id]}" readonly tabindex="-1" aria-label="${x.name} quantity">
+            <button type="button" data-addon-step="1" data-addon-id="${x.id}" aria-label="More ${x.name}">+</button>
+          </div>
+        </div>`).join("");
+  }
+  document.getElementById("addons").addEventListener("click", e => {
+    const b = e.target.closest("[data-addon-step]");
+    if (!b) return;
+    const id = b.dataset.addonId;
+    addonQty[id] = Math.max(0, Math.min(99, addonQty[id] + Number(b.dataset.addonStep)));
+    renderSummary();
+    document.querySelector(`[data-addon-id="${id}"][data-addon-step="${b.dataset.addonStep}"]`).focus();
+  });
 
   const checkout = document.getElementById("checkout");
   const form = document.getElementById("checkoutForm");
   const SAVED = "pn-customer";
 
   function openCheckout() {
-    const c = cart();
-    document.getElementById("summary").innerHTML =
-      c.items.map(i => `<div><span>${esc(i.p.name)} × ${i.n}</span><span>${rm(i.sub)}</span></div>`).join("") +
-      `<div><span>Postage (${c.a.name}) × ${c.count}</span><span>${rm(c.postage)}</span></div>` +
-      `<div class="grand"><span>Total</span><span>${rm(c.total)}</span></div>`;
+    renderSummary();
+    // Pickup needs no address, so those fields are hidden and skipped.
+    const pickup = !!area().pickup;
+    document.getElementById("pickupNote").hidden = !pickup;
+    document.getElementById("addressFields").hidden = pickup;
+    for (const name of ["address", "postcode", "city"]) form.elements[name].disabled = pickup;
     // Returning customers get their details filled in again.
     try {
       const saved = JSON.parse(localStorage.getItem(SAVED) || "{}");
@@ -819,9 +894,13 @@
     const f = Object.fromEntries([...new FormData(form)].map(([k, v]) => [k, String(v).trim()]));
     // Light checks only: a real-looking phone number and a 5-digit postcode.
     form.elements.phone.setCustomValidity(f.phone.replace(/\D/g, "").length >= 9 ? "" : "Please enter a valid phone number");
-    form.elements.postcode.setCustomValidity(/^\d{5}$/.test(f.postcode) ? "" : "Postcode should be 5 digits");
+    if (f.postcode !== undefined) form.elements.postcode.setCustomValidity(/^\d{5}$/.test(f.postcode) ? "" : "Postcode should be 5 digits");
     if (!form.reportValidity()) return;
-    try { localStorage.setItem(SAVED, JSON.stringify({ name: f.name, phone: f.phone, address: f.address, postcode: f.postcode, city: f.city })); } catch (e) { /* storage unavailable */ }
+    try {
+      const keep = JSON.parse(localStorage.getItem(SAVED) || "{}");
+      for (const k of ["name", "phone", "address", "postcode", "city"]) if (f[k] !== undefined) keep[k] = f[k];
+      localStorage.setItem(SAVED, JSON.stringify(keep));
+    } catch (e) { /* storage unavailable */ }
 
     const c = cart();
     const lines = [
@@ -829,17 +908,19 @@
       ...c.items.map(i => `- ${i.p.name} (${i.p.badge || i.p.category}) x ${i.n} = ${rm(i.sub)}`),
       "",
       `Subtotal: ${rm(c.subtotal)}`,
-      `Postage (${c.a.name}): ${rm(c.a.fee)} x ${c.count} = ${rm(c.postage)}`,
+      `${chargeLabel(c.a)}: ${rm(c.a.fee)} x ${c.count} = ${rm(c.postage)}`,
+      ...c.extras.map(e => `${e.x.name} x ${e.n} = ${rm(e.sub)}`),
       `Total: ${rm(c.total)}`,
-      ...(preorder ? ["", `Pre-order - receive by ${preorder}`] : []),
+      ...(preorder ? ["", `Pre-order - postage by ${preorder}`] : []),
       "",
       `Name: ${f.name}`,
       `Phone: ${f.phone}`,
-      `Address: ${f.address}, ${f.postcode} ${f.city}`,
-      ...(f.notes ? [`Notes: ${f.notes}`] : [])
+      c.a.pickup ? "Delivery: Self pickup (Taman Sentosa, Klang)" : `Address: ${f.address}, ${f.postcode} ${f.city}`,
+      ...(f.notes ? [`Wish card / notes: ${f.notes}`] : [])
     ];
     window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
     form.elements.notes.value = "";
+    for (const id in addonQty) addonQty[id] = 0;
     closeCheckout();
   });
   form.addEventListener("input", e => e.target.setCustomValidity(""));
