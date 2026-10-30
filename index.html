@@ -351,9 +351,23 @@
   .sheet input:focus, .sheet textarea:focus { outline: 2px solid var(--rose); outline-offset: 1px; border-color: transparent; }
   .sheet .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .sheet .wa-btn { width: 100%; justify-content: center; margin-top: 6px; }
+  .pay {
+    text-align: center; border: 1px solid var(--line); border-radius: 16px;
+    background: #fff; padding: 14px 12px 12px; margin: 4px 0 12px;
+  }
+  .pay-title { font-weight: 700; margin: 0; }
+  .pay-amount { font-size: 1.6rem; font-weight: 800; color: var(--rose-dark); margin: 0; line-height: 1.2; }
+  .pay img { width: 240px; max-width: 80%; margin: 8px auto; border-radius: 12px; }
+  .pay .to { font-size: .8rem; color: var(--muted); margin: 0; }
+  .pay .save { display: inline-block; margin-top: 8px; font-size: .85rem; font-weight: 700; color: var(--rose-dark); text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; }
+  .pay .steps { text-align: left; font-size: .8rem; color: var(--text); margin: 10px 0 0; padding-left: 18px; }
+  .pay .steps li { margin-bottom: 2px; }
   .addons { border: 1px dashed var(--line); border-radius: 14px; padding: 10px 12px; margin-bottom: 12px; }
   .addons-title { font-size: .85rem; font-weight: 700; margin: 0 0 6px; }
   .addons-title small { font-weight: 400; color: var(--muted); }
+  .addon-need { font-size: .8rem; color: #8a5a00; background: #fff4dc; border-radius: 10px; padding: 6px 10px; margin: 0 0 6px; }
+  .addon-need.ok { color: #4f6545; background: #eef3e6; }
+  .addon-need.warn { color: #fff; background: #c0533f; font-weight: 700; }
   .addon { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: .9rem; padding: 4px 0; }
   .addon span small { color: var(--muted); }
   .sheet .qty input { display: inline-block; width: 34px; margin: 0; padding: 0; border: 0; border-radius: 0; }
@@ -426,7 +440,7 @@
 
 <div class="block">
   <p class="preorder" id="preorder" hidden></p>
-  <p class="pickup-banner">📍 <strong>Self pickup at Taman Sentosa, Klang</strong><small>No postage, just a RM<span data-fee="pk">5</span> box per lamp 🎁</small></p>
+  <p class="pickup-banner">📍 <strong>Self pickup at Taman Sentosa, Klang</strong><small>FREE pickup 🎉 Just choose a box (RM<span data-addon="box">5</span>) or window paper bag (RM<span data-addon="paper_bag">3</span>) for each lamp</small></p>
 </div>
 
 <nav class="chips" id="chips"></nav>
@@ -472,7 +486,7 @@
 <div class="info">
   <p>Pick your blooms, choose the quantity and your delivery area, then tap <strong>Order via WhatsApp</strong> 🫶🏻<br>
   Postage: Semenanjung RM<span data-fee="sm">10</span> · Sabah / Sarawak RM<span data-fee="ss">45</span> per lamp 📦<br>
-  Self pickup at Taman Sentosa, Klang: box RM<span data-fee="pk">5</span> per lamp 🎁<br>
+  Self pickup at Taman Sentosa, Klang: FREE · each lamp needs a box (RM<span data-addon="box">5</span>) or window paper bag (RM<span data-addon="paper_bag">3</span>) 🎁<br>
   Add-ons: window paper bag RM<span data-addon="paper_bag">3</span> · wish card RM<span data-addon="wish_card">2</span> 💌<br>
   Or just say hi: <a href="https://wa.me/60134478918" target="_blank" rel="noopener">013-447 8918</a></p>
 </div>
@@ -483,7 +497,7 @@
     <span class="ship-label">Delivery:</span>
     <label><input type="radio" name="area" value="sm"><span class="pill">Semenanjung +RM<span data-fee="sm">10</span>/pc</span></label>
     <label><input type="radio" name="area" value="ss"><span class="pill">Sabah/Sarawak +RM<span data-fee="ss">45</span>/pc</span></label>
-    <label><input type="radio" name="area" value="pk"><span class="pill pickup">📍 Pickup Klang +RM<span data-fee="pk">5</span>/pc</span></label>
+    <label><input type="radio" name="area" value="pk"><span class="pill pickup">📍 Pickup Klang · FREE</span></label>
   </div>
   <div class="order-inner">
     <div>
@@ -516,6 +530,18 @@
         <label>Postcode<input name="postcode" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="41200" required></label>
         <label>City / State<input name="city" autocomplete="address-level2" placeholder="Klang, Selangor" required></label>
       </div>
+    </div>
+    <div class="pay">
+      <p class="pay-title">💳 Pay with DuitNow QR</p>
+      <p class="pay-amount" id="payAmount">RM0</p>
+      <img id="payQr" src="images/duitnow-qr.jpg" alt="DuitNow QR for Nadia Atirah binti Isa">
+      <p class="to">Pay to: <strong id="payName">NADIA ATIRAH BINTI ISA</strong></p>
+      <a class="save" id="saveQr" href="images/duitnow-qr.jpg" download="PreciousNuha-DuitNow-QR.jpg">⬇️ Save QR</a>
+      <ol class="steps">
+        <li>Save the QR (or screenshot it), then open your bank or e-wallet app and scan it from your gallery</li>
+        <li>Key in the total amount above and pay</li>
+        <li>Tap the button below and send your receipt screenshot in WhatsApp</li>
+      </ol>
     </div>
     <button class="wa-btn" type="submit">
       <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg>
@@ -564,13 +590,23 @@
     note.hidden = !preorder;
 
     const money = v => parseFloat((v || "").replace(/[^\d.]/g, ""));
-    for (const [key, column] of [["sm", "postage_semenanjung"], ["ss", "postage_sabah_sarawak"], ["pk", "box_pickup"]]) {
+    for (const [key, column] of [["sm", "postage_semenanjung"], ["ss", "postage_sabah_sarawak"]]) {
       const fee = money(settings[column]);
       if (!isNaN(fee)) SHIPPING[key].fee = fee;
       document.querySelectorAll(`[data-fee="${key}"]`).forEach(el => { el.textContent = SHIPPING[key].fee; });
     }
+    // A new DuitNow QR can be set from the Sheet (Google Drive link shared with anyone).
+    if (settings.payment_qr) {
+      const qr = imageUrl("payment-qr", settings.payment_qr);
+      document.getElementById("payQr").src = qr;
+      document.getElementById("saveQr").href = qr;
+    }
+    if (settings.payment_name) {
+      document.getElementById("payName").textContent = settings.payment_name;
+      document.getElementById("payQr").alt = "DuitNow QR for " + settings.payment_name;
+    }
     for (const addon of ADDONS) {
-      const price = money(settings["addon_" + addon.id]);
+      const price = money(settings[addon.id === "box" ? "box_pickup" : "addon_" + addon.id]);
       if (!isNaN(price)) addon.price = price;
       document.querySelectorAll(`[data-addon="${addon.id}"]`).forEach(el => { el.textContent = addon.price; });
     }
@@ -613,6 +649,8 @@
           postage_semenanjung: below("postage_semenanjung") || "",
           postage_sabah_sarawak: below("postage_sabah_sarawak") || "",
           box_pickup: below("box_pickup") || "",
+          payment_qr: below("payment_qr") || "",
+          payment_name: below("payment_name") || "",
           addon_paper_bag: below("addon_paper_bag") || "",
           addon_wish_card: below("addon_wish_card") || ""
         };
@@ -758,13 +796,12 @@
     render();
   }
 
-  // Fees are charged for every lamp. Self pickup has no postage but each lamp needs a box.
+  // Postage is charged for every lamp. Self pickup is free, but each lamp needs a box or paper bag (see ADDONS).
   const SHIPPING = {
     sm: { name: "Semenanjung", fee: 10 },
     ss: { name: "Sabah / Sarawak", fee: 45 },
-    pk: { name: "Self pickup", fee: 5, pickup: true }
+    pk: { name: "Self pickup", fee: 0, pickup: true }
   };
-  const chargeLabel = a => a.pickup ? "Box for pickup" : `Postage (${a.name})`;
   const ship = document.getElementById("ship");
   const area = () => SHIPPING[(ship.querySelector("input:checked") || {}).value];
 
@@ -781,7 +818,7 @@
     ship.hidden = count === 0;
     document.getElementById("total").textContent = rm(total + postage);
     document.getElementById("itemCount").textContent =
-      count && a ? `${items} + ${a.pickup ? "box" : "postage"} ${rm(postage)}` : count ? `${items} + postage` : items;
+      count && a ? (a.pickup ? `${items} · free pickup` : `${items} + postage ${rm(postage)}`) : count ? `${items} + postage` : items;
     document.getElementById("waBtn").disabled = count === 0;
   }
   ship.addEventListener("change", render);
@@ -803,11 +840,15 @@
   document.addEventListener("keydown", e => { if (e.key === "Escape") lightbox.classList.remove("open"); });
 
   // Extras picked in the order form; prices can be changed in the Sheet's settings tab.
+  // "packaging" items count towards the box-or-bag each pickup lamp needs; the box is offered for pickup only.
   const ADDONS = [
-    { id: "paper_bag", name: "Window paper bag", price: 3 },
+    { id: "box", name: "Box", price: 5, packaging: true, pickupOnly: true },
+    { id: "paper_bag", name: "Window paper bag", price: 3, packaging: true },
     { id: "wish_card", name: "Wish card", price: 2 }
   ];
   const addonQty = Object.fromEntries(ADDONS.map(a => [a.id, 0]));
+  const shownAddons = () => ADDONS.filter(x => !x.pickupOnly || area().pickup);
+  const packed = () => ADDONS.filter(x => x.packaging).reduce((t, x) => t + addonQty[x.id], 0);
 
   // The cart as it stands: chosen lamps, postage or pickup boxes, add-ons and totals.
   function cart() {
@@ -816,7 +857,7 @@
     const count = items.reduce((t, i) => t + i.n, 0);
     const subtotal = items.reduce((t, i) => t + i.sub, 0);
     const postage = a.fee * count;
-    const extras = ADDONS.filter(x => addonQty[x.id]).map(x => ({ x, n: addonQty[x.id], sub: addonQty[x.id] * x.price }));
+    const extras = shownAddons().filter(x => addonQty[x.id]).map(x => ({ x, n: addonQty[x.id], sub: addonQty[x.id] * x.price }));
     const extrasTotal = extras.reduce((t, e) => t + e.sub, 0);
     return { a, items, count, subtotal, postage, extras, total: subtotal + postage + extrasTotal };
   }
@@ -825,12 +866,18 @@
     const c = cart();
     document.getElementById("summary").innerHTML =
       c.items.map(i => `<div><span>${esc(i.p.name)} × ${i.n}</span><span>${rm(i.sub)}</span></div>`).join("") +
-      `<div><span>${chargeLabel(c.a)} × ${c.count}</span><span>${rm(c.postage)}</span></div>` +
+      (c.a.pickup
+        ? `<div><span>Self pickup</span><span>FREE</span></div>`
+        : `<div><span>Postage (${c.a.name}) × ${c.count}</span><span>${rm(c.postage)}</span></div>`) +
       c.extras.map(e => `<div><span>${e.x.name} × ${e.n}</span><span>${rm(e.sub)}</span></div>`).join("") +
       `<div class="grand"><span>Total</span><span>${rm(c.total)}</span></div>`;
+    document.getElementById("payAmount").textContent = rm(c.total);
+    const need = c.a.pickup
+      ? `<p class="addon-need${packed() >= c.count ? " ok" : ""}" id="addonNeed">Pickup: choose a box or window paper bag for each lamp (${Math.min(packed(), c.count)}/${c.count})</p>`
+      : "";
     document.getElementById("addons").innerHTML =
-      `<p class="addons-title">Add-ons 🎀 <small>(optional)</small></p>` +
-      ADDONS.map(x => `
+      `<p class="addons-title">${c.a.pickup ? "Packaging & add-ons 🎀" : `Add-ons 🎀 <small>(optional)</small>`}</p>` + need +
+      shownAddons().map(x => `
         <div class="addon">
           <span>${x.name} <small>${rm(x.price)}</small></span>
           <div class="qty">
@@ -863,6 +910,8 @@
     renderSummary();
     // Pickup needs no address, so those fields are hidden and skipped.
     const pickup = !!area().pickup;
+    if (!pickup) addonQty.box = 0;
+    renderSummary();
     document.getElementById("pickupNote").hidden = !pickup;
     document.getElementById("addressFields").hidden = pickup;
     for (const name of ["address", "postcode", "city"]) form.elements[name].disabled = pickup;
@@ -901,6 +950,14 @@
     // Light checks only: a real-looking phone number and a 5-digit postcode.
     form.elements.phone.setCustomValidity(f.phone.replace(/\D/g, "").length >= 9 ? "" : "Please enter a valid phone number");
     if (f.postcode !== undefined) form.elements.postcode.setCustomValidity(/^\d{5}$/.test(f.postcode) ? "" : "Postcode should be 5 digits");
+    // Every pickup lamp leaves in a box or a window paper bag.
+    const c0 = cart();
+    if (c0.a.pickup && packed() < c0.count) {
+      const needEl = document.getElementById("addonNeed");
+      needEl.classList.add("warn");
+      needEl.scrollIntoView({ block: "center", behavior: "smooth" });
+      return;
+    }
     if (!form.reportValidity()) return;
     try {
       const keep = JSON.parse(localStorage.getItem(SAVED) || "{}");
@@ -914,7 +971,7 @@
       ...c.items.map(i => `- ${i.p.name} (${i.p.badge || i.p.category}) x ${i.n} = ${rm(i.sub)}`),
       "",
       `Subtotal: ${rm(c.subtotal)}`,
-      `${chargeLabel(c.a)}: ${rm(c.a.fee)} x ${c.count} = ${rm(c.postage)}`,
+      c.a.pickup ? "Self pickup: FREE" : `Postage (${c.a.name}): ${rm(c.a.fee)} x ${c.count} = ${rm(c.postage)}`,
       ...c.extras.map(e => `${e.x.name} x ${e.n} = ${rm(e.sub)}`),
       `Total: ${rm(c.total)}`,
       ...(preorder ? ["", `Pre-order - postage by ${preorder}`] : []),
@@ -922,7 +979,9 @@
       `Name: ${f.name}`,
       `Phone: ${f.phone}`,
       c.a.pickup ? "Delivery: Self pickup (Taman Sentosa, Klang)" : `Address: ${f.address}, ${f.postcode} ${f.city}`,
-      ...(f.wish ? [`Wish card message: ${f.wish}`] : [])
+      ...(f.wish ? [`Wish card message: ${f.wish}`] : []),
+      "",
+      `Payment: DuitNow QR ${rm(c.total)} (receipt to follow)`
     ];
     window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
     form.elements.wish.value = "";
