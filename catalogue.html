@@ -23,6 +23,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
+<!-- Visitor counter (GoatCounter: free, no cookies). Stats: https://preciousnuha.goatcounter.com -->
+<script data-goatcounter="https://preciousnuha.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
 
@@ -426,10 +428,14 @@
   const lbImg = lightbox.querySelector("img");
   const lbVideo = lightbox.querySelector("video");
 
+  // Count a moment (video play, order form opened, order sent) in GoatCounter, if it loaded.
+  const track = (path, title) => window.goatcounter?.count?.({ path, title: title || path, event: true });
+
   function openLightbox(img, video) {
     lbImg.hidden = !!video;
     lbVideo.hidden = !video;
     if (video) {
+      track("video/" + video.split("/").pop().replace(/\.mp4$/, ""));
       lbVideo.poster = img;
       lbVideo.src = video;
       lbVideo.play().catch(() => {});
@@ -518,6 +524,7 @@
   const SAVED = "pn-customer";
 
   function openCheckout() {
+    track("order-form-opened");
     renderSummary();
     // Pickup needs no address, so those fields are hidden and skipped.
     const pickup = !!area().pickup;
@@ -595,6 +602,7 @@
       `Payment: DuitNow QR ${rm(c.total)} (receipt to follow)`
     ];
     window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
+    track("order-sent", `Order sent: ${rm(c.total)} (${c.a.name})`);
     form.elements.wish.value = "";
     for (const id in addonQty) addonQty[id] = 0;
     closeCheckout();
