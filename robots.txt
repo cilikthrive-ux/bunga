@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /marketing/
+Disallow: /template/
+
+Sitemap: https://preciousnuha.com/sitemap.xml

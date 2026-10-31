@@ -86,12 +86,29 @@
     button.title = "Play music";
   }
 
+  // Floating buttons share one stack in the bottom-right corner, above the catalogue's order bar.
+  function floatStack() {
+    let stack = document.querySelector(".float-stack");
+    if (stack) return stack;
+    stack = document.createElement("div");
+    stack.className = "float-stack";
+    const css = document.createElement("style");
+    css.textContent = `.float-stack { position: fixed; right: 14px; bottom: 16px; z-index: 15; display: flex; flex-direction: column; gap: 10px; align-items: center; }`;
+    document.head.appendChild(css);
+    document.body.appendChild(stack);
+    const bar = document.querySelector(".order");
+    if (bar && window.ResizeObserver) {
+      new ResizeObserver(() => { stack.style.bottom = bar.offsetHeight + 14 + "px"; }).observe(bar);
+    }
+    return stack;
+  }
+
   const remember = on => { try { localStorage.setItem(KEY, on ? "on" : "off"); } catch (e) { /* storage unavailable */ } };
 
   const style = document.createElement("style");
   style.textContent = `
     .music-btn {
-      position: fixed; right: 14px; bottom: 16px; z-index: 15;
+      order: 1;
       width: 46px; height: 46px; border-radius: 50%;
       border: 1px solid #f6d3d8; background: #fffdf8; color: #a05c69;
       font-size: 1.3rem; cursor: pointer;
@@ -114,13 +131,7 @@
     e.stopPropagation();
     if (playing) { stop(); remember(false); } else { start(); remember(true); }
   });
-  document.body.appendChild(button);
-
-  // Sit above the catalogue's order bar when there is one.
-  const bar = document.querySelector(".order");
-  if (bar && window.ResizeObserver) {
-    new ResizeObserver(() => { button.style.bottom = bar.offsetHeight + 14 + "px"; }).observe(bar);
-  }
+  floatStack().appendChild(button);
 
   // Browsers only allow sound after a tap, so a visitor who had music on gets it back on their first tap.
   let wanted = false;
