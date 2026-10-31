@@ -127,9 +127,9 @@
       { q: "The batteries ran out. Can I replace them?", a: "Yes! You can buy new ones at DIY stores (e.g. Mr DIY) and swap them in." },
       { q: "What does \"USB + LED\" mean?", a: "The big flower on top is a table lamp powered by USB, and the small flower below has its own LED lights." },
       { q: "When will I get my lamp?", a: preorder ? `All our lamps are made to order 🌷 This batch will be posted by ${preorder}.` : "Every lamp is handmade to order. We'll let you know the ready date on WhatsApp." },
-      { q: "Can I pick it up myself?", a: `Yes! Self pickup at Taman Sentosa, Klang is FREE. Just choose a box (${rm(st.box_pickup)}) or window paper bag (${rm(st.addon_paper_bag)}) for each lamp.` },
+      { q: "Can I pick it up myself?", a: `Yes! Self pickup at Taman Sentosa, Klang is FREE. Just choose a box (${rm(st.box_pickup)}) or window paper bag (${rm(st.addon_paper_bag)}) for each lamp. Full payment is required before pickup 💳` },
       { q: "How much is postage?", a: `Semenanjung ${rm(st.postage_semenanjung)} and Sabah / Sarawak ${rm(st.postage_sabah_sarawak)} for each lamp.` },
-      { q: "How do I pay?", a: "Scan our DuitNow QR in the order form, pay the total, then send your receipt in WhatsApp." },
+      { q: "How do I pay?", a: "Scan our DuitNow QR in the order form, pay the full total, then send your receipt in WhatsApp. Full payment is required for every order, including self pickup." },
       { q: "Can I request my own flower or colour? 🎀", a: "Yes, we love custom orders! WhatsApp us your favourite flower, colours or a photo, and we'll see what we can make." }
     ];
   }
@@ -160,5 +160,6 @@
     render(own || defaultFaq(st));
   })();
 </script>
+<script src="assets/music.js" defer></script>
 </body>
 </html>

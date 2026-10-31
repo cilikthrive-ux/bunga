@@ -49,7 +49,7 @@
 
 <div class="block">
   <p class="preorder" id="preorder" hidden></p>
-  <p class="pickup-banner">📍 <strong>Self pickup at Taman Sentosa, Klang</strong><small>FREE pickup 🎉 Just choose a box (RM<span data-addon="box">5</span>) or window paper bag (RM<span data-addon="paper_bag">3</span>) for each lamp</small></p>
+  <p class="pickup-banner">📍 <strong>Self pickup at Taman Sentosa, Klang</strong><small>FREE pickup 🎉 Just choose a box (RM<span data-addon="box">5</span>) or window paper bag (RM<span data-addon="paper_bag">3</span>) for each lamp · Full payment required 💳</small></p>
 </div>
 
 <nav class="chips" id="chips"></nav>
@@ -108,7 +108,7 @@
     <div class="summary" id="summary"></div>
     <div class="addons" id="addons"></div>
     <label id="wishField" hidden>Wish card message 💌<textarea name="wish" rows="2" required disabled></textarea></label>
-    <p class="pickup-note" id="pickupNote" hidden>📍 Self pickup at Taman Sentosa, Klang. We'll WhatsApp you the exact spot &amp; time.</p>
+    <p class="pickup-note" id="pickupNote" hidden>📍 Self pickup at Taman Sentosa, Klang. We'll WhatsApp you the exact spot &amp; time.<br>💳 <strong>Full payment is required before pickup.</strong></p>
     <label>Name<input name="name" autocomplete="name" required></label>
     <label>Phone number<input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="012-345 6789" required></label>
     <div id="addressFields">
@@ -121,6 +121,7 @@
     <div class="pay">
       <p class="pay-title">💳 Pay with DuitNow QR</p>
       <p class="pay-amount" id="payAmount">RM0</p>
+      <p class="pay-full">Full payment is required for every order, including self pickup 💳</p>
       <img id="payQr" src="images/duitnow-qr.jpg" alt="DuitNow QR for Nadia Atirah binti Isa">
       <p class="to">Pay to: <strong id="payName">NADIA ATIRAH BINTI ISA</strong></p>
       <a class="save" id="saveQr" href="images/duitnow-qr.jpg" download="PreciousNuha-DuitNow-QR.jpg">⬇️ Save QR</a>
@@ -619,5 +620,6 @@
   render();
   load();
 </script>
+<script src="assets/music.js" defer></script>
 </body>
 </html>
