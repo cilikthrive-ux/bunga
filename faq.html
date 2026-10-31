@@ -153,6 +153,15 @@
   function render(list) {
     document.getElementById("faqList").innerHTML = list
       .map(f => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join("");
+    // The same questions as FAQ data for Google search results.
+    const ld = document.createElement("script");
+    ld.type = "application/ld+json";
+    ld.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: list.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } }))
+    });
+    document.head.appendChild(ld);
   }
 
   (async () => {
@@ -161,5 +170,6 @@
   })();
 </script>
 <script src="assets/music.js" defer></script>
+<script src="assets/whatsapp.js" defer></script>
 </body>
 </html>
