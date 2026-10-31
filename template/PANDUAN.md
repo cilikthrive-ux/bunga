@@ -120,7 +120,7 @@ Buka demo dengan `?theme=` di hujung link:
 | Pembetulan | 1 kali | 3 kali |
 | Bantuan percuma | 7 hari | 30 hari |
 
-**Jagaan:** RM30/bulan (update design, tambah ciri, bantuan) atau RM20 setiap kali update.
+**Update (pilihan):** RM20 setiap kali (tukar design, tambah ciri, bantuan). Tiada caj bulanan.
 **Promo 5 pelanggan pertama:** Pro RM249, dengan syarat bagi testimoni.
 
 \*Renew domain tahun ke-2 ~RM45/tahun ditanggung pelanggan. Daftar domain dalam akaun pelanggan sendiri, beli .com sahaja, dan catat tarikh renew.

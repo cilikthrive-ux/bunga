@@ -73,6 +73,11 @@
     box-shadow: 0 6px 16px rgba(194, 124, 136, .3);
   }
   .btn:hover { background: var(--rose-dark); }
+  .socials { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 24px 0 0; }
+  .socials a {
+    text-decoration: none; color: var(--rose-dark); font-weight: 700; font-size: .85rem;
+    background: var(--card); border: 1px solid var(--pink-deep); border-radius: 999px; padding: 6px 14px;
+  }
 
   .lightbox {
     position: fixed; inset: 0; z-index: 20; background: rgba(60, 40, 42, .85);
@@ -81,6 +86,8 @@
   .lightbox.open { display: flex; }
   .lightbox img { max-height: 90vh; max-width: 100%; border-radius: 14px; }
 </style>
+<!-- Visitor counter (GoatCounter: free, no cookies). Stats: https://preciousnuha.goatcounter.com -->
+<script data-goatcounter="https://preciousnuha.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
 
@@ -102,6 +109,11 @@
 
 <div class="cta">
   <a class="btn" href="../catalogue.html">Find your bloom ✿</a>
+  <p class="socials">
+    <a href="https://www.instagram.com/preciousnuha" target="_blank" rel="noopener">📸 Instagram</a>
+    <a href="https://www.tiktok.com/@preciousnuha" target="_blank" rel="noopener">🎵 TikTok</a>
+    <a href="https://www.threads.com/@preciousnuha" target="_blank" rel="noopener">🧵 Threads</a>
+  </p>
 </div>
 
 <div class="lightbox" id="lightbox" role="dialog" aria-label="Full photo"><img alt=""></div>

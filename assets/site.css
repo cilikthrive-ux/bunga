@@ -459,3 +459,11 @@ footer.home-footer { padding-bottom: 32px; }
 @media (max-width: 480px) {
   .gallery { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* social links in the footer */
+.socials { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 28px 0 10px; }
+.socials a {
+  text-decoration: none; color: var(--rose-dark); font-weight: 700; font-size: .85rem;
+  background: var(--card); border: 1px solid var(--pink-deep); border-radius: 999px; padding: 6px 14px;
+}
+.socials a:hover { background: var(--pink); }
