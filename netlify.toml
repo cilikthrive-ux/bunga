@@ -1,0 +1,5 @@
+# Netlify builds the sales demo from the shop template: template/ plus demo/overrides.js.
+# (preciousnuha.com itself is served by GitHub Pages and ignores this file.)
+[build]
+  command = "rm -rf _demo && cp -r template _demo && rm -f _demo/PANDUAN.md && cat demo/overrides.js >> _demo/config.js"
+  publish = "_demo"

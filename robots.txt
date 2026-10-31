@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /marketing/
 Disallow: /template/
+Disallow: /demo/
 
 Sitemap: https://preciousnuha.com/sitemap.xml
