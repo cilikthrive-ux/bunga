@@ -543,6 +543,8 @@
       if (!c) cats.push(c = { name: p.category, id: "cat-" + (slug(p.category) || "all"), items: [] });
       c.items.push(p);
     }
+    // Cheapest first within each group; items with the same price keep their Sheet order.
+    for (const c of cats) c.items.sort((a, b) => a.price - b.price);
     const priceText = c => {
       const min = Math.min(...c.items.map(p => p.price));
       return c.items.every(p => p.price === min) ? `${rm(min)} ${T.each}` : `${T.from} ${rm(min)}`;

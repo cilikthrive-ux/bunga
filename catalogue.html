@@ -293,7 +293,7 @@
   const VIDEOS = new Set([
     "tangled-yellow", "tangled-lilac", "tiger-lily-pink", "signature-plum-red-lily", "signature-red-tiger-lily",
     "pink-daisy", "white-daisy", "white-tulip", "red-roses", "black-roses", "lily-valley-lotus",
-    "giant-tiger-lily", "wild-lily-garden"
+    "giant-tiger-lily", "wild-lily-garden", "blush-reverie-lily"
   ]);
 
   // A Google Drive video link (shared with anyone) plays in Drive's own player; other links are used as is.
@@ -363,6 +363,8 @@
       if (!c) cats.push(c = { name: p.category, id: "cat-" + slug(p.category), items: [] });
       c.items.push(p);
     }
+    // Cheapest first within each group; items with the same price keep their Sheet order.
+    for (const c of cats) c.items.sort((a, b) => a.price - b.price);
     const priceText = c => {
       const min = Math.min(...c.items.map(p => p.price));
       return c.items.every(p => p.price === min) ? `${rm(min)} each` : `from ${rm(min)}`;
