@@ -69,6 +69,18 @@
   }
   img { max-width: 100%; display: block; }
   p { margin: 0 0 8px; }
+  .demo-bar {
+    background: var(--accent-dark); color: #fff; text-align: center;
+    padding: 10px 14px; font-size: .85rem; line-height: 1.5;
+  }
+  .demo-bar[hidden] { display: none; }
+  .demo-bar a { color: #fff; font-weight: 700; }
+  .demo-bar .themes { display: inline-flex; gap: 6px; margin: 6px 4px 0; flex-wrap: wrap; justify-content: center; }
+  .demo-bar .themes a {
+    text-decoration: none; border: 1px solid rgba(255,255,255,.6); border-radius: 999px; padding: 2px 10px; font-weight: 600;
+  }
+  .demo-bar .themes a[aria-current] { background: #fff; color: var(--accent-dark); }
+  .demo-bar .cta { display: inline-block; margin-top: 6px; background: #25d366; border-radius: 999px; padding: 4px 12px; text-decoration: none; }
   .sparkle, .divider { text-align: center; color: var(--accent); letter-spacing: .12em; margin: 0; }
   .divider { margin: 40px 0 0; font-size: .95rem; }
 
@@ -217,6 +229,7 @@
 </head>
 <body>
 
+<div class="demo-bar" id="demoBar" hidden></div>
 <header id="hero"></header>
 <div id="before"></div>
 <div class="block"><p class="preorder" id="preorder" hidden></p></div>
@@ -290,6 +303,17 @@
     return (i ? `<p class="divider">✦ ⋆ ˚｡ ⋆ ✦</p>` : "") +
       (s.highlight ? `<div class="bubble-wrap"><section class="bubble">${inner}</section></div>` : `<section class="block">${inner}</section>`);
   };
+
+  // Demo only: a bar to try the three themes and contact the website maker.
+  if (SHOP.demo) {
+    const current = new URLSearchParams(location.search).get("theme") || SHOP.theme;
+    const themes = [["pink", "🌸 Pink Lembut"], ["sage", "🌿 Hijau Sage"], ["cream", "🤎 Krim Klasik"]];
+    const bar = document.getElementById("demoBar");
+    bar.innerHTML = `${SHOP.demo.text}<br>
+      <span class="themes">${themes.map(([id, label]) => `<a href="?theme=${id}"${id === current ? ' aria-current="true"' : ""}>${label}</a>`).join("")}</span><br>
+      <a class="cta" href="https://wa.me/${SHOP.demo.whatsapp}?text=${encodeURIComponent(SHOP.demo.message)}" target="_blank" rel="noopener">💬 ${SHOP.demo.button}</a>`;
+    bar.hidden = false;
+  }
 
   const h = SHOP.hero;
   document.getElementById("hero").innerHTML = `

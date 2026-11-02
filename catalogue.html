@@ -98,6 +98,7 @@
   <button type="button" class="lightbox-close" aria-label="Close">×</button>
   <img alt="">
   <video playsinline muted loop controls preload="none" hidden></video>
+  <iframe title="Video" allow="autoplay; fullscreen" hidden></iframe>
 </div>
 
 <div class="sheet" id="checkout" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle" hidden>
@@ -295,6 +296,14 @@
     "giant-tiger-lily", "wild-lily-garden"
   ]);
 
+  // A Google Drive video link (shared with anyone) plays in Drive's own player; other links are used as is.
+  function videoUrl(link) {
+    if (!link) return "";
+    const drive = link.match(/drive\.google\.com\/.*(?:\/d\/|[?&]id=)([\w-]{20,})/);
+    return drive ? `https://drive.google.com/file/d/${drive[1]}/preview` : link;
+  }
+  const isDrive = url => /^https:\/\/drive\.google\.com\/file\/d\/[\w-]+\/preview$/.test(url);
+
   function toProducts(rows) {
     const seen = new Set();
     return rows
@@ -313,14 +322,14 @@
           badge: r.badge,
           desc: r.description,
           img: imageUrl(id, r.image),
-          video: r.video || (VIDEOS.has(id) ? `videos/${id}.mp4` : "")
+          video: videoUrl(r.video) || (VIDEOS.has(id) ? `videos/${id}.mp4` : "")
         };
       });
   }
 
   const card = p => `
     <article class="card${p.soldOut ? " sold-out" : ""}">
-      <button class="photo" type="button" data-zoom="${esc(p.img)}"${p.video ? ` data-video="${esc(p.video)}"` : ""} aria-label="${p.video ? "Play video of" : "View"} ${esc(p.name)}">
+      <button class="photo" type="button" data-zoom="${esc(p.img)}"${p.video ? ` data-video="${esc(p.video)}" data-pid="${p.id}"` : ""} aria-label="${p.video ? "Play video of" : "View"} ${esc(p.name)}">
         <img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy" width="600" height="1066" onerror="this.onerror=null;this.src='images/logo.jpg';this.parentNode.dataset.zoom='images/logo.jpg'">
         ${p.video ? `<span class="play">▶ Video</span>` : ""}
       </button>
@@ -428,22 +437,27 @@
     const b = e.target.closest("button[data-step]");
     if (b) return setQty(b.dataset.id, qty[b.dataset.id] + Number(b.dataset.step));
     const z = e.target.closest("[data-zoom]");
-    if (z) openLightbox(z.dataset.zoom, z.dataset.video);
+    if (z) openLightbox(z.dataset.zoom, z.dataset.video, z.dataset.pid);
   });
   catalog.addEventListener("change", e => {
     if (e.target.matches("input[data-id]")) setQty(e.target.dataset.id, e.target.value);
   });
   const lbImg = lightbox.querySelector("img");
   const lbVideo = lightbox.querySelector("video");
+  const lbFrame = lightbox.querySelector("iframe");
 
   // Count a moment (video play, order form opened, order sent) in GoatCounter, if it loaded.
   const track = (path, title) => window.goatcounter?.count?.({ path, title: title || path, event: true });
 
-  function openLightbox(img, video) {
+  function openLightbox(img, video, pid) {
+    const drive = !!video && isDrive(video);
     lbImg.hidden = !!video;
-    lbVideo.hidden = !video;
-    if (video) {
-      track("video/" + video.split("/").pop().replace(/\.mp4$/, ""));
+    lbVideo.hidden = !video || drive;
+    lbFrame.hidden = !drive;
+    if (video) track("video/" + (pid || video.split("/").pop().replace(/\.mp4$/, "")));
+    if (drive) {
+      lbFrame.src = video;
+    } else if (video) {
       lbVideo.poster = img;
       lbVideo.src = video;
       lbVideo.play().catch(() => {});
@@ -458,6 +472,7 @@
     lbVideo.pause();
     lbVideo.removeAttribute("src");
     lbVideo.load();
+    lbFrame.removeAttribute("src");
   }
 
   // Taps on the video work its controls; anywhere else closes.

@@ -87,5 +87,8 @@ window.SHOP = {
     threads: ""
   },
 
+  // Hanya untuk demo awak sendiri: bar di atas untuk cuba tema & hubungi awak. Untuk pelanggan, biar null.
+  demo: null,
+
   signoff: "Terima kasih kerana menyokong bisnes kecil kami 🤍"
 };
