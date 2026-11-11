@@ -49,7 +49,7 @@
 
 <div class="block">
   <p class="preorder" id="preorder" hidden></p>
-  <p class="pickup-banner">📍 <strong>Self pickup at Taman Sentosa, Klang</strong><small>FREE pickup 🎉 Just choose a box (RM<span data-addon="box">5</span>) or window paper bag (RM<span data-addon="paper_bag">3</span>) for each lamp · Full payment required 💳</small></p>
+  <p class="pickup-banner">📍 <strong>Self pickup at Taman Sentosa, Klang</strong><small>FREE pickup 🎉 Each lamp comes in a window paper bag (RM<span data-addon="paper_bag">3</span>) · Box available at RM<span data-addon="box">12</span> · Full payment required 💳</small></p>
 </div>
 
 <nav class="chips" id="chips"></nav>
@@ -62,7 +62,7 @@
 <div class="info">
   <p>Pick your blooms, choose the quantity and your delivery area, then tap <strong>Order via WhatsApp</strong> 🫶🏻<br>
   Postage: Semenanjung RM<span data-fee="sm">10</span> · Sabah / Sarawak RM<span data-fee="ss">45</span> per lamp 📦<br>
-  Self pickup at Taman Sentosa, Klang: FREE · each lamp needs a box (RM<span data-addon="box">5</span>) or window paper bag (RM<span data-addon="paper_bag">3</span>) 🎁<br>
+  Self pickup at Taman Sentosa, Klang: FREE · each lamp comes in a window paper bag (RM<span data-addon="paper_bag">3</span>), or a box for RM<span data-addon="box">12</span> 🎁<br>
   Add-ons: window paper bag RM<span data-addon="paper_bag">3</span> · wish card RM<span data-addon="wish_card">2</span> 💌<br>
   Or just say hi: <a href="https://wa.me/60134478918" target="_blank" rel="noopener">013-447 8918</a></p>
 </div>
@@ -484,8 +484,8 @@
   // Extras picked in the order form; prices can be changed in the Sheet's settings tab.
   // "packaging" items count towards the box-or-bag each pickup lamp needs; the box is offered for pickup only.
   const ADDONS = [
-    { id: "box", name: "Box", price: 5, packaging: true, pickupOnly: true },
     { id: "paper_bag", name: "Window paper bag", price: 3, packaging: true },
+    { id: "box", name: "Box (instead of paper bag)", price: 12, packaging: true, pickupOnly: true },
     { id: "wish_card", name: "Wish card", price: 2 }
   ];
   const addonQty = Object.fromEntries(ADDONS.map(a => [a.id, 0]));
@@ -515,7 +515,7 @@
       `<div class="grand"><span>Total</span><span>${rm(c.total)}</span></div>`;
     document.getElementById("payAmount").textContent = rm(c.total);
     const need = c.a.pickup
-      ? `<p class="addon-need${packed() >= c.count ? " ok" : ""}" id="addonNeed">Pickup: choose a box or window paper bag for each lamp (${Math.min(packed(), c.count)}/${c.count})</p>`
+      ? `<p class="addon-need${packed() >= c.count ? " ok" : ""}" id="addonNeed">Pickup: each lamp needs a window paper bag or a box (${Math.min(packed(), c.count)}/${c.count}). Prefer a box? Swap a paper bag for one below.</p>`
       : "";
     document.getElementById("addons").innerHTML =
       `<p class="addons-title">${c.a.pickup ? "Packaging & add-ons 🎀" : `Add-ons 🎀 <small>(optional)</small>`}</p>` + need +
@@ -547,13 +547,24 @@
   const checkout = document.getElementById("checkout");
   const form = document.getElementById("checkoutForm");
   const SAVED = "pn-customer";
+  let autoBags = 0;
 
   function openCheckout() {
     track("order-form-opened");
     renderSummary();
     // Pickup needs no address, so those fields are hidden and skipped.
     const pickup = !!area().pickup;
-    if (!pickup) addonQty.box = 0;
+    // Pickup lamps come in a window paper bag by default; customers can swap some for boxes.
+    // Bags added that way are taken back off if the order switches to postage.
+    if (pickup) {
+      const add = Math.max(0, cart().count - packed());
+      addonQty.paper_bag += add;
+      autoBags += add;
+    } else {
+      addonQty.box = 0;
+      addonQty.paper_bag = Math.max(0, addonQty.paper_bag - autoBags);
+      autoBags = 0;
+    }
     renderSummary();
     document.getElementById("pickupNote").hidden = !pickup;
     document.getElementById("addressFields").hidden = pickup;
@@ -630,6 +641,7 @@
     track("order-sent", `Order sent: ${rm(c.total)} (${c.a.name})`);
     form.elements.wish.value = "";
     for (const id in addonQty) addonQty[id] = 0;
+    autoBags = 0;
     closeCheckout();
   });
   form.addEventListener("input", e => e.target.setCustomValidity(""));
