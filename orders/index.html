@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nuha Orders</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#fff8ea">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+<meta name="apple-mobile-web-app-title" content="Nuha Orders">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<script>
+  // The shop's order app lives in Claude. This page only gives it a Home Screen icon.
+  var APP = "https://claude.ai/artifact/DqgFopdLSjs8f6Q56Fbtdd";
+  // Opened from the Home Screen icon: go straight to the app.
+  if (/[?&]open\b/.test(location.search)) location.replace(APP);
+</script>
+<style>
+  :root { --bg: #fff8ea; --card: #fffdf8; --rose: #c27c88; --rose-dark: #a05c69; --text: #5a4446; --muted: #8d7a7b; --line: #f1dcd8; --soft: #fbe4e6; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #221a1b; --card: #2d2425; --rose: #d896a1; --rose-dark: #f0bcc4; --text: #f7ece6; --muted: #b9a2a2; --line: #4a3a3b; --soft: #4a3135; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); font: 16px/1.5 "Nunito", system-ui, sans-serif;
+    display: grid; place-items: center; padding: max(24px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+  main { width: 100%; max-width: 420px; text-align: center; }
+  img { width: 120px; height: 120px; border-radius: 28px; box-shadow: 0 10px 28px rgba(160, 92, 105, .18); }
+  h1 { font-family: "Great Vibes", cursive; font-weight: 400; font-size: 2.6rem; color: var(--rose-dark); margin: 14px 0 0; }
+  .open { display: block; margin: 20px 0; padding: 15px; border-radius: 999px; background: var(--rose); color: #fff; font-weight: 800; text-decoration: none; font-size: 1.05rem; }
+  .card { background: var(--card); border: 1.5px solid var(--line); border-radius: 22px; padding: 18px 20px; text-align: left; }
+  .card b { color: var(--rose-dark); }
+  ol { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; }
+  .note { color: var(--muted); font-size: .88rem; margin-top: 14px; }
+</style>
+</head>
+<body>
+<main>
+  <img src="icon-180.png" alt="Nuha Orders">
+  <h1>Nuha Orders</h1>
+  <a class="open" id="open" href="https://claude.ai/artifact/DqgFopdLSjs8f6Q56Fbtdd">Open order app 🌷</a>
+  <div class="card">
+    <b>Add to your iPhone Home Screen</b>
+    <ol>
+      <li>Open this page in <b>Safari</b></li>
+      <li>Tap <b>Share</b> (square with arrow ⬆️)</li>
+      <li>Tap <b>Add to Home Screen</b> → <b>Add</b></li>
+    </ol>
+    <p class="note">The Nuha logo icon will open the order app straight away. You still sign in with your Claude account.</p>
+  </div>
+</main>
+<script>
+  // Whatever is saved to the Home Screen from here opens the app directly.
+  if (!/[?&]open\b/.test(location.search)) history.replaceState(null, "", location.pathname + "?open");
+</script>
+</body>
+</html>
