@@ -13,7 +13,7 @@ Bila pelanggan tekan **Order via WhatsApp** di `catalogue.html`, satu salinan or
    - **Who has access:** Anyone
    - Tekan **Deploy**, kemudian **Authorize access**. Pilih akaun Google awak. Kalau keluar amaran "Google hasn't verified this app", tekan **Advanced → Go to … (unsafe)**. Amaran ni normal sebab skrip tu awak sendiri yang buat.
 5. Salin **Web app URL**. Bentuknya macam `https://script.google.com/macros/s/AKfy…/exec`.
-6. Letak URL tu dalam `catalogue.html`, pada baris `const ORDER_HOOK_URL = "";`.
+6. Letak URL tu dalam `catalogue.html`, pada baris `const ORDER_HOOK_URL = "…";`.
 
 Selepas tu, setiap order dari website akan masuk sebagai satu baris dalam tab pertama Sheet.
 
