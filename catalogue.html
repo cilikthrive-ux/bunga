@@ -141,6 +141,9 @@
 
 <script>
   const WHATSAPP = "60134478918";
+  // Google Apps Script web app that saves each order to the "Precious Nuha Orders" Sheet.
+  // Leave empty to turn order saving off (orders still go to WhatsApp as before).
+  const ORDER_HOOK_URL = "";
   // Google Sheet shared as "Anyone with the link" (CSV export). Empty or unreachable = use products.csv.
   const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1-wnqefDebKtjV0jvCL7RW9KRSHVJ_56WMuBDDaMshDk/export?format=csv";
   // Optional "settings" tab in the same Sheet: preorder_until, postage_semenanjung, postage_sabah_sarawak.
@@ -620,8 +623,26 @@
     } catch (e) { /* storage unavailable */ }
 
     const c = cart();
+    const orderId = newOrderId();
+    saveOrder({
+      id: orderId,
+      created_at: new Date().toISOString(),
+      name: f.name,
+      phone: f.phone,
+      delivery: c.a.pickup ? "Self pickup" : c.a.name,
+      address: c.a.pickup ? "" : f.address,
+      postcode: c.a.pickup ? "" : f.postcode,
+      city: c.a.pickup ? "" : f.city,
+      items: c.items.map(i => ({ name: i.p.name, qty: i.n, price: i.p.price })),
+      postage: c.a.pickup ? [] : [{ name: `Postage (${c.a.name})`, qty: c.count, price: c.a.fee }],
+      addons: c.extras.map(e => ({ name: e.x.name, qty: e.n, price: e.x.price })),
+      subtotal: c.subtotal,
+      total: c.total,
+      wish: f.wish || "",
+      preorder_by: preorder || ""
+    });
     const lines = [
-      "Hi Precious Nuha! I'd love to order:", "",
+      `Hi Precious Nuha! I'd love to order (Order ${orderId}):`, "",
       ...c.items.map(i => `- ${i.p.name} (${i.p.badge || i.p.category}) x ${i.n} = ${rm(i.sub)}`),
       "",
       `Subtotal: ${rm(c.subtotal)}`,
@@ -645,6 +666,22 @@
     closeCheckout();
   });
   form.addEventListener("input", e => e.target.setCustomValidity(""));
+
+  // A short order number customers and the shop can both quote, e.g. PN-261112-4821.
+  function newOrderId() {
+    const d = new Date(Date.now() + 8 * 3600 * 1000).toISOString(); // Malaysia time
+    return `PN-${d.slice(2, 4)}${d.slice(5, 7)}${d.slice(8, 10)}-${Math.floor(1000 + Math.random() * 9000)}`;
+  }
+
+  // Fire-and-forget copy of the order to the shop's Google Sheet. Never blocks WhatsApp.
+  function saveOrder(order) {
+    if (!ORDER_HOOK_URL) return;
+    try {
+      const body = JSON.stringify(order);
+      const sent = navigator.sendBeacon && navigator.sendBeacon(ORDER_HOOK_URL, new Blob([body], { type: "text/plain" }));
+      if (!sent) fetch(ORDER_HOOK_URL, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain" }, body });
+    } catch (e) { /* the WhatsApp message still carries the full order */ }
+  }
 
   render();
   load();
