@@ -827,3 +827,31 @@ nav.chips a { border-color: var(--line); border-radius: 4px; }
 .sheet form { background: #f6eee0; }
 .sheet h3 { font-family: "Cinzel", serif !important; color: #6b1a26; letter-spacing: .08em; text-transform: uppercase; font-size: 1.4rem; }
 .sheet label.agree a, .pay .save, .pay .pay-amount { color: #6b1a26; }
+
+/* Catalogue: neat framed cards, cream like the reference, on the burgundy page */
+.grid { gap: 14px; }
+.card {
+  background: #f6eee0 !important; border: 1px solid var(--gold) !important; border-radius: 4px !important;
+  padding: 6px; box-shadow: 0 10px 24px rgba(0, 0, 0, .25) !important; color: var(--parch-ink);
+}
+.card .photo { background: #e9dcc4 !important; border: 1px solid rgba(160, 122, 66, .45); border-radius: 2px; overflow: hidden; }
+.card .photo img { aspect-ratio: 9 / 16; object-fit: cover; }
+.card-body { padding: 12px 6px 6px; gap: 5px; text-align: center; align-items: center; }
+.card h4 { color: #5a1424 !important; font-size: 1.2rem; }
+.card-body::after { content: none; }
+.card h4::after {
+  content: ""; display: block; width: 46px; height: 1px; margin: 6px auto 0;
+  background: linear-gradient(90deg, transparent, #a07a42, transparent);
+}
+.card p { color: #6b4f45 !important; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.card .ready { color: #8a6232 !important; }
+.card .badge, .card .badge.pre { background: transparent; color: #8a6232; border: 1px solid rgba(160, 122, 66, .55); font-family: "Cinzel", serif; letter-spacing: .08em; font-weight: 600; font-size: .62rem; }
+.card .badge.out { color: #fff; background: #6b4f45; border-color: #6b4f45; }
+.card .price { color: #5a1424 !important; font-family: "Cinzel", serif; letter-spacing: .04em; margin-top: auto; padding-top: 4px; }
+.card .row { width: 100%; justify-content: center; flex-wrap: wrap; }
+.card .qty { background: #fff; border: 1px solid rgba(160, 122, 66, .55); border-radius: 4px; }
+.card .qty button { color: #5a1424; }
+.card .qty input { color: #3b1a17; background: transparent; }
+.card .subtotal { color: #8a6232; width: 100%; text-align: center; }
+.card .play { background: rgba(44, 8, 17, .7); border: 1px solid rgba(228, 199, 143, .6); color: #f3e6d3; border-radius: 3px; font-family: "Cinzel", serif; letter-spacing: .06em; }
+.section-head .price-tag { color: var(--gold-2); }
