@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=Great+Vibes&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=20261119">
+<link rel="stylesheet" href="assets/site.css?v=20261120">
 <!-- Visitor counter (GoatCounter: free, no cookies). Stats: https://preciousnuha.goatcounter.com -->
 <script data-goatcounter="https://preciousnuha.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
@@ -52,7 +52,7 @@
 <div class="block">
   <p class="preorder" id="preorder" hidden></p>
   <p class="pickup-banner"><strong>Self pickup at Taman Sentosa, Klang</strong><small>Free pickup · Each lamp comes in a window paper bag (RM<span data-addon="paper_bag">3</span>) · Box available at RM<span data-addon="box">12</span> · Full payment required</small></p>
-  <p class="use-note"><strong>Decorative mood lamps</strong>, lovely as room décor, a study-desk lamp or soft extra light (not a main room light). <a href="terms.html">Read before you buy →</a></p>
+  <p class="use-note"><strong>Decorative mood lamps</strong>, not a main room light. <a href="terms.html">Terms →</a></p>
 </div>
 
 <nav class="chips" id="chips"></nav>
@@ -135,8 +135,7 @@
         <li>Tap the button below and send your receipt screenshot in WhatsApp</li>
       </ol>
     </div>
-    <label class="agree"><input type="checkbox" name="agree" required> <span>I’ve read the <a href="terms.html" target="_blank" rel="noopener">Terms &amp; Care notes</a> and understand that:
-      <span class="agree-list">• this is a decorative lamp with a soft glow, not a main room light<br>• there is no cancellation or refund after payment<br>• damage claims need an unboxing video, sent within 24 hours</span></span></label>
+    <label class="agree"><input type="checkbox" name="agree" required> <span>I agree to the <a href="terms.html" target="_blank" rel="noopener">Terms</a>: decorative lamp, no refund after payment, damage claims within 24 hours with an unboxing video.</span></label>
     <button class="wa-btn" type="submit">
       <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg>
       <span>Send order via WhatsApp</span>
@@ -662,7 +661,7 @@
       ...(f.wish ? [`Wish card message: ${f.wish}`] : []),
       "",
       `Payment: DuitNow QR ${rm(c.total)} (receipt to follow)`,
-      "Agreed to Terms & Care notes: Yes"
+      "Agreed to Terms: Yes"
     ];
     window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
     track("order-sent", `Order sent: ${rm(c.total)} (${c.a.name})`);
