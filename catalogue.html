@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=Great+Vibes&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=20261121">
+<link rel="stylesheet" href="assets/site.css?v=20261122">
 <!-- Visitor counter (GoatCounter: free, no cookies). Stats: https://preciousnuha.goatcounter.com -->
 <script data-goatcounter="https://preciousnuha.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
@@ -39,20 +39,20 @@
 
 <header class="page-head">
   <h1>Our Flowers</h1>
-  <p class="tagline">Handmade flower lamps that glow</p>
+  <div class="orn" aria-hidden="true"></div>
+  <p class="tagline">which one feels like you?</p>
 </header>
 
-<section class="block" id="bloom">
-  <div class="story">
-    <p>A little romantic? We’ve got roses. A little sunshine? Say hello to our sunflowers. Feeling whimsical? Our lilies might just steal your heart.</p>
-    <p><strong>Which one feels like you?</strong></p>
-  </div>
-</section>
-
 <div class="block">
-  <p class="preorder" id="preorder" hidden></p>
-  <p class="pickup-banner"><strong>Self pickup at Taman Sentosa, Klang</strong><small>Free pickup · Each lamp comes in a window paper bag (RM<span data-addon="paper_bag">3</span>) · Box available at RM<span data-addon="box">12</span> · Full payment required</small></p>
-  <p class="use-note"><strong>Decorative mood lamps</strong>, not a main room light. <a href="terms.html">Terms →</a></p>
+  <div class="shop-note">
+    <p class="preorder" id="preorder" hidden></p>
+    <ul>
+      <li><span>Postage</span>RM<span data-fee="sm">10</span> Semenanjung · RM<span data-fee="ss">45</span> Sabah / Sarawak, per lamp</li>
+      <li><span>Pickup</span>Free at Taman Sentosa, Klang · paper bag RM<span data-addon="paper_bag">3</span> or box RM<span data-addon="box">12</span></li>
+      <li><span>Payment</span>Full payment via DuitNow QR</li>
+      <li><span>Note</span>Decorative mood lamp, not a main room light · <a href="terms.html">Terms</a></li>
+    </ul>
+  </div>
 </div>
 
 <nav class="chips" id="chips"></nav>
@@ -60,15 +60,8 @@
 <main id="catalog"><p class="loading">Loading our blooms… 🌷</p></main>
 
 
-<p class="more-links">Questions? Read our <a href="faq.html">FAQ</a> · See <a href="testimoni/">customer reviews</a> ⭐</p>
+<p class="more-links"><a href="faq.html">FAQ</a> · <a href="testimoni/">Reviews</a> · <a href="https://wa.me/60134478918" target="_blank" rel="noopener">WhatsApp 013-447 8918</a></p>
 
-<div class="info">
-  <p>Pick your blooms, choose the quantity and your delivery area, then tap <strong>Order via WhatsApp</strong> 🫶🏻<br>
-  Postage: Semenanjung RM<span data-fee="sm">10</span> · Sabah / Sarawak RM<span data-fee="ss">45</span> per lamp 📦<br>
-  Self pickup at Taman Sentosa, Klang: FREE · each lamp comes in a window paper bag (RM<span data-addon="paper_bag">3</span>), or a box for RM<span data-addon="box">12</span> 🎁<br>
-  Add-ons: window paper bag RM<span data-addon="paper_bag">3</span> · wish card RM<span data-addon="wish_card">2</span> 💌<br>
-  Or just say hi: <a href="https://wa.me/60134478918" target="_blank" rel="noopener">013-447 8918</a></p>
-</div>
 <footer>
   <p class="socials">
     <a href="https://www.instagram.com/preciousnuha" target="_blank" rel="noopener">Instagram</a>
@@ -183,7 +176,7 @@
       ? end.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kuala_Lumpur" })
       : "";
     const note = document.getElementById("preorder");
-    note.innerHTML = `Pre-order now · Postage by ${preorder}<small>Every bloom is handmade just for you</small>`;
+    note.innerHTML = `Pre-order · posted by ${preorder}`;
     note.hidden = !preorder;
 
     const money = v => parseFloat((v || "").replace(/[^\d.]/g, ""));
@@ -343,10 +336,9 @@
       <div class="card-body">
         <h4>${esc(p.name)}</h4>
         ${p.soldOut ? `<div class="badges"><span class="badge out">Sold out</span></div>`
-          : preorder || p.badge ? `<div class="badges">${preorder ? `<span class="badge pre">Pre-order</span>` : ""}${p.badge ? `<span class="badge">${esc(p.badge)}</span>` : ""}</div>` : ""}
+          : p.badge ? `<div class="badges"><span class="badge">${esc(p.badge)}</span></div>` : ""}
         <p>${esc(p.desc)}</p>
-        ${p.soldOut ? "" : p.readyIn ? `<p class="ready">📦 Ready to ship in ${esc(p.readyIn)}</p>`
-          : preorder ? `<p class="ready">📦 Postage by ${preorder}</p>` : ""}
+        ${p.soldOut || !p.readyIn ? "" : `<p class="ready">Ready in ${esc(p.readyIn)}</p>`}
         <div class="price">${rm(p.price)}</div>
         <div class="row">
           <div class="qty">
@@ -381,8 +373,8 @@
     catalog.innerHTML = cats.map(c => `
       <section id="${c.id}">
         <div class="section-head">
-          <h3>Flower Lamp</h3>
-          <p>${esc(c.name)} · <span class="price-tag">${priceText(c)}</span></p>
+          <h3>${esc(c.name)}</h3>
+          <p class="script">${priceText(c)}</p>
         </div>
         <div class="grid">${c.items.map(card).join("")}</div>
       </section>`).join("");

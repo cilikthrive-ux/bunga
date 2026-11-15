@@ -861,10 +861,10 @@ body, body.home {
   background:
     radial-gradient(ellipse at 50% 0%, rgba(122, 22, 40, .5) 0, transparent 60%),
     radial-gradient(ellipse at 50% 100%, rgba(122, 22, 40, .3) 0, transparent 55%),
-    url("damask.svg") center top / 140px 200px,
+    url("blooms.svg") center top / 160px 160px,
     var(--wine-deep);
 }
-.wine-band { background: url("damask.svg") center / 112px 160px, rgba(20, 3, 8, .35) !important; }
+.wine-band { background: url("blooms.svg") center / 128px 128px, rgba(20, 3, 8, .35) !important; }
 .how, .facts { position: relative; }
 .how::before, .facts::before {
   content: ""; position: absolute; inset: 8px; pointer-events: none;
@@ -875,3 +875,42 @@ body, body.home {
     url("corner-br.svg") right bottom / 44px 44px no-repeat;
 }
 .how > *, .facts > * { position: relative; }
+
+/* Catalogue: one tidy note instead of three banners, elegant type */
+.page-head .orn { margin-top: 10px; }
+.shop-note {
+  max-width: 520px; margin: 6px auto 0; padding: 16px 18px; position: relative;
+  background: linear-gradient(180deg, #f3e9d8, #e9dcc4); color: var(--parch-ink);
+  border: 1px solid var(--gold); border-radius: 4px; box-shadow: 0 10px 24px rgba(0, 0, 0, .25);
+}
+.shop-note::before {
+  content: ""; position: absolute; inset: 5px; pointer-events: none;
+  background:
+    url("corner.svg") left top / 30px 30px no-repeat,
+    url("corner-tr.svg") right top / 30px 30px no-repeat,
+    url("corner-bl.svg") left bottom / 30px 30px no-repeat,
+    url("corner-br.svg") right bottom / 30px 30px no-repeat;
+}
+.shop-note .preorder {
+  all: unset; display: block; text-align: center; margin: 0 0 10px; padding: 0 0 10px !important;
+  background: none !important; border: 0 !important; border-bottom: 1px solid rgba(160, 122, 66, .45) !important; border-radius: 0 !important;
+  font-family: "Cinzel", serif; letter-spacing: .1em; text-transform: uppercase; font-size: .74rem; font-weight: 600; color: #6b1a26 !important;
+}
+.shop-note .preorder[hidden] { display: none; }
+.shop-note ul { list-style: none; margin: 0; padding: 0 6px; }
+.shop-note li {
+  font-family: "Cormorant Garamond", serif; font-size: 1.02rem; line-height: 1.35; color: #4a2a25;
+  padding: 7px 0; border-top: 1px solid rgba(160, 122, 66, .3);
+}
+.shop-note li:first-child { border-top: 0; }
+.shop-note li > span:first-child {
+  display: block; font-family: "Cinzel", serif; font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: #8a6232;
+}
+.shop-note a { color: #6b1a26; font-weight: 600; }
+nav.chips a { font-family: "Cinzel", serif; letter-spacing: .06em; font-size: .75rem; color: var(--gold-2); }
+.section-head h3 { margin-bottom: 0; }
+.section-head .script { margin-top: 0; font-size: 1.25rem; }
+.card h4 { font-family: "Cormorant Garamond", serif; font-weight: 600; font-size: 1.25rem !important; }
+.card p { font-family: "Cormorant Garamond", serif; font-size: .98rem !important; line-height: 1.35; }
+.card .ready { font-family: "Cinzel", serif; font-size: .68rem !important; letter-spacing: .08em; }
+.more-links a { color: var(--gold-2); font-family: "Cinzel", serif; letter-spacing: .06em; font-size: .8rem; font-weight: 500; }
