@@ -51,6 +51,7 @@ the "Pick up here" section after each finished task.
   ornaments, cream parchment bands). It is the last block in `assets/site.css`; testimoni has its own inline copy.
 - Catalogue cards: cream, gold-framed (PR #30), styled at the very end of `assets/site.css`.
 - Terms page and order-form agreement shortened (one line: decorative lamp, no refund after payment, 24h unboxing-video claim). Still confirm with Nadia.
+- Background: damask pattern (`assets/damask.svg`) on burgundy; cream bands have gold corner flourishes (`assets/corner*.svg`).
 - Waiting on the user: Netlify signup + new private repo `kedai-websites` for client sites;
   @chanttekmanis (beaded hand bouquets) answers: ready-stock prices, custom pricing A/B,
   deposit rule, colours/ribbons, photos.
