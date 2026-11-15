@@ -855,3 +855,4 @@ nav.chips a { border-color: var(--line); border-radius: 4px; }
 .card .subtotal { color: #8a6232; width: 100%; text-align: center; }
 .card .play { background: rgba(44, 8, 17, .7); border: 1px solid rgba(228, 199, 143, .6); color: #f3e6d3; border-radius: 3px; font-family: "Cinzel", serif; letter-spacing: .06em; }
 .section-head .price-tag { color: var(--gold-2); }
+.sheet label.agree .agree-list { display: block; font-weight: 500; margin-top: 4px; line-height: 1.5; }
