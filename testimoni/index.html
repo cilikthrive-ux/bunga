@@ -21,24 +21,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Great+Vibes&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream: #fff8ea;
-    --pink: #fbe4e6;
-    --pink-deep: #f6d3d8;
-    --card: #fffdf8;
-    --rose: #c27c88;
-    --rose-dark: #a05c69;
-    --sage: #7d846b;
-    --text: #5a4446;
-    --muted: #8d7a7b;
-    --line: #f1dcd8;
+    --cream: #340c18;
+    --pink: #4a1626;
+    --pink-deep: #6a2a3c;
+    --card: #41121f;
+    --rose: #e8b4bd;
+    --rose-dark: #f2cbd2;
+    --sage: #cdb0b4;
+    --text: #f6e7e2;
+    --muted: #cdb0b4;
+    --line: rgba(246, 231, 226, .14);
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    background:
-      radial-gradient(circle at 10% 0%, var(--pink) 0, transparent 40%),
-      radial-gradient(circle at 95% 30%, var(--pink) 0, transparent 30%),
-      var(--cream);
+    background: var(--cream);
     color: var(--text);
     font-family: "Nunito", system-ui, sans-serif;
     line-height: 1.6;
@@ -47,11 +44,11 @@
 
   header { text-align: center; padding: 20px 16px 4px; }
   .site-nav { display: flex; justify-content: center; gap: 4px; flex-wrap: wrap; padding: 12px 12px 0; }
-  .site-nav a { color: var(--rose-dark); text-decoration: none; font-weight: 700; font-size: .9rem; padding: 6px 14px; border-radius: 999px; }
-  .site-nav a:hover { background: var(--pink); }
-  .site-nav a[aria-current="page"] { background: var(--rose); color: #fff; }
+  .site-nav a { color: var(--muted); text-decoration: none; font-weight: 600; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; padding: 6px 14px; }
+  .site-nav a:hover { color: var(--text); }
+  .site-nav a[aria-current="page"] { color: var(--text); box-shadow: inset 0 -1px 0 var(--rose); }
   header img { width: 90px; height: 90px; border-radius: 50%; margin: 14px auto 0; box-shadow: 0 6px 18px rgba(194, 124, 136, .2); }
-  h1 { font-family: "Great Vibes", cursive; font-weight: 400; font-size: 2.8rem; color: var(--rose-dark); margin: 8px 0 0; line-height: 1.1; }
+  h1 { font-family: "Cormorant Garamond", serif; font-weight: 600; font-size: 2.6rem; color: var(--text); margin: 8px 0 0; line-height: 1.1; }
   .sub { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 1.2rem; color: var(--sage); margin: 2px 0 0; }
   .summary { margin: 10px 0 0; color: var(--muted); font-weight: 700; }
   .summary .stars { color: #e0a43a; letter-spacing: 2px; }
@@ -72,11 +69,11 @@
 
   .cta { text-align: center; padding: 20px 16px 48px; }
   .btn {
-    display: inline-block; background: var(--rose); color: #fff; border-radius: 999px;
+    display: inline-block; background: var(--rose); color: #340c18; border-radius: 999px; letter-spacing: .14em; text-transform: uppercase; font-size: .75rem;
     padding: 12px 26px; font-weight: 700; text-decoration: none;
     box-shadow: 0 6px 16px rgba(194, 124, 136, .3);
   }
-  .btn:hover { background: var(--rose-dark); }
+  .btn:hover { background: #f4d3d9; }
   .socials { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 24px 0 0; }
   .socials a {
     text-decoration: none; color: var(--rose-dark); font-weight: 700; font-size: .85rem;
@@ -112,11 +109,11 @@
 <main id="reviews"><p class="loading">Loading reviews… 🌷</p></main>
 
 <div class="cta">
-  <a class="btn" href="../catalogue.html">Find your bloom ✿</a>
+  <a class="btn" href="../catalogue.html">Find your bloom</a>
   <p class="socials">
-    <a href="https://www.instagram.com/preciousnuha" target="_blank" rel="noopener">📸 Instagram</a>
-    <a href="https://www.tiktok.com/@preciousnuha" target="_blank" rel="noopener">🎵 TikTok</a>
-    <a href="https://www.threads.com/@preciousnuha" target="_blank" rel="noopener">🧵 Threads</a>
+    <a href="https://www.instagram.com/preciousnuha" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.tiktok.com/@preciousnuha" target="_blank" rel="noopener">TikTok</a>
+    <a href="https://www.threads.com/@preciousnuha" target="_blank" rel="noopener">Threads</a>
   </p>
   <p style="margin-top:14px;font-size:.85rem"><a href="../terms.html" style="color:var(--rose-dark);font-weight:700">Terms &amp; Care</a></p>
 </div>
@@ -210,7 +207,7 @@
 
   load();
 </script>
-<script src="../assets/music.js?v=20261115" defer></script>
-<script src="../assets/whatsapp.js?v=20261115" defer></script>
+<script src="../assets/music.js?v=20261116" defer></script>
+<script src="../assets/whatsapp.js?v=20261116" defer></script>
 </body>
 </html>
