@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="140" height="200" viewBox="0 0 140 200">
+  <defs>
+    <g id="h">
+      <path d="M0-74C10-58 22-46 20-28C18-14 6-10 4 0C14-6 30-12 40-2C50 8 44 24 30 26C38 16 34 6 24 6C14 6 8 16 4 24C10 34 18 46 12 60C8 68 2 70 0 78Z"/>
+      <path d="M20-30C30-40 46-36 46-22C46-10 34-8 31-16C36-14 40-18 38-24C35-31 26-32 20-30Z"/>
+      <path d="M12 60C22 58 32 64 30 74C28 82 20 80 20 74C24 76 26 72 24 69C22 65 16 63 12 60Z"/>
+      <circle cx="28" cy="-56" r="3"/><circle cx="38" cy="40" r="2.5"/>
+    </g>
+    <g id="m"><use xlink:href="#h"/><use xlink:href="#h" transform="scale(-1 1)"/></g>
+  </defs>
+  <g fill="#e4c78f" fill-opacity=".09">
+    <use xlink:href="#m" transform="translate(70 100)"/>
+    <use xlink:href="#m" transform="translate(0 0) scale(.55)"/>
+    <use xlink:href="#m" transform="translate(140 0) scale(.55)"/>
+    <use xlink:href="#m" transform="translate(0 200) scale(.55)"/>
+    <use xlink:href="#m" transform="translate(140 200) scale(.55)"/>
+  </g>
+</svg>
