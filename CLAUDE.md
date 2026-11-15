@@ -42,9 +42,11 @@ the "Pick up here" section after each finished task.
 ## Workflow
 - Work on branch `claude/zealous-cerf-wscpgw`, open a PR to `main`; the user merges on phone.
 - Test with a local `python3 -m http.server` + Playwright (390px mobile) before committing.
+- When `assets/site.css`, `music.js` or `whatsapp.js` change, bump the `?v=` number on their links in
+  every page, or phones keep the old cached file with the new HTML and the layout breaks.
 
 ## Pick up here
-- Done (PR pending): editorial home redesign, Terms & Care page + order-form agreement.
+- Done: editorial home redesign, Terms & Care page + order-form agreement (PR #27), cache-busting ?v= on assets.
 - Waiting on the user: Netlify signup + new private repo `kedai-websites` for client sites;
   @chanttekmanis (beaded hand bouquets) answers: ready-stock prices, custom pricing A/B,
   deposit rule, colours/ribbons, photos.
