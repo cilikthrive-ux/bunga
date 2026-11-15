@@ -52,6 +52,7 @@
 <div class="block">
   <p class="preorder" id="preorder" hidden></p>
   <p class="pickup-banner">📍 <strong>Self pickup at Taman Sentosa, Klang</strong><small>FREE pickup 🎉 Each lamp comes in a window paper bag (RM<span data-addon="paper_bag">3</span>) · Box available at RM<span data-addon="box">12</span> · Full payment required 💳</small></p>
+  <p class="use-note">💡 <strong>Decorative mood lamps</strong>, lovely as room décor, a study-desk lamp or soft extra light (not a main room light). <a href="terms.html">Read before you buy →</a></p>
 </div>
 
 <nav class="chips" id="chips"></nav>
@@ -74,7 +75,7 @@
     <a href="https://www.tiktok.com/@preciousnuha" target="_blank" rel="noopener">🎵 TikTok</a>
     <a href="https://www.threads.com/@preciousnuha" target="_blank" rel="noopener">🧵 Threads</a>
   </p>
-  &copy; Précious Nuha Bloom · @preciousnuha
+  <a class="terms-link" href="terms.html">Terms &amp; Care</a> · &copy; Précious Nuha Bloom · @preciousnuha
 </footer>
 
 <div class="order">
@@ -134,6 +135,7 @@
         <li>Tap the button below and send your receipt screenshot in WhatsApp</li>
       </ol>
     </div>
+    <label class="agree"><input type="checkbox" name="agree" required> I’ve read the <a href="terms.html" target="_blank" rel="noopener">Terms &amp; Care notes</a> and understand this is a decorative lamp with a soft glow, not a main room light.</label>
     <button class="wa-btn" type="submit">
       <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg>
       <span>Send order via WhatsApp</span>
@@ -658,7 +660,8 @@
       c.a.pickup ? "Delivery: Self pickup (Taman Sentosa, Klang)" : `Address: ${f.address}, ${f.postcode} ${f.city}`,
       ...(f.wish ? [`Wish card message: ${f.wish}`] : []),
       "",
-      `Payment: DuitNow QR ${rm(c.total)} (receipt to follow)`
+      `Payment: DuitNow QR ${rm(c.total)} (receipt to follow)`,
+      "Agreed to Terms & Care notes: Yes"
     ];
     window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
     track("order-sent", `Order sent: ${rm(c.total)} (${c.a.name})`);
