@@ -570,3 +570,260 @@ footer.home-footer { padding-bottom: 32px; }
 .sheet label.agree input { width: 20px; height: 20px; flex: none; margin: 1px 0 0; accent-color: var(--rose-dark); }
 .sheet label.agree a { color: var(--rose-dark); }
 .terms-link { color: var(--rose-dark); font-weight: 700; }
+
+/* ======================================================================
+   Theme: burgundy minimal (Nov 2026). Overrides the earlier pastel look
+   on every page; keep this block last.
+   ====================================================================== */
+:root {
+  --wine-deep: #340c18;
+  --wine: #4a1424;
+  --wine-2: #5e1d30;
+  --cream: #340c18;          /* page background */
+  --cream-deep: #3f1120;
+  --pink: #4a1626;           /* soft surfaces */
+  --pink-deep: #6a2a3c;      /* outlines */
+  --card: #41121f;           /* cards */
+  --line: rgba(246, 231, 226, .14);
+  --text: #f6e7e2;
+  --muted: #cdb0b4;
+  --rose: #e8b4bd;           /* accent */
+  --rose-dark: #f2cbd2;      /* headings, prices */
+  --sage: #cdb0b4;
+  --ink: #340c18;            /* dark text on light buttons */
+}
+body { background: var(--wine-deep); color: var(--text); }
+.sparkle, .divider, .ribbon { display: none !important; }
+
+/* Serif headings instead of script */
+h1, .block-title, .section-head h3, .sheet h3, .signoff span, .kicker {
+  font-family: "Cormorant Garamond", Georgia, serif !important; font-style: normal;
+}
+h1 { font-weight: 600; color: var(--text); letter-spacing: .01em; }
+.block-title { font-weight: 600; color: var(--text); font-size: clamp(1.8rem, 6vw, 2.4rem); }
+.block-title::before, .block-title::after { content: none !important; }
+.section-head h3 { color: var(--text); font-weight: 600; font-size: 1.9rem; }
+.tagline { color: var(--muted); }
+.kicker { background: none; color: var(--rose); letter-spacing: .2em; text-transform: uppercase; font-size: .72rem; font-weight: 700; }
+.story, .story p, .intro { color: var(--muted); }
+.story strong { color: var(--text); }
+a { color: var(--rose); }
+
+/* Buttons: light pill on dark */
+.btn, .pill { background: var(--rose) !important; color: var(--ink) !important; box-shadow: none !important; letter-spacing: .14em; text-transform: uppercase; font-size: .75rem; font-weight: 700; }
+.btn:hover, .pill:hover { background: #f4d3d9 !important; }
+.pill.outline { background: transparent !important; color: var(--text) !important; border: 1px solid rgba(246,231,226,.45); }
+
+/* Navigation & footer */
+.site-nav { padding-top: 16px; }
+.site-nav a { color: var(--muted); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: .72rem; }
+.site-nav a:hover { background: transparent; color: var(--text); }
+.site-nav a[aria-current="page"] { background: transparent; color: var(--text); box-shadow: inset 0 -1px 0 var(--rose); border-radius: 0; }
+footer { color: var(--muted); }
+.socials a { background: transparent; border-color: var(--line); color: var(--muted); }
+.socials a:hover { background: transparent; color: var(--text); }
+.terms-link { color: var(--rose); }
+
+/* Banners & notes become quiet outlined strips */
+.pickup-banner, .use-note, .preorder {
+  background: transparent !important; border: 1px solid var(--line) !important; color: var(--text) !important; border-radius: 14px;
+}
+.pickup-banner small, .preorder small, .use-note { color: var(--muted) !important; }
+.use-note a { color: var(--rose); }
+.bubble { background: var(--card); border: 1px solid var(--line); }
+
+/* Catalogue */
+nav.chips { background: rgba(52, 12, 24, .94); border-bottom-color: var(--line); }
+nav.chips a { background: transparent; border-color: var(--line); color: var(--text); }
+.card { background: var(--card); border-color: var(--line); box-shadow: none; }
+.card .photo { background: #2a0a13; }
+.card h4 { color: var(--text); }
+.badge { background: rgba(232, 180, 189, .16); color: var(--rose); }
+.badge.pre { background: rgba(232, 180, 189, .16); color: var(--rose); }
+.badge.out { background: rgba(246, 231, 226, .2); color: var(--text); }
+.ready { color: var(--muted) !important; }
+.qty { border-color: var(--line); }
+.qty button { background: transparent; color: var(--text); }
+.qty button:hover { background: rgba(246,231,226,.08); }
+.qty input { background: transparent; color: var(--text); }
+.order { background: rgba(52, 12, 24, .96); border-top-color: var(--line); }
+.total { color: var(--text); }
+.ship span.pill, .ship span.pill.pickup { background: transparent; border-color: var(--line); color: var(--text); }
+.ship input:checked + span.pill, .ship input:checked + span.pill.pickup { background: var(--rose); border-color: var(--rose); color: var(--ink); }
+.wa-btn:disabled { background: #6b4550; color: #d9c2c5; }
+.info, .more-links { color: var(--muted); }
+
+/* Order form: a light sheet on the dark page, for easy reading and typing */
+.sheet form { background: #fbf3f1; color: #3a1a22; }
+.sheet h3 { color: #4a1424; font-weight: 600; font-size: 1.9rem; }
+.sheet .sub, .sheet label small, .addon span small { color: #7d5a60; }
+.sheet label, .addon, .addons-title { color: #3a1a22; }
+.summary { background: #fff; border-color: #ead7d3; color: #3a1a22; }
+.summary .grand { color: #4a1424; }
+.sheet input, .sheet textarea { background: #fff; color: #3a1a22; border-color: #e6d2ce; }
+.sheet ::placeholder { color: #9b8286; }
+.sheet .qty { border-color: #e6d2ce; }
+.sheet .qty button { background: #f6e3df; color: #4a1424; }
+.sheet .qty input { background: #fff; color: #3a1a22; }
+.addons { border-color: #e6d2ce; }
+.pay { background: #fff; border-color: #ead7d3; color: #3a1a22; }
+.pay .pay-amount { color: #4a1424; }
+.pay .save { color: #4a1424; border-color: #e6d2ce; }
+.pay-full { background: #f6e3df; color: #4a1424; }
+.sheet label.agree, .sheet label.agree a { color: #3a1a22; }
+.sheet-close { background: #f6e3df; color: #4a1424; }
+
+/* FAQ */
+.faq details { background: var(--card); border-color: var(--line); }
+.faq summary { color: var(--text); }
+.faq summary::after { color: var(--rose); }
+.faq details p { color: var(--muted); }
+
+/* Home */
+body.home { background: var(--wine-deep); }
+.home .eyebrow, .eyebrow { color: var(--rose); }
+.hero2 h1 { color: var(--text); }
+.hero2 .sub, .story2 p { color: var(--muted); }
+.text-link { color: var(--text); }
+.stage { box-shadow: 0 30px 60px rgba(0,0,0,.35); }
+.stage .tag { background: rgba(52, 12, 24, .82); color: var(--text); border: 1px solid var(--line); }
+.stage .tag a { color: var(--rose); }
+.swatch-label { color: var(--muted); }
+.swatches button { background: transparent; border-color: var(--line); color: var(--text); }
+.swatches button[aria-pressed="true"] { background: var(--text); color: var(--ink); border-color: var(--text); }
+.wine-band { background: transparent; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.wine-band .eyebrow, .wine-band .head a { color: var(--rose); }
+.cards3 a { background: transparent; color: var(--text); }
+.cards3 img { border-radius: 16px; }
+.cards3 .meta2 { padding: 12px 2px 0; }
+.cards3 p { color: var(--muted); }
+.cards3 .arrow { border-color: var(--line); }
+.how { background: transparent; }
+.how h2, .story2 h2 { color: var(--text); }
+.steps3 svg { color: var(--rose); border-color: var(--line); }
+.steps3 h3 { color: var(--text); }
+.steps3 p { color: var(--muted); }
+.custom2, .closing { max-width: 640px; margin: 0 auto; padding: 44px 16px 8px; text-align: center; }
+.custom2 h2 { font-family: "Cormorant Garamond", serif; font-weight: 600; color: var(--text); font-size: clamp(1.9rem, 6vw, 2.5rem); margin: 8px 0 10px; line-height: 1.1; }
+.custom2 p { color: var(--muted); margin: 0 0 20px; }
+.facts {
+  max-width: 900px; margin: 44px auto 0; padding: 22px 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center;
+}
+.facts p { margin: 4px 0 0; color: var(--text); font-size: .85rem; }
+.facts .eyebrow { font-size: .65rem; }
+.photo-band { margin-top: 44px; }
+.closing p { color: var(--muted); }
+.signoff2 { margin-top: 18px !important; color: var(--muted); }
+.signoff2 span { font-family: "Cormorant Garamond", serif; font-size: 1.6rem; color: var(--text); }
+.closing .contact a { color: var(--rose); letter-spacing: .14em; text-transform: uppercase; font-size: .72rem; font-weight: 700; text-decoration: none; border-bottom: 1px solid currentColor; }
+
+/* ======================================================================
+   Theme: royal burgundy & gold (Nov 2026), after the wedding-invitation
+   reference: velvet burgundy, gold Cinzel capitals, italic script lines,
+   gold ornaments and cream parchment bands. Keep this block last.
+   ====================================================================== */
+:root {
+  --wine-deep: #2c0811;
+  --wine: #4a0f1d;
+  --cream: #2c0811;
+  --card: #3a0c18;
+  --pink: #42101d;
+  --pink-deep: #6b4a2f;
+  --line: rgba(201, 164, 106, .28);
+  --text: #f3e6d3;
+  --muted: #d6c2a8;
+  --rose: #c9a46a;            /* gold */
+  --rose-dark: #e4c78f;       /* light gold */
+  --gold: #c9a46a;
+  --gold-2: #e4c78f;
+  --parch: #efe3cf;
+  --parch-ink: #3b1a17;
+  --ink: #2c0811;
+}
+body {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(122, 22, 40, .55) 0, transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(122, 22, 40, .35) 0, transparent 55%),
+    var(--wine-deep);
+}
+
+/* Gold capitals for titles, italic script for little lines */
+h1, .block-title, .section-head h3, .how h2, .story2 h2, .custom2 h2, .steps3 h3, .cards3 h3, .terms h2 {
+  font-family: "Cinzel", "Cormorant Garamond", serif !important; color: var(--gold-2) !important;
+  font-weight: 500 !important; letter-spacing: .08em; text-transform: uppercase;
+}
+h1 { font-size: clamp(2.2rem, 9vw, 3.6rem) !important; line-height: 1.1 !important; }
+.tagline, .script {
+  font-family: "Cormorant Garamond", serif; font-style: italic; color: var(--gold) !important;
+  font-size: 1.35rem; margin: 6px 0 0; letter-spacing: .01em; text-transform: none;
+}
+.script.big { font-size: 1.7rem; }
+.eyebrow { color: var(--gold) !important; }
+
+/* Gold ornament: a line, a diamond, a line */
+.orn {
+  width: 180px; height: 12px; margin: 12px auto 4px; position: relative;
+  background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold) 42%, transparent 46%, transparent 54%, var(--gold) 58%, var(--gold) 70%, transparent) center / 100% 1px no-repeat;
+}
+.orn::after {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 7px; height: 7px;
+  border: 1px solid var(--gold); transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* Buttons: gold */
+.btn, .pill { background: linear-gradient(180deg, #d9b97d, #b98f52) !important; color: var(--ink) !important; border-radius: 4px !important; }
+.btn:hover, .pill:hover { background: #e4c78f !important; }
+.pill.outline, .pill.light { background: transparent !important; color: var(--gold-2) !important; border: 1px solid var(--gold); }
+.wa-btn { border-radius: 4px; }
+
+/* Navigation */
+.site-nav a { color: var(--muted); font-family: "Cinzel", serif; letter-spacing: .14em; }
+.site-nav a[aria-current="page"] { color: var(--gold-2); box-shadow: inset 0 -1px 0 var(--gold); }
+
+/* Hero text centred like an invitation */
+.hero2 > div:first-child { text-align: center; }
+.hero2 h1 { text-align: center; margin-top: 4px; }
+.hero2 .sub { margin-left: auto; margin-right: auto; color: var(--muted); }
+.hero2 .actions { justify-content: center; }
+.text-link { color: var(--gold-2); }
+.stage { border: 1px solid var(--gold); border-radius: 6px; padding: 0; }
+.stage .tag { border-color: var(--line); border-radius: 4px; }
+.stage .tag a { color: var(--gold-2); }
+.swatches button { border-color: var(--line); border-radius: 4px; }
+.swatches button[aria-pressed="true"] { background: var(--gold); color: var(--ink); border-color: var(--gold); }
+
+/* Cream parchment bands with a gold frame */
+.how, .facts {
+  background: linear-gradient(180deg, #f3e9d8, #e9dcc4); color: var(--parch-ink);
+  border-top: 3px double var(--gold); border-bottom: 3px double var(--gold);
+}
+.how h2, .how .steps3 h3 { color: #6b1a26 !important; }
+.how .eyebrow, .facts .eyebrow { color: #8a6232 !important; }
+.how .steps3 p, .facts p { color: #5a3a33 !important; }
+.how .steps3 svg { color: #8a6232; border-color: rgba(138, 98, 50, .45); }
+.how .orn, .facts .orn { background-image: linear-gradient(90deg, transparent, #a07a42 30%, #a07a42 42%, transparent 46%, transparent 54%, #a07a42 58%, #a07a42 70%, transparent); }
+.how .orn::after { border-color: #a07a42; }
+.facts { max-width: none; margin-top: 44px; }
+
+/* Cards, frames and quiet strips in gold */
+.wine-band { border-color: var(--line); }
+.cards3 img, .card, .faq details, .terms section, .pickup-banner, .use-note, .preorder, .bubble { border-radius: 6px !important; }
+.cards3 img { border: 1px solid var(--line); }
+.cards3 .arrow { border-color: var(--gold); color: var(--gold-2); }
+.card { border-color: var(--line); }
+.price { color: var(--gold-2); }
+.badge, .badge.pre { background: rgba(201, 164, 106, .16); color: var(--gold-2); border-radius: 3px; }
+.steps3 svg { border-radius: 50%; }
+.photo-band { border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); }
+.photo-band p { font-family: "Cinzel", serif; }
+.signoff2 span { font-family: "Cormorant Garamond", serif; font-style: italic; color: var(--gold-2); font-size: 1.8rem; }
+.closing .contact a, .terms-link, .use-note a, a { color: var(--gold-2); }
+nav.chips a { border-color: var(--line); border-radius: 4px; }
+.ship input:checked + span.pill, .ship input:checked + span.pill.pickup { background: var(--gold); border-color: var(--gold); }
+.socials a { border-color: var(--line); border-radius: 4px; color: var(--muted); }
+
+/* Order form keeps a light sheet, now parchment with burgundy accents */
+.sheet form { background: #f6eee0; }
+.sheet h3 { font-family: "Cinzel", serif !important; color: #6b1a26; letter-spacing: .08em; text-transform: uppercase; font-size: 1.4rem; }
+.sheet label.agree a, .pay .save, .pay .pay-amount { color: #6b1a26; }
