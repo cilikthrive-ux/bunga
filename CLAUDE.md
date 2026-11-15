@@ -49,6 +49,7 @@ the "Pick up here" section after each finished task.
 - Done: editorial home redesign, Terms & Care page + order-form agreement (PR #27), cache-busting ?v= on assets.
 - Theme now "royal burgundy & gold" (wedding-invitation look: Cinzel gold caps, italic script lines, `.orn`
   ornaments, cream parchment bands). It is the last block in `assets/site.css`; testimoni has its own inline copy.
+- Catalogue cards: cream, gold-framed (PR #30), styled at the very end of `assets/site.css`.
 - Waiting on the user: Netlify signup + new private repo `kedai-websites` for client sites;
   @chanttekmanis (beaded hand bouquets) answers: ready-stock prices, custom pricing A/B,
   deposit rule, colours/ribbons, photos.
