@@ -47,12 +47,9 @@ the "Pick up here" section after each finished task.
 
 ## Pick up here
 - Done: editorial home redesign, Terms & Care page + order-form agreement (PR #27), cache-busting ?v= on assets.
-- Theme now "royal burgundy & gold" (wedding-invitation look: Cinzel gold caps, italic script lines, `.orn`
-  ornaments, cream parchment bands). It is the last block in `assets/site.css`; testimoni has its own inline copy.
-- Catalogue cards: cream, gold-framed (PR #30), styled at the very end of `assets/site.css`.
+- Burgundy/gold themes (PRs #29-#34) were reverted on request: back to the pink theme of PR #28.
 - Terms page and order-form agreement shortened (one line: decorative lamp, no refund after payment, 24h unboxing-video claim). Still confirm with Nadia.
-- Background: small blossom pattern (`assets/blooms.svg`) on burgundy; cream bands have gold corner flourishes (`assets/corner*.svg`).
-- Catalogue: one cream `.shop-note` (pre-order date, postage, pickup, payment, note) replaces the 3 banners and the bottom info; cards no longer repeat Pre-order / postage date; section head = category name.
+- Catalogue: one `.shop-note` box (pre-order date, postage, pickup, payment, note) replaces the 3 banners and the bottom info; cards no longer repeat Pre-order / postage date; section head = category name.
 - Waiting on the user: Netlify signup + new private repo `kedai-websites` for client sites;
   @chanttekmanis (beaded hand bouquets) answers: ready-stock prices, custom pricing A/B,
   deposit rule, colours/ribbons, photos.
