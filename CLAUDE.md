@@ -11,11 +11,11 @@ the "Pick up here" section after each finished task.
   `demo/overrides.js` + `netlify.toml` build a sales demo for Netlify (not connected yet).
 - **marketing/**: price-list poster (`harga-website.html` → PNG via Playwright), music preview.
 
-## Pages (all share `assets/site.css`, top nav, footer socials + Terms link)
+## Pages (all share `assets/site.css` + `assets/garden.css`, sticky header with hamburger, footer socials + Terms link)
 | Page | Notes |
 |---|---|
-| `index.html` | Editorial home: hero video with colour swatches, wine "This season's blooms", how it works, photo band |
-| `catalogue.html` | Shop: Sheet-driven products, pre-order, postage/pickup, add-ons, wish card, order form, DuitNow QR, T&C checkbox, WhatsApp order, order copy to Orders Sheet |
+| `index.html` | Enchanted Garden home: hero video in an arch + swatches, 4 collections, #story letter + steps, love notes, #custom, closing |
+| `catalogue.html` | "The Flower Garden": products grouped into collections (`COLLECTIONS`, optional Sheet `collection` column), pre-order, postage/pickup, add-ons, wish card, order form, DuitNow QR, T&C checkbox, WhatsApp order, order copy to Orders Sheet |
 | `faq.html` | Default FAQ (uses settings tab prices/date) or Sheet `faq` tab |
 | `terms.html` | Before you buy / Terms & Care (decorative mood lamp disclaimer) |
 | `testimoni/` | Reviews: 4 built-in WhatsApp testimonials or Sheet `testimoni` tab |
@@ -45,11 +45,20 @@ the "Pick up here" section after each finished task.
 - When `assets/site.css`, `music.js` or `whatsapp.js` change, bump the `?v=` number on their links in
   every page, or phones keep the old cached file with the new HTML and the layout breaks.
 
+## Brand (Enchanted Garden, Nov 2026, from the owner's brief)
+- Grown-up whimsical boutique, storybook botanical; lamps are the main characters, decorations only frame them.
+- Colours: cream #F8F3EA, blush #EACFD0, sage #BBC9B2, lilac #D9CDE5, rosewood #A77F76, moss #687C62 (buttons).
+- Fonts: Cormorant Garamond (titles), DM Sans (body), Pinyon Script (rare handwritten notes).
+- Decorations: tiny flower mark (logo), butterflies `#bf` symbol by titles, `sprig.svg` divider, arch photo frames.
+- Collections: Lily Garden, Dreamy Blooms, Rose Atelier, Bespoke Garden (custom). No sunflower lamps yet.
+- Nav: Home, The Flower Garden, Custom Orders, Our Story, Love Notes, FAQ. Header markup is built by a
+  script, so change it in every page (index, catalogue, faq, terms, testimoni) together.
+
 ## Pick up here
-- Done: editorial home redesign, Terms & Care page + order-form agreement (PR #27), cache-busting ?v= on assets.
-- Burgundy/gold themes (PRs #29-#34) were reverted on request: back to the pink theme of PR #28.
-- Terms page and order-form agreement shortened (one line: decorative lamp, no refund after payment, 24h unboxing-video claim). Still confirm with Nadia.
-- Catalogue: one `.shop-note` box (pre-order date, postage, pickup, payment, note) replaces the 3 banners and the bottom info; cards no longer repeat Pre-order / postage date; section head = category name.
+- Done: Enchanted Garden phase 1 (theme in `assets/garden.css`, new home, header + menu, catalogue collections).
+- Terms page and order-form agreement are short (decorative lamp, no refund after payment, 24h unboxing-video claim). Still confirm with Nadia.
+- Brief's next steps not built: PN monogram logo, product detail pages (Bloom No. 001 style), 15-page PDF
+  catalogue, 3 photos per product (full, close-up, glowing).
 - Waiting on the user: Netlify signup + new private repo `kedai-websites` for client sites;
   @chanttekmanis (beaded hand bouquets) answers: ready-stock prices, custom pricing A/B,
   deposit rule, colours/ribbons, photos.
